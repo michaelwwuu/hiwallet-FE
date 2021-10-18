@@ -46,18 +46,6 @@ const constantRoutes = [
     ]
   },
   {
-    path: '/documentation',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'index',
-        component: 'views/documentation/index',
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  {
     path: '/guide',
     component: 'layout/Layout',
     redirect: '/guide/index',
@@ -382,21 +370,6 @@ const asyncRoutes = [
       }
     ]
   },
-
-  {
-    path: '/error-log',
-    component: 'layout/Layout',
-    redirect: 'noRedirect',
-    children: [
-      {
-        path: 'log',
-        component: 'views/error-log/index',
-        name: 'ErrorLog',
-        meta: { title: 'errorLog', icon: 'bug' }
-      }
-    ]
-  },
-
   {
     path: '/excel',
     component: 'layout/Layout',
@@ -467,58 +440,6 @@ const asyncRoutes = [
     path: '/pdf/download',
     component: 'views/pdf/download',
     hidden: true
-  },
-
-  {
-    path: '/theme',
-    component: 'layout/Layout',
-    redirect: 'noRedirect',
-    children: [
-      {
-        path: 'index',
-        component: 'views/theme/index',
-        name: 'Theme',
-        meta: { title: 'theme', icon: 'theme' }
-      }
-    ]
-  },
-
-  {
-    path: '/clipboard',
-    component: 'layout/Layout',
-    redirect: 'noRedirect',
-    children: [
-      {
-        path: 'index',
-        component: 'views/clipboard/index',
-        name: 'ClipboardDemo',
-        meta: { title: 'clipboardDemo', icon: 'clipboard' }
-      }
-    ]
-  },
-
-  {
-    path: '/i18n',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'index',
-        component: 'views/i18n-demo/index',
-        name: 'I18n',
-        meta: { title: 'i18n', icon: 'international' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: 'layout/Layout',
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'externalLink', icon: 'link' }
-      }
-    ]
   },
 
   { path: '*', redirect: '/404', hidden: true }

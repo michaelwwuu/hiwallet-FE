@@ -1,7 +1,6 @@
 export default {
   route: {
     dashboard: '首页',
-    documentation: '文档',
     guide: '引导页',
     permission: '权限测试页',
     rolePermission: '角色权限',
@@ -60,8 +59,6 @@ export default {
     exportZip: 'Export Zip',
     theme: '换肤',
     clipboardDemo: 'Clipboard',
-    i18n: '国际化',
-    externalLink: '外链',
     profile: '个人中心'
   },
   navbar: {

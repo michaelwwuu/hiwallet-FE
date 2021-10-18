@@ -1,7 +1,6 @@
 export default {
   route: {
     dashboard: 'Dashboard',
-    documentation: 'Documentation',
     guide: 'Guide',
     permission: 'Permission',
     pagePermission: 'Page Permission',
@@ -60,8 +59,6 @@ export default {
     exportZip: 'Export Zip',
     theme: 'Theme',
     clipboardDemo: 'Clipboard',
-    i18n: 'I18n',
-    externalLink: 'External Link',
     profile: 'Profile'
   },
   navbar: {

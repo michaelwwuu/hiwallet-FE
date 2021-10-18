@@ -172,25 +172,6 @@ export default {
       lowestPx: 'Resmin boyutu çok küçük. En az olması gereken: '
     }
   },
-  'es-MX': {
-    hint: 'Selecciona o arrastra una imagen',
-    loading: 'Subiendo...',
-    noSupported: 'Tu navegador no es soportado, porfavor usa IE10+ u otros navegadores mas recientes',
-    success: 'Subido exitosamente',
-    fail: 'Sucedió un error',
-    preview: 'Vista previa',
-    btn: {
-      off: 'Cancelar',
-      close: 'Cerrar',
-      back: 'Atras',
-      save: 'Guardar'
-    },
-    error: {
-      onlyImg: 'Unicamente imagenes',
-      outOfSize: 'La imagen excede el tamaño maximo:',
-      lowestPx: 'La imagen es demasiado pequeño. Se espera por lo menos:'
-    }
-  },
   de: {
     hint: 'Klick hier oder zieh eine Datei hier rein zum Hochladen',
     loading: 'Hochladen…',
@@ -209,24 +190,6 @@ export default {
       outOfSize: 'Das Bild ist zu groß: ',
       lowestPx: 'Das Bild ist zu klein. Mindestens: '
     }
-  },
-  ja: {
-    hint: 'クリック・ドラッグしてファイルをアップロード',
-    loading: 'アップロード中...',
-    noSupported: 'このブラウザは対応されていません。IE10+かその他の主要ブラウザをお使いください。',
-    success: 'アップロード成功',
-    fail: 'アップロード失敗',
-    preview: 'プレビュー',
-    btn: {
-      off: 'キャンセル',
-      close: '閉じる',
-      back: '戻る',
-      save: '保存'
-    },
-    error: {
-      onlyImg: '画像のみ',
-      outOfSize: '画像サイズが上限を超えています。上限: ',
-      lowestPx: '画像が小さすぎます。最小サイズ: '
-    }
   }
+
 }

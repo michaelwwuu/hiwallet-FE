@@ -1,6 +1,6 @@
 export default {
   route: {
-    dashboard: '首页',
+    dashboard: '首頁',
     permission: '帳號管理',
     rolePermission: '角色权限',
     pagePermission: '页面权限',
@@ -55,7 +55,7 @@ export default {
     size: '布局大小'
   },
   login: {
-    title: '系统登录',
+    title: '嗨錢包後台系统登录',
     logIn: '登录',
     username: '账号',
     password: '密码',

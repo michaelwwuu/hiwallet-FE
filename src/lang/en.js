@@ -1,6 +1,5 @@
 export default {
   route: {
-    dashboard: 'Dashboard',
     permission: 'Account manage',
     pagePermission: 'Page Permission',
     rolePermission: 'Role Permission',
@@ -55,7 +54,7 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'Login Form',
+    title: 'Hiwallet Admin Login Form',
     logIn: 'Login',
     username: 'Username',
     password: 'Password',

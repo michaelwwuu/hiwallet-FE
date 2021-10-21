@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'HiWallet Admin',
+      title: 'Hiwallet Admin',
       logo: require('./../../../../public/hiwallet.png')
     }
   }

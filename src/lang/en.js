@@ -2,6 +2,7 @@ export default {
   route: {
     permission: 'Account manage',
     pagePermission: 'Page Permission',
+    adminPermission: 'Account manage',
     rolePermission: 'Role Permission',
     directivePermission: 'Directive Permission',
     componentMixin: 'Mixin',
@@ -62,9 +63,13 @@ export default {
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
   },
+  dashboard: {
+    adminPermission: 'Account manage'
+  },
   permission: {
     addRole: 'New Role',
     editPermission: 'Edit',
+    adminPermission: 'Account manage',
     roles: 'Your roles',
     switchRoles: 'Switch roles',
     tips: 'In some cases, using v-permission will have no effect. For example: Element-UI  el-tab or el-table-column and other scenes that dynamically render dom. You can only do this with v-if.',

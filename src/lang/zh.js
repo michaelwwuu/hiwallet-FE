@@ -1,8 +1,8 @@
 export default {
   route: {
-    dashboard: '首頁',
     permission: '帳號管理',
     rolePermission: '角色权限',
+    adminPermission: '帳號管理',
     pagePermission: '页面权限',
     directivePermission: '指令权限',
     componentMixin: '小组件',
@@ -63,9 +63,18 @@ export default {
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
   },
+  dashboard: {
+    addRole: '新增角色',
+    adminPermission: '帳號管理',
+    editPermission: '编辑权限',
+    delete: '删除',
+    confirm: '确定',
+    cancel: '取消'
+  },
   permission: {
     addRole: '新增角色',
     editPermission: '编辑权限',
+    adminPermission: '帳號管理',
     roles: '你的权限',
     switchRoles: '切换权限',
     tips: '在某些情况下，不适合使用 v-permission。例如：Element-UI 的 el-tab 或 el-table-column 以及其它动态渲染 dom 的场景。你只能通过手动设置 v-if 来实现。',

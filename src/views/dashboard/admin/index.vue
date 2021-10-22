@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TransactionTable from './admin/components/TransactionTable.vue'
+import TransactionTable from './components/TransactionTable'
 
 export default {
   name: 'DashboardAdmin',
@@ -17,6 +17,8 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-editor-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
   position: relative;
 
   .github-corner {

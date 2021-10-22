@@ -1,8 +1,8 @@
 export default {
   route: {
+    dashboard: '帳號管理',
     permission: '帳號管理',
     rolePermission: '角色权限',
-    adminPermission: '帳號管理',
     pagePermission: '页面权限',
     directivePermission: '指令权限',
     componentMixin: '小组件',
@@ -107,20 +107,6 @@ export default {
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定'
-  },
-  example: {
-    warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'
-  },
-  excel: {
-    export: '导出',
-    selectedExport: '导出已选择项',
-    placeholder: '请输入文件名(默认excel-list)'
-  },
-  tagsView: {
-    refresh: '刷新',
-    close: '关闭',
-    closeOthers: '关闭其它',
-    closeAll: '关闭所有'
   },
   settings: {
     title: '系统布局配置',

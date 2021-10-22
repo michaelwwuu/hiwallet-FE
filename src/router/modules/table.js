@@ -12,7 +12,6 @@ const tableRouter = {
     icon: 'table'
   },
   children: [
-
     {
       path: 'inline-edit-table',
       component: () => import('@/views/table/inline-edit-table'),

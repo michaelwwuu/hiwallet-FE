@@ -1,4 +1,5 @@
 export default {
+  hiwalletTitle: 'Hiwallet Admin',
   route: {
     dashboard: 'Account manage',
     permission: 'Account manage',
@@ -64,18 +65,16 @@ export default {
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
   },
   dashboard: {
-    adminPermission: 'Account manage'
-  },
-  permission: {
-    addRole: 'New Role',
-    editPermission: 'Edit',
+    addRole: '新增角色',
     adminPermission: 'Account manage',
-    roles: 'Your roles',
-    switchRoles: 'Switch roles',
-    tips: 'In some cases, using v-permission will have no effect. For example: Element-UI  el-tab or el-table-column and other scenes that dynamically render dom. You can only do this with v-if.',
+    editPermission: 'Edit',
     delete: 'Delete',
     confirm: 'Confirm',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    adminKey: 'Member Account',
+    meberName: 'Name',
+    description: 'Description',
+    operations: '設置'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',
@@ -102,6 +101,12 @@ export default {
     delete: 'Delete',
     cancel: 'Cancel',
     confirm: 'Confirm'
+  },
+  tagsView: {
+    refresh: 'Refresh',
+    close: 'Close',
+    closeOthers: 'Close Others',
+    closeAll: 'Close All'
   },
   settings: {
     title: 'Page style setting',

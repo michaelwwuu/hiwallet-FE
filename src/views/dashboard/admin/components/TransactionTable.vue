@@ -5,22 +5,22 @@
     </el-button>
 
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="Role Key" width="220">
+      <el-table-column align="center" :label="$t('dashboard.adminKey')" width="220">
         <template slot-scope="scope">
           {{ scope.row.key }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Role Name" width="220">
+      <el-table-column align="center" :label="$t('dashboard.meberName')" width="220">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="Description">
+      <el-table-column align="header-center" :label="$t('dashboard.description')">
         <template slot-scope="scope">
           {{ scope.row.description }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Operations">
+      <el-table-column align="center" :label="$t('dashboard.operations')">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
             {{ $t('dashboard.editPermission') }}
@@ -110,6 +110,7 @@ export default {
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data
+      console.log(this.rolesList)
     },
     i18n(routes) {
       const app = routes.map(route => {

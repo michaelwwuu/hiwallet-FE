@@ -1,7 +1,7 @@
 export default {
   hiwalletTitle: 'Hiwallet Admin',
   route: {
-    dashboard: 'Account manage',
+    dashboard: 'dashboard',
     permission: 'Account manage',
     pagePermission: 'Page Permission',
     rolePermission: 'Role Permission',

@@ -1,7 +1,7 @@
 export default {
   hiwalletTitle: '嗨錢包後台',
   route: {
-    dashboard: '帳號管理',
+    dashboard: '首頁',
     permission: '帳號管理',
     rolePermission: '角色权限',
     pagePermission: '页面权限',

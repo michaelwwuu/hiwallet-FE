@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TransactionTable from './admin/components/TransactionTable.vue'
+import TransactionTable from './components/TransactionTable.vue'
 
 export default {
   name: 'DashboardAdmin',

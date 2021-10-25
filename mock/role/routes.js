@@ -68,23 +68,23 @@ const asyncRoutes = [
           roles: ['admin']
         }
       },
-      {
-        path: 'directive',
-        component: 'views/permission/directive',
-        name: 'DirectivePermission',
-        meta: {
-          title: 'directivePermission'
-        }
-      },
-      {
-        path: 'role',
-        component: 'views/permission/role',
-        name: 'RolePermission',
-        meta: {
-          title: 'rolePermission',
-          roles: ['admin']
-        }
-      }
+      // {
+      //   path: 'directive',
+      //   component: 'views/permission/directive',
+      //   name: 'DirectivePermission',
+      //   meta: {
+      //     title: 'directivePermission'
+      //   }
+      // },
+      // {
+      //   path: 'role',
+      //   component: 'views/permission/role',
+      //   name: 'RolePermission',
+      //   meta: {
+      //     title: 'rolePermission',
+      //     roles: ['admin']
+      //   }
+      // }
     ]
   },
 

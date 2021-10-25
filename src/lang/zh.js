@@ -3,9 +3,9 @@ export default {
   route: {
     dashboard: '首頁',
     permission: '帳號管理',
-    rolePermission: '角色权限',
-    pagePermission: '页面权限',
-    directivePermission: '指令权限',
+    pagePermission: '帳號管理',
+    // rolePermission: '角色权限',
+    // directivePermission: '指令权限',
     componentMixin: '小组件',
     backToTop: '返回顶部',
     dragDialog: '拖拽 Dialog',

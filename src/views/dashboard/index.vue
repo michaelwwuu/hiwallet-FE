@@ -1,16 +1,17 @@
 <template>
   <div class="dashboard-editor-container">
-    <transaction-table />
+    <img class="home-logo" :src="homeImg" alt="">
   </div>
 </template>
 
 <script>
-import TransactionTable from './components/TransactionTable.vue'
 
 export default {
   name: 'DashboardAdmin',
-  components: {
-    TransactionTable
+  data() {
+    return {
+      homeImg: require('./../../assets/home_images/home-logo.png')
+    }
   }
 }
 </script>
@@ -18,24 +19,12 @@ export default {
 <style lang="scss" scoped>
 .dashboard-editor-container {
   position: relative;
-
-  .github-corner {
-    position: absolute;
-    top: 0px;
-    border: 0;
-    right: 0;
-  }
-
-  .chart-wrapper {
-    background: #fff;
-    padding: 16px 16px 0;
-    margin-bottom: 32px;
+  top: 50px;
+  display: flex;
+  justify-content: center;
+  .home-logo{
+    height: 100%;
   }
 }
 
-@media (max-width:1024px) {
-  .chart-wrapper {
-    padding: 8px;
-  }
-}
 </style>

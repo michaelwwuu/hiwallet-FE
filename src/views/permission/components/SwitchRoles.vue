@@ -1,10 +1,13 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole">
-      {{ $t('dashboard.addRole') }}
+    <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 400px;" @keyup.enter.native="handleFilter" />
+    <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="handleFilter">
+      {{ $t('table.search') }}
     </el-button>
-
-    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
+    <!-- <el-button type="primary" @click="handleAddRole">
+      {{ $t('dashboard.addRole') }}
+    </el-button> -->
+    <el-table v-if="searchSubmit" :data="rolesList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" :label="$t('dashboard.adminKey')" width="220">
         <template slot-scope="scope">
           {{ scope.row.key }}
@@ -87,7 +90,11 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'title'
-      }
+      },
+      listQuery: {
+        title: ''
+      },
+      searchSubmit: false
     }
   },
   computed: {
@@ -101,6 +108,10 @@ export default {
     this.getRoles()
   },
   methods: {
+    // 示意搜尋
+    handleFilter() {
+      this.searchSubmit = true
+    },
     async getRoutes() {
       const res = await getRoutes()
       this.serviceRoutes = res.data
@@ -163,14 +174,15 @@ export default {
       })
       return data
     },
-    handleAddRole() {
-      this.role = Object.assign({}, defaultRole)
-      if (this.$refs.tree) {
-        this.$refs.tree.setCheckedNodes([])
-      }
-      this.dialogType = 'new'
-      this.dialogVisible = true
-    },
+    // 新增腳色
+    // handleAddRole() {
+    //   this.role = Object.assign({}, defaultRole)
+    //   if (this.$refs.tree) {
+    //     this.$refs.tree.setCheckedNodes([])
+    //   }
+    //   this.dialogType = 'new'
+    //   this.dialogVisible = true
+    // },
     handleEdit(scope) {
       this.dialogType = 'edit'
       this.dialogVisible = true

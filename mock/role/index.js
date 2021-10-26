@@ -7,9 +7,15 @@ const routes = deepClone([...constantRoutes, ...asyncRoutes])
 const roles = [
   {
     userName: 'peterwu0987',
-    hiwalletMoney: '190,000,100,000',
+    nickName: '高雄發大財',
+    hiwalletMoney: '10,213',
+    loginPassword: '****',
+    payPassword: '****',
+    bankCard:'5',
+    payObject:'3',
     status: 'normal',
-
+    avatar:'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
+    avatarStatus:'done',
   },
 ]
 

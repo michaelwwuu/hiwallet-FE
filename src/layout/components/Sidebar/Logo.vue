@@ -2,7 +2,7 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link class="sidebar-logo-link" to="/">
-        <h1 class="sidebar-title">{{ title }} </h1>
+        <h1 class="sidebar-title">{{ $t('hiwalletTitle') }} </h1>
       </router-link>
     </transition>
   </div>
@@ -15,11 +15,6 @@ export default {
     collapse: {
       type: Boolean,
       required: true
-    }
-  },
-  data() {
-    return {
-      title: this.$t('hiwalletTitle')
     }
   }
 }

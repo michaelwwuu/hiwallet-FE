@@ -66,15 +66,23 @@ export default {
   },
   dashboard: {
     adminPermission: '帳號管理',
-    editPermission: '编辑',
+    editPermission: '變更',
     confirm: '确定',
     cancel: '取消',
     userName: '帳號名稱',
     locking: '鎖定帳號',
     normal: '解鎖帳號',
     hiwalletMoney: '嗨錢包餘額',
+    loginPassword: '登錄密碼',
+    payPassword: '交易密碼',
+    payObject: '常用交易對象',
+    bankCard: '綁定銀行卡',
+    nickName: '暱稱',
+    avatar: '頭像',
     increase: '增加',
-    reduce: '減少'
+    reduce: '減少',
+    record: '重置',
+    check: '查看'
   },
   table: {
     dynamicTips1: '固定表头, 按照表头顺序排序',

@@ -3,7 +3,7 @@ export default {
   route: {
     dashboard: 'dashboard',
     permission: 'Account manage',
-    pagePermission: 'Page Permission',
+    pagePermission: 'Account manage',
     // rolePermission: 'Account manage',
     // directivePermission: 'Directive Permission',
     componentMixin: 'Mixin',
@@ -73,8 +73,16 @@ export default {
     locking: 'Account Block',
     normal: 'Account Normal',
     hiwalletMoney: 'Hiwallet Balance',
+    loginPassword: 'Login Password',
+    payPassword: 'Transaction code',
+    payObject: 'Frequently used account',
+    bankCard: 'Bind bank card',
+    nickName: 'nickName',
+    avatar: 'avatar',
     increase: 'increase',
-    reduce: 'reduce'
+    reduce: 'reduce',
+    record: 'record',
+    check: 'Check'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',

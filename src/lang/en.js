@@ -65,16 +65,16 @@ export default {
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
   },
   dashboard: {
-    addRole: '新增角色',
     adminPermission: 'Account manage',
     editPermission: 'Edit',
-    delete: 'Delete',
     confirm: 'Confirm',
     cancel: 'Cancel',
-    adminKey: 'Member Account',
-    meberName: 'Name',
-    description: 'Description',
-    operations: '設置'
+    userName: 'Member Account',
+    locking: 'Account Block',
+    normal: 'Account Normal',
+    hiwalletMoney: 'Hiwallet Balance',
+    increase: 'increase',
+    reduce: 'reduce'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',

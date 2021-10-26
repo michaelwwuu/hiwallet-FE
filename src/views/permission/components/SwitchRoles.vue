@@ -4,54 +4,90 @@
     <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="handleFilter">
       {{ $t('table.search') }}
     </el-button>
-    <!-- <el-button type="primary" @click="handleAddRole">
-      {{ $t('dashboard.addRole') }}
-    </el-button> -->
-    <el-table v-if="searchSubmit" :data="rolesList" style="width: 100%;margin-top:30px;" border>
+    <el-table v-if="searchSubmit" :data="rolesList" style="width: 100%;border-top:0" border>
       <el-table-column align="center" :label="$t('dashboard.adminKey')" width="220">
         <template slot-scope="scope">
           {{ scope.row.key }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="$t('dashboard.meberName')" width="220">
+      <el-table-column align="center" :label="$t('dashboard.userPassword')" width="220">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.userPassword }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" :label="$t('dashboard.description')">
+      <el-table-column align="center" :label="$t('dashboard.payPassword')" width="220">
         <template slot-scope="scope">
-          {{ scope.row.description }}
+          {{ scope.row.payPassword }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" :label="$t('dashboard.bank')">
+        <template slot-scope="scope">
+          {{ scope.row.bank }}
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('dashboard.status')" class-name="status-col" width="100">
+        <template slot-scope="{row}">
+          <el-tag :type="row.status | statusFilter">
+            {{ row.status }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" :label="$t('dashboard.operations')">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">
+          <el-button type="primary" size="mini" @click="handleEdit(scope,'edit')">
             {{ $t('dashboard.editPermission') }}
           </el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ $t('dashboard.delete') }}
+          <el-button type="primary" size="mini" @click="handleEdit(scope,'bankEdit')">
+            {{ $t('dashboard.bankEdit') }}
+          </el-button>
+          <el-button v-if="scope.row.status!='locking'" type="danger" size="mini" @click="handleModifyStatus(scope.row,'locking')">
+            {{ $t('dashboard.locking') }}
+          </el-button>
+          <el-button v-if="scope.row.status!='normal'" type="success" size="mini" @click="handleModifyStatus(scope.row,'normal')">
+            {{ $t('dashboard.normal') }}
           </el-button>
         </template>
       </el-table-column>
     </el-table>
+    <div v-for="(item,index) in rolesList" :key="index" class="form-table">
+      <div class="el-form">
+        <span>{{ $t('dashboard.userName') }}</span>
+        <span>{{ item.userName }}</span>
+        <span>
+          <el-button v-if="item.status!='locking'" type="danger" @click="handleModifyStatus(item,'locking')">
+            {{ $t('dashboard.locking') }}
+          </el-button>
+          <el-button v-if="item.status!='normal'" type="success" @click="handleModifyStatus(item,'normal')">
+            {{ $t('dashboard.normal') }}
+          </el-button>
+        </span>
+      </div>
+      <div class="el-form">
+        <span>{{ $t('dashboard.hiwalletMoney') }}</span>
+        <span>{{ item.hiwalletMoney }}</span>
+        <span>
+          <el-button type="success">
+            {{ $t('dashboard.increase') }}
+          </el-button>
+          <el-button type="danger">
+            {{ $t('dashboard.reduce') }}
+          </el-button>
+        </span>
+      </div>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
-      <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="Name">
-          <el-input v-model="role.name" placeholder="Role Name" />
+    </div>
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType ==='edit' ? $t('dashboard.editPermission'): $t('dashboard.bankEdit')">
+      <el-form v-if="dialogType ==='edit'" :model="role" label-width="80px" label-position="left">
+        <el-form-item :label="$t('dashboard.adminKey')"><span>{{ role.key }}</span></el-form-item>
+        <el-form-item :label="$t('dashboard.userPassword')">
+          <el-input v-model="role.userPassword" placeholder="請輸入登入密碼" />
         </el-form-item>
-        <el-form-item label="Desc">
-          <el-input
-            v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
+        <el-form-item :label="$t('dashboard.payPassword')">
+          <el-input v-model="role.payPassword" placeholder="請輸入交易密碼" />
         </el-form-item>
-        <el-form-item label="Menus">
-          <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree" />
-        </el-form-item>
+        <avatar-Img />
       </el-form>
+      <el-form v-if="dialogType ==='bankEdit'" :model="role" label-width="80px" label-position="left" />
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">
           {{ $t('dashboard.cancel') }}
@@ -67,7 +103,7 @@
 <script>
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+import { getRoutes, getRoles, addRole, updateRole } from '@/api/role'
 import i18n from '@/lang'
 
 const defaultRole = {
@@ -79,6 +115,15 @@ const defaultRole = {
 
 export default {
   name: 'AdminPermission',
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        normal: 'success',
+        locking: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
       role: Object.assign({}, defaultRole),
@@ -121,7 +166,6 @@ export default {
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data
-      console.log(this.rolesList)
     },
     i18n(routes) {
       const app = routes.map(route => {
@@ -174,42 +218,22 @@ export default {
       })
       return data
     },
-    // 新增腳色
-    // handleAddRole() {
-    //   this.role = Object.assign({}, defaultRole)
-    //   if (this.$refs.tree) {
-    //     this.$refs.tree.setCheckedNodes([])
-    //   }
-    //   this.dialogType = 'new'
-    //   this.dialogVisible = true
-    // },
-    handleEdit(scope) {
-      this.dialogType = 'edit'
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
+    },
+    handleEdit(scope, key) {
+      this.dialogType = key
       this.dialogVisible = true
       this.checkStrictly = true
       this.role = deepClone(scope.row)
+      console.log(scope, key)
       this.$nextTick(() => {
-        const routes = this.generateRoutes(this.role.routes)
-        this.$refs.tree.setCheckedNodes(this.generateArr(routes))
-        // set checked state of a node not affects its father and child nodes
         this.checkStrictly = false
       })
-    },
-    handleDelete({ $index, row }) {
-      this.$confirm('Confirm to remove the role?', 'Warning', {
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      })
-        .then(async() => {
-          await deleteRole(row.key)
-          this.rolesList.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: 'Delete succed!'
-          })
-        })
-        .catch(err => { console.error(err) })
     },
     generateTree(routes, basePath = '/', checkedKeys) {
       const res = []
@@ -230,10 +254,6 @@ export default {
     },
     async confirmRole() {
       const isEdit = this.dialogType === 'edit'
-
-      const checkedKeys = this.$refs.tree.getCheckedKeys()
-      this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
-
       if (isEdit) {
         await updateRole(this.role.key, this.role)
         for (let index = 0; index < this.rolesList.length; index++) {
@@ -248,15 +268,15 @@ export default {
         this.rolesList.push(this.role)
       }
 
-      const { description, key, name } = this.role
+      const { key, userPassword, payPassword } = this.role
       this.dialogVisible = false
       this.$notify({
-        title: 'Success',
+        title: '編輯成功',
         dangerouslyUseHTMLString: true,
         message: `
-            <div>Role Key: ${key}</div>
-            <div>Role Name: ${name}</div>
-            <div>Description: ${description}</div>
+            <div>會員名稱: ${key}</div>
+            <div>登入密碼: ${userPassword}</div>
+            <div>交易密碼: ${payPassword}</div>
           `,
         type: 'success'
       })
@@ -292,6 +312,25 @@ export default {
   }
   .permission-tree {
     margin-bottom: 30px;
+  }
+}
+.form-table{
+  border:1px solid #666666;
+  width: 80%;
+  margin-top: 2em;
+  border-radius: 10px;
+  .el-form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    margin:1em;
+    padding: 1em 3em;
+    background-color:#c1eafe ;
+    span{
+      width: 300px;
+      text-align: center;
+    }
   }
 }
 </style>

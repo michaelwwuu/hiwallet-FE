@@ -65,16 +65,16 @@ export default {
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
   },
   dashboard: {
-    addRole: '新增角色',
     adminPermission: '帳號管理',
-    editPermission: '编辑权限',
-    delete: '删除',
+    editPermission: '编辑',
     confirm: '确定',
     cancel: '取消',
-    adminKey: '會員帳號',
-    meberName: '會員名稱',
-    description: '內容',
-    operations: '設置'
+    userName: '帳號名稱',
+    locking: '鎖定帳號',
+    normal: '解鎖帳號',
+    hiwalletMoney: '嗨錢包餘額',
+    increase: '增加',
+    reduce: '減少'
   },
   table: {
     dynamicTips1: '固定表头, 按照表头顺序排序',

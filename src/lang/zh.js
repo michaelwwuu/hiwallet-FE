@@ -4,46 +4,15 @@ export default {
     dashboard: '首頁',
     permission: '帳號管理',
     pagePermission: '帳號管理',
-    // rolePermission: '角色权限',
-    // directivePermission: '指令权限',
-    componentMixin: '小组件',
     backToTop: '返回顶部',
-    dragDialog: '拖拽 Dialog',
-    dragSelect: '拖拽 Select',
-    dragKanban: '可拖拽看板',
-    charts: '图表',
-    keyboardChart: '键盘图表',
-    lineChart: '折线图',
-    mixChart: '混合图表',
     example: '综合实例',
     nested: '路由嵌套',
-    menu1: '菜单1',
-    'menu1-1': '菜单 1-1',
-    'menu1-2': '菜单 1-2',
-    'menu1-2-1': '菜单 1-2-1',
-    'menu1-2-2': '菜单 1-2-2',
-    'menu1-3': '菜单 1-3',
-    menu2: '菜单 2',
     Table: 'Table',
-    dynamicTable: '动态 Table',
-    dragTable: '拖拽 Table',
     inlineEditTable: 'Table 内编辑',
     complexTable: '综合 Table',
-    tab: 'Tab',
-    form: '表单',
-    createArticle: '创建文章',
-    editArticle: '编辑文章',
-    articleList: '文章列表',
     errorPages: '错误页面',
     page401: '401',
     page404: '404',
-    errorLog: '错误日志',
-    excel: 'Excel',
-    exportExcel: '导出 Excel',
-    selectExcel: '导出 已选择项',
-    mergeHeader: '导出 多级表头',
-    uploadExcel: '上传 Excel',
-    exportZip: 'Export Zip',
     clipboardDemo: 'Clipboard',
     profile: '个人中心'
   },
@@ -82,7 +51,8 @@ export default {
     increase: '增加',
     reduce: '減少',
     record: '重置',
-    check: '查看'
+    check: '查看',
+    searchKey: '輸入搜尋關鍵字'
   },
   table: {
     dynamicTips1: '固定表头, 按照表头顺序排序',
@@ -109,16 +79,5 @@ export default {
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定'
-  },
-  tagsView: {
-    refresh: '刷新',
-    close: '关闭',
-    closeOthers: '关闭其它',
-    closeAll: '关闭所有'
-  },
-  settings: {
-    title: '系统布局配置',
-    fixedHeader: '固定 Header',
-    sidebarLogo: '侧边栏 Logo'
   }
 }

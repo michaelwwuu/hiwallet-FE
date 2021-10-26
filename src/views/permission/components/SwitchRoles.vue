@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 400px;" @keyup.enter.native="handleFilter" />
-    <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="handleFilter">
+    <el-input v-model="listQuery.searchKey" :placeholder="$t('dashboard.searchKey')" style="width: 400px;" @keyup.enter.native="handleFilter(listQuery)" />
+    <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="handleFilter(listQuery)">
       {{ $t('table.search') }}
     </el-button>
     <div v-if="searchSubmit">
@@ -25,7 +25,7 @@
             <el-button type="success" size="small">
               {{ $t('dashboard.increase') }}
             </el-button>
-            <el-button type="primary" size="small">
+            <el-button type="danger" size="small">
               {{ $t('dashboard.reduce') }}
             </el-button>
           </span>
@@ -50,18 +50,18 @@
         </div>
         <div class="el-form">
           <span>{{ $t('dashboard.payObject') }}</span>
-          <span>{{ item.payObject }}筆/{{ item.payObject-1 }}筆</span>
+          <span>{{ item.payObject }} 筆 / {{ item.payObject-1 }} 筆</span>
           <span>
-            <el-button type="primary" size="small">
+            <el-button type="warning" size="small">
               {{ $t('dashboard.check') }}
             </el-button>
           </span>
         </div>
         <div class="el-form">
           <span>{{ $t('dashboard.bankCard') }}</span>
-          <span>{{ item.bankCard }}張</span>
+          <span>{{ item.bankCard }} 張</span>
           <span>
-            <el-button type="primary" size="small">
+            <el-button type="warning" size="small">
               {{ $t('dashboard.check') }}
             </el-button>
           </span>
@@ -79,7 +79,7 @@
           <span>{{ $t('dashboard.avatar') }}</span>
           <span>{{ item.avatarStatus === "done" ? '已上傳':'未上傳' }}</span>
           <span>
-            <el-button type="primary" size="small">
+            <el-button type="warning" size="small">
               {{ $t('dashboard.check') }}
             </el-button>
           </span>
@@ -97,27 +97,28 @@ export default {
   name: 'AdminPermission',
   data() {
     return {
-      routes: [],
       rolesList: [],
       listQuery: {
-        title: ''
+        searchKey: ''
       },
       searchSubmit: false
     }
   },
   created() {
-    // Mock: get all routes and roles list from server
     this.getRoles()
   },
   methods: {
     // 示意搜尋
-    handleFilter() {
+    handleFilter(listQuery) {
       this.searchSubmit = true
+      console.log(listQuery.searchKey)
     },
+    // 獲取表格資料
     async getRoles() {
       const res = await getRoles()
       this.rolesList = res.data
     },
+    // 切換姐所按鈕
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
@@ -139,22 +140,26 @@ export default {
   }
 }
 .form-table{
-  border:1px solid #666666;
+  border:0.05em solid #b3b3b3;
   width: 70%;
   margin-top: 2em;
   border-radius: 10px;
+  background-color:#faf1d338;
   .el-form{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 5px;
-    margin:0.6em;
-    padding: 1em 3em;
-    background-color:#c1eafe ;
+    margin: 0 0.6em;
+    padding: 0.7em 3em;
+    border-bottom: 0.01em solid #b3b3b3;
+    &:last-child{
+      border-bottom: 0;
+    }
     span{
       width: 300px;
       font-size:14px;
       text-align: center;
+      color: #666666;
     }
   }
 }

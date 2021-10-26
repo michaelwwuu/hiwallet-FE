@@ -4,46 +4,15 @@ export default {
     dashboard: 'dashboard',
     permission: 'Account manage',
     pagePermission: 'Account manage',
-    // rolePermission: 'Account manage',
-    // directivePermission: 'Directive Permission',
-    componentMixin: 'Mixin',
     backToTop: 'Back To Top',
-    dragDialog: 'Drag Dialog',
-    dragSelect: 'Drag Select',
-    dragKanban: 'Drag Kanban',
-    charts: 'Charts',
-    keyboardChart: 'Keyboard Chart',
-    lineChart: 'Line Chart',
-    mixChart: 'Mix Chart',
     example: 'Example',
     nested: 'Nested Routes',
-    menu1: 'Menu 1',
-    'menu1-1': 'Menu 1-1',
-    'menu1-2': 'Menu 1-2',
-    'menu1-2-1': 'Menu 1-2-1',
-    'menu1-2-2': 'Menu 1-2-2',
-    'menu1-3': 'Menu 1-3',
-    menu2: 'Menu 2',
     Table: 'Table',
-    dynamicTable: 'Dynamic Table',
-    dragTable: 'Drag Table',
     inlineEditTable: 'Inline Edit',
     complexTable: 'Complex Table',
-    tab: 'Tab',
-    form: 'Form',
-    createArticle: 'Create Article',
-    editArticle: 'Edit Article',
-    articleList: 'Article List',
     errorPages: 'Error Pages',
     page401: '401',
     page404: '404',
-    errorLog: 'Error Log',
-    excel: 'Excel',
-    exportExcel: 'Export Excel',
-    selectExcel: 'Export Selected',
-    mergeHeader: 'Merge Header',
-    uploadExcel: 'Upload Excel',
-    exportZip: 'Export Zip',
     clipboardDemo: 'Clipboard',
     profile: 'Profile'
   },
@@ -82,7 +51,8 @@ export default {
     increase: 'increase',
     reduce: 'reduce',
     record: 'record',
-    check: 'Check'
+    check: 'Check',
+    searchKey: 'Enter search keywords'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',
@@ -109,16 +79,5 @@ export default {
     delete: 'Delete',
     cancel: 'Cancel',
     confirm: 'Confirm'
-  },
-  tagsView: {
-    refresh: 'Refresh',
-    close: 'Close',
-    closeOthers: 'Close Others',
-    closeAll: 'Close All'
-  },
-  settings: {
-    title: 'Page style setting',
-    fixedHeader: 'Fixed Header',
-    sidebarLogo: 'Sidebar Logo'
   }
 }

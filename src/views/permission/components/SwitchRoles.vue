@@ -177,12 +177,14 @@
       </el-dialog>
       <span
         v-if="generalModifyShow"
+        ref="generalModifyShow"
         class="dialog-content"
         v-html="dialogVisibleContent"
       />
 
       <el-form
         v-if="advancedModifyShow"
+        ref="advancedModify"
         :model="advancedModifyList"
         :rules="advancedModifyRules"
         class="advanced-style"

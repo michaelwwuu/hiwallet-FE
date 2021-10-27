@@ -110,7 +110,11 @@
           <span>{{ $t("dashboard.nickName") }}</span>
           <span>{{ item.nickName }}</span>
           <span>
-            <el-button type="primary" size="small" @click="handleModifyStatus(item, 'editPermission')">
+            <el-button
+              type="primary"
+              size="small"
+              @click="handleModifyStatus(item, 'editPermission')"
+            >
               {{ $t("dashboard.editPermission") }}
             </el-button>
           </span>
@@ -119,7 +123,11 @@
           <span>{{ $t("dashboard.avatar") }}</span>
           <span>{{ item.avatarStatus === "done" ? "已上傳" : "未上傳" }}</span>
           <span>
-            <el-button type="warning" size="small" @click="handleModifyStatus(item, 'accountAvatar')">
+            <el-button
+              type="warning"
+              size="small"
+              @click="handleModifyStatus(item, 'accountAvatar')"
+            >
               {{ $t("dashboard.check") }}
             </el-button>
           </span>
@@ -136,10 +144,7 @@
         <img :src="avatarImg" alt="">
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button
-          type="danger"
-          @click="dialogVisible = true"
-        >刪 除</el-button>
+        <el-button type="danger" @click="dialogVisible = true">刪 除</el-button>
       </span>
     </el-dialog>
 
@@ -160,18 +165,45 @@
         <span slot="footer" class="dialog-footer">
           <el-button
             type="primary"
-            @click="dialogVisibleSubmit(rolesList,dialogVisibleTitle,advancedModifyList)"
+            @click="
+              dialogVisibleSubmit(
+                rolesList,
+                dialogVisibleTitle,
+                advancedModifyList
+              )
+            "
           >确 定</el-button>
         </span>
       </el-dialog>
-      <span v-if="generalModifyShow" class="dialog-content" v-html="dialogVisibleContent" />
+      <span
+        v-if="generalModifyShow"
+        class="dialog-content"
+        v-html="dialogVisibleContent"
+      />
 
-      <el-form v-if="advancedModifyShow" class="advanced-style" :model="advancedModifyList">
-        <el-form-item :label="$t('dashboard.currentNickname')" :label-width="advancedModifyLabelWidth">
+      <el-form
+        v-if="advancedModifyShow"
+        :model="advancedModifyList"
+        :rules="advancedModifyRules"
+        class="advanced-style"
+      >
+        <el-form-item
+          :label="$t('dashboard.currentNickname')"
+          :label-width="advancedModifyLabelWidth"
+        >
           <span>{{ advancedModifyList.oddNickName }}</span>
         </el-form-item>
-        <el-form-item :label="$t('dashboard.changeNickname')" :label-width="advancedModifyLabelWidth">
-          <el-input v-model="advancedModifyList.newNickName" placeholder="請輸入新暱稱" autocomplete="off" />
+        <el-form-item
+          prop="newNickName"
+          :label="$t('dashboard.changeNickname')"
+          :label-width="advancedModifyLabelWidth"
+        >
+          <el-input
+            v-model="advancedModifyList.newNickName"
+            type="text"
+            placeholder="請輸入新暱稱"
+            autocomplete="off"
+          />
         </el-form-item>
       </el-form>
 
@@ -196,6 +228,7 @@ export default {
   name: 'AdminPermission',
   data() {
     return {
+      advancedModifyLabelWidth: '160',
       rolesList: [],
       listQuery: {
         searchKey: ''
@@ -209,17 +242,21 @@ export default {
         oddNickName: '',
         newNickName: ''
       },
-      advancedModifyLabelWidth: '160',
-      searchSubmit: false,
-      generalModifyShow: false,
-      advancedModifyShow: false,
-      dialogVisible: false,
-      dialogVisibleSend: false,
-      dialogtAvatarShow: false,
+      advancedModifyRules: {
+        newNickName: [
+          { required: true, message: '帳號不可空白', trigger: 'blur' }
+        ]
+      },
+      avatarImg: '',
       dialogVisibleTitle: '',
       dialogVisibleContent: '',
       innerVisibleContent: '',
-      avatarImg: ''
+      searchSubmit: false,
+      dialogVisible: false,
+      dialogVisibleSend: false,
+      dialogtAvatarShow: false,
+      generalModifyShow: false,
+      advancedModifyShow: false
     }
   },
   created() {
@@ -269,7 +306,9 @@ export default {
         this.advancedModifyShow = true
         this.dialogVisibleTitle = `${this.$t('dashboard.accountNickname')}`
         this.advancedModifyList.oddNickName = row.nickName
-        this.innerVisibleContent = `${this.$t('dashboard.accountNickname')}變更成功`
+        this.innerVisibleContent = `${this.$t(
+          'dashboard.accountNickname'
+        )}變更成功`
       } else if (status === 'accountAvatar') {
         this.dialogVisible = false
         this.dialogtAvatarShow = true
@@ -349,22 +388,28 @@ export default {
       .dialog-content {
         font-size: 15px;
       }
-      .el-input{
+      .el-input {
         width: 60%;
       }
-      .avatar-box{
-        margin:0 auto;
-        img{
-          width:200px;
+      .avatar-box {
+        margin: 0 auto;
+        img {
+          width: 200px;
           border: 0.5px solid #b3b3b3;
           border-radius: 10px;
           background-repeat: no-repeat;
-          background-size:cover;
+          background-size: cover;
         }
       }
-      .advanced-style{
-        .el-form-item{
-          text-align:left
+      .advanced-style {
+        .el-form-item {
+          text-align: left;
+          .el-form-item__content{
+            .el-form-item__error{
+              padding-top: 9px;
+              left: 16%;
+            }
+          }
         }
       }
     }

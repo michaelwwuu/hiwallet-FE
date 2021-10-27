@@ -39,6 +39,7 @@ export default {
     confirm: '确定',
     cancel: '取消',
     userName: '帳號名稱',
+    accountLock: '帳號鎖定',
     locking: '鎖定帳號',
     normal: '解鎖帳號',
     hiwalletMoney: '嗨錢包餘額',
@@ -51,8 +52,14 @@ export default {
     increase: '增加',
     reduce: '減少',
     record: '重置',
+    recordLoginPassword: '重置登錄密碼',
+    recordPayPassword: '重置交易密碼',
     check: '查看',
-    searchKey: '輸入搜尋關鍵字'
+    searchKey: '请输入完整帳號',
+    search: '搜索',
+    currentNickname: '目前暱稱',
+    changeNickname: '變更暱稱',
+    accountNickname: '帳號暱稱'
   },
   table: {
     dynamicTips1: '固定表头, 按照表头顺序排序',

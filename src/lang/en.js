@@ -39,6 +39,7 @@ export default {
     confirm: 'Confirm',
     cancel: 'Cancel',
     userName: 'Member Account',
+    accountLock: 'Account lock',
     locking: 'Account Block',
     normal: 'Account Normal',
     hiwalletMoney: 'Hiwallet Balance',
@@ -51,8 +52,15 @@ export default {
     increase: 'increase',
     reduce: 'reduce',
     record: 'record',
+    recordLoginPassword: 'Reset login password',
+    recordPayPassword: 'Reset trading password',
     check: 'Check',
-    searchKey: 'Enter search keywords'
+    searchKey: 'Please enter the full account number',
+    search: 'Search',
+    currentNickname: 'Current nickname',
+    changeNickname: 'Change nickname',
+    accountNickname: 'Account nickname'
+
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',

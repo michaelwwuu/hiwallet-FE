@@ -66,7 +66,7 @@ export const asyncRoutes = [
     name: 'Permission',
     meta: {
       title: 'permission',
-      icon: 'lock'
+      icon: 'education'
     },
     children: [
       {

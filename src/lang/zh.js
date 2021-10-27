@@ -49,6 +49,7 @@ export default {
     bankCard: '綁定銀行卡',
     nickName: '暱稱',
     avatar: '頭像',
+    accountAvatar: '帳號頭像',
     increase: '增加',
     reduce: '減少',
     record: '重置',

@@ -49,6 +49,7 @@ export default {
     bankCard: 'Bind bank card',
     nickName: 'nickName',
     avatar: 'avatar',
+    accountAvatar: 'Account avatar',
     increase: 'increase',
     reduce: 'reduce',
     record: 'record',

@@ -119,13 +119,30 @@
           <span>{{ $t("dashboard.avatar") }}</span>
           <span>{{ item.avatarStatus === "done" ? "已上傳" : "未上傳" }}</span>
           <span>
-            <el-button type="warning" size="small">
+            <el-button type="warning" size="small" @click="handleModifyStatus(item, 'accountAvatar')">
               {{ $t("dashboard.check") }}
             </el-button>
           </span>
         </div>
       </div>
     </div>
+    <el-dialog
+      :title="$t('dashboard.accountAvatar')"
+      :visible.sync="dialogtAvatarShow"
+      width="30%"
+      center
+    >
+      <div class="avatar-box">
+        <img :src="avatarImg" alt="">
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button
+          type="danger"
+          @click="dialogVisible = true"
+        >刪 除</el-button>
+      </span>
+    </el-dialog>
+
     <el-dialog
       :title="dialogVisibleTitle"
       :visible.sync="dialogVisible"
@@ -143,13 +160,13 @@
         <span slot="footer" class="dialog-footer">
           <el-button
             type="primary"
-            @click="dialogVisibleSubmit(rolesList, dialogVisibleTitle,advancedModifyList)"
+            @click="dialogVisibleSubmit(rolesList,dialogVisibleTitle,advancedModifyList)"
           >确 定</el-button>
         </span>
       </el-dialog>
       <span v-if="generalModifyShow" class="dialog-content" v-html="dialogVisibleContent" />
 
-      <el-form v-if="advancedModifyShow" :model="advancedModifyList">
+      <el-form v-if="advancedModifyShow" class="advanced-style" :model="advancedModifyList">
         <el-form-item :label="$t('dashboard.currentNickname')" :label-width="advancedModifyLabelWidth">
           <span>{{ advancedModifyList.oddNickName }}</span>
         </el-form-item>
@@ -198,9 +215,11 @@ export default {
       advancedModifyShow: false,
       dialogVisible: false,
       dialogVisibleSend: false,
+      dialogtAvatarShow: false,
       dialogVisibleTitle: '',
       dialogVisibleContent: '',
-      innerVisibleContent: ''
+      innerVisibleContent: '',
+      avatarImg: ''
     }
   },
   created() {
@@ -251,6 +270,15 @@ export default {
         this.dialogVisibleTitle = `${this.$t('dashboard.accountNickname')}`
         this.advancedModifyList.oddNickName = row.nickName
         this.innerVisibleContent = `${this.$t('dashboard.accountNickname')}變更成功`
+      } else if (status === 'accountAvatar') {
+        this.dialogVisible = false
+        this.dialogtAvatarShow = true
+        this.generalModifyShow = true
+        this.avatarImg = row.avatar
+        this.dialogVisibleTitle = `${this.$t('dashboard.accountAvatar')}`
+        this.dialogVisibleContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`
+        this.innerVisibleContent = '帳號頭像刪除成功。'
+        this.avatarStatus = 'noUpload'
       }
     },
     // 送出姐所按鈕
@@ -258,6 +286,7 @@ export default {
       console.log(data, key, modify)
       this.dialogVisible = false
       this.dialogVisibleSend = false
+      this.dialogtAvatarShow = false
       this.$message({
         message: '操作成功',
         type: 'success'
@@ -266,6 +295,8 @@ export default {
         data[0].status = this.status
       } else if (key === this.$t('dashboard.accountNickname')) {
         data[0].nickName = modify.newNickName
+      } else if (key === this.$t('dashboard.accountAvatar')) {
+        data[0].avatarStatus = this.avatarStatus
       }
     }
   }
@@ -320,6 +351,21 @@ export default {
       }
       .el-input{
         width: 60%;
+      }
+      .avatar-box{
+        margin:0 auto;
+        img{
+          width:200px;
+          border: 0.5px solid #b3b3b3;
+          border-radius: 10px;
+          background-repeat: no-repeat;
+          background-size:cover;
+        }
+      }
+      .advanced-style{
+        .el-form-item{
+          text-align:left
+        }
       }
     }
   }

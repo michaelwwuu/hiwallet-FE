@@ -108,7 +108,7 @@
         </div>
         <div class="el-form">
           <span>{{ $t("dashboard.nickName") }}</span>
-          <span>{{ item.nickName }}張</span>
+          <span>{{ item.nickName }}</span>
           <span>
             <el-button type="primary" size="small" @click="handleModifyStatus(item, 'editPermission')">
               {{ $t("dashboard.editPermission") }}
@@ -150,10 +150,10 @@
       <span v-if="generalModifyShow" class="dialog-content" v-html="dialogVisibleContent" />
 
       <el-form v-if="advancedModifyShow" :model="advancedModifyList">
-        <el-form-item :label="$t('dashboard.currentNickname')" :label-width="formLabelWidth">
+        <el-form-item :label="$t('dashboard.currentNickname')" :label-width="advancedModifyLabelWidth">
           <span>{{ advancedModifyList.oddNickName }}</span>
         </el-form-item>
-        <el-form-item :label="$t('dashboard.changeNickname')" :label-width="formLabelWidth">
+        <el-form-item :label="$t('dashboard.changeNickname')" :label-width="advancedModifyLabelWidth">
           <el-input v-model="advancedModifyList.newNickName" placeholder="請輸入新暱稱" autocomplete="off" />
         </el-form-item>
       </el-form>
@@ -192,7 +192,7 @@ export default {
         oddNickName: '',
         newNickName: ''
       },
-      formLabelWidth: '160',
+      advancedModifyLabelWidth: '160',
       searchSubmit: false,
       generalModifyShow: false,
       advancedModifyShow: false,

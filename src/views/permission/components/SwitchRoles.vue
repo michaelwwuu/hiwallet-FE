@@ -169,39 +169,37 @@
               dialogVisibleSubmit(
                 rolesList,
                 dialogVisibleTitle,
-                advancedModifyList
+                advancedModifyForm
               )
             "
           >确 定</el-button>
         </span>
       </el-dialog>
+      <!-- 登入 交易 密碼-->
       <span
         v-if="generalModifyShow"
-        ref="generalModifyShow"
         class="dialog-content"
         v-html="dialogVisibleContent"
       />
 
+      <!-- 暱稱-->
       <el-form
         v-if="advancedModifyShow"
-        ref="advancedModify"
-        :model="advancedModifyList"
+        ref="advancedModifyForm"
+        :model="advancedModifyForm"
         :rules="advancedModifyRules"
-        class="advanced-style"
+        label-width="100px"
+        class="advancedModify-style"
       >
-        <el-form-item
-          :label="$t('dashboard.currentNickname')"
-          :label-width="advancedModifyLabelWidth"
-        >
-          <span>{{ advancedModifyList.oddNickName }}</span>
+        <el-form-item :label="$t('dashboard.currentNickname')">
+          <span>{{ advancedModifyForm.oddNickName }}</span>
         </el-form-item>
         <el-form-item
           prop="newNickName"
           :label="$t('dashboard.changeNickname')"
-          :label-width="advancedModifyLabelWidth"
         >
           <el-input
-            v-model="advancedModifyList.newNickName"
+            v-model="advancedModifyForm.newNickName"
             type="text"
             placeholder="請輸入新暱稱"
             autocomplete="off"
@@ -209,10 +207,12 @@
         </el-form-item>
       </el-form>
 
+      <!-- dialogVisibleSend =
+              advancedModifyForm.newNickName !== '' || generalModifyShow -->
       <span slot="footer" class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogVisibleSend = advancedModifyList.newNickName !=='' || generalModifyShow"
+          @click="submitVisible(dialogVisibleTitle,advancedModifyShow?'advancedModifyForm':'')"
         >确 定</el-button>
         <el-button
           type="danger"
@@ -240,7 +240,7 @@ export default {
           { required: true, message: '请输入完整帳號', trigger: 'blur' }
         ]
       },
-      advancedModifyList: {
+      advancedModifyForm: {
         oddNickName: '',
         newNickName: ''
       },
@@ -274,8 +274,15 @@ export default {
         this.searchSubmit = true
       })
     },
-    submitVisible(key) {
-
+    submitVisible(key, formkey) {
+      if (key !== this.$t('dashboard.accountNickname')) {
+        this.dialogVisibleSend = true
+      } else {
+        this.$refs[formkey].validate((valid) => {
+          if (!valid) return
+          this.dialogVisibleSend = true
+        })
+      }
     },
     // 獲取表格資料
     async getRoles() {
@@ -310,10 +317,11 @@ export default {
       } else if (status === 'editPermission') {
         this.advancedModifyShow = true
         this.dialogVisibleTitle = `${this.$t('dashboard.accountNickname')}`
-        this.advancedModifyList.oddNickName = row.nickName
+        this.advancedModifyForm.oddNickName = row.nickName
         this.innerVisibleContent = `${this.$t(
           'dashboard.accountNickname'
         )}變更成功`
+        this.$nextTick(() => { this.$refs.advancedModifyForm.resetFields() })
       } else if (status === 'accountAvatar') {
         this.dialogVisible = false
         this.dialogtAvatarShow = true
@@ -340,6 +348,7 @@ export default {
       } else if (key === this.$t('dashboard.accountNickname')) {
         data[0].nickName = modify.newNickName
       } else if (key === this.$t('dashboard.accountAvatar')) {
+        data[0].avatar = require('./../../../assets/no_data_images/no_data.png')
         data[0].avatarStatus = this.avatarStatus
       }
     }
@@ -393,9 +402,6 @@ export default {
       .dialog-content {
         font-size: 15px;
       }
-      .el-input {
-        width: 60%;
-      }
       .avatar-box {
         margin: 0 auto;
         img {
@@ -406,15 +412,9 @@ export default {
           background-size: cover;
         }
       }
-      .advanced-style {
-        .el-form-item {
+      .advancedModify-style {
+        .el-form-item__content{
           text-align: left;
-          .el-form-item__content{
-            .el-form-item__error{
-              padding-top: 9px;
-              left: 16%;
-            }
-          }
         }
       }
     }

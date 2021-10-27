@@ -210,7 +210,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button
           type="primary"
-          @click="dialogVisibleSend = true"
+          @click="dialogVisibleSend = advancedModifyList.newNickName !=='' || generalModifyShow"
         >确 定</el-button>
         <el-button
           type="danger"
@@ -271,6 +271,9 @@ export default {
         if (!valid) return
         this.searchSubmit = true
       })
+    },
+    submitVisible(key) {
+
     },
     // 獲取表格資料
     async getRoles() {

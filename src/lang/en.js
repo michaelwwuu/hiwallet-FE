@@ -5,11 +5,7 @@ export default {
     permission: 'Account manage',
     pagePermission: 'Account manage',
     backToTop: 'Back To Top',
-    example: 'Example',
     nested: 'Nested Routes',
-    Table: 'Table',
-    inlineEditTable: 'Inline Edit',
-    complexTable: 'Complex Table',
     errorPages: 'Error Pages',
     page401: '401',
     page404: '404',
@@ -18,11 +14,8 @@ export default {
   },
   navbar: {
     dashboard: 'Dashboard',
-    github: 'Github',
     logOut: 'Log Out',
-    profile: 'Profile',
-    theme: 'Theme',
-    size: 'Global Size'
+    profile: 'Profile'
   },
   login: {
     title: 'Hiwallet Admin Login Form',
@@ -35,6 +28,7 @@ export default {
   },
   dashboard: {
     adminPermission: 'Account manage',
+    account_enquiry: 'Account Enquiry',
     editPermission: 'Edit',
     confirm: 'Confirm',
     cancel: 'Cancel',
@@ -60,33 +54,13 @@ export default {
     search: 'Search',
     currentNickname: 'Current nickname',
     changeNickname: 'Change nickname',
-    accountNickname: 'Account nickname'
-
-  },
-  table: {
-    dynamicTips1: 'Fixed header, sorted by header order',
-    dynamicTips2: 'Not fixed header, sorted by click order',
-    dragTips1: 'The default order',
-    dragTips2: 'The after dragging order',
-    title: 'Title',
-    importance: 'Imp',
-    type: 'Type',
-    remark: 'Remark',
-    search: 'Search',
-    add: 'Add',
-    export: 'Export',
-    reviewer: 'reviewer',
-    id: 'ID',
-    date: 'Date',
-    author: 'Author',
-    readings: 'Readings',
-    status: 'Status',
-    actions: 'Actions',
-    edit: 'Edit',
-    publish: 'Publish',
-    draft: 'Draft',
-    delete: 'Delete',
-    cancel: 'Cancel',
-    confirm: 'Confirm'
+    accountNickname: 'Account nickname',
+    commonlyTradedCounterparties: 'List of commonly traded counterparties',
+    bankCardAccountNumber: 'Bank Card Account Number',
+    nicknameRemark: 'Nickname / Remark',
+    hiwalletAccount: 'Hiwallet Account',
+    the_account_cannot_be_blank: 'The account cannot be blank',
+    please_enter_the_full_account_number: 'Please enter the full account number',
+    please_enter_a_new_nickname: 'Please enter a new nickname'
   }
 }

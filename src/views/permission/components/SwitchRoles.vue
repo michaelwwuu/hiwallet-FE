@@ -1,33 +1,37 @@
 <template>
   <div class="app-container">
     <el-form
-      ref="listQuery"
-      :model="listQuery"
-      :rules="listQueryRules"
+      ref="listSearchKey"
+      :model="listSearchKey"
+      :rules="listSearchKeyRules"
       @submit.native.prevent
     >
-      <el-form-item prop="searchKey">
+      <el-form-item :label="$t('dashboard.account_enquiry')" label-width="80px" prop="searchKey">
         <el-input
           ref="searchKey"
-          v-model="listQuery.searchKey"
+          v-model="listSearchKey.searchKey"
           :placeholder="$t('dashboard.searchKey')"
           name="searchKey"
           type="text"
           style="width: 400px"
-          @keyup.enter.native="handleFilter('listQuery')"
+          @keyup.enter.native="handleFilter('listSearchKey')"
         />
         <el-button
           type="primary"
           icon="el-icon-search"
           style="margin-left: 10px"
-          @click="handleFilter('listQuery')"
+          @click="handleFilter('listSearchKey')"
         >
           {{ $t("dashboard.search") }}
         </el-button>
       </el-form-item>
     </el-form>
-    <div v-if="searchSubmit">
-      <div v-for="(item, index) in rolesList" :key="index" class="form-table">
+    <div v-if="searchListSubmit">
+      <div
+        v-for="(item, index) in accountDataList"
+        :key="index"
+        class="form-table"
+      >
         <div class="el-form">
           <span>{{ $t("dashboard.userName") }}</span>
           <span>{{ item.userName }}</span>
@@ -90,9 +94,13 @@
         </div>
         <div class="el-form">
           <span>{{ $t("dashboard.payObject") }}</span>
-          <span>{{ item.payObject }} 筆 / {{ item.payObject - 1 }} 筆</span>
+          <span>{{ item.payObject }} 筆 / {{ item.bankCard }} 筆</span>
           <span>
-            <el-button type="warning" size="small">
+            <el-button
+              type="warning"
+              size="small"
+              @click="handleBankList(item, 'payObject')"
+            >
               {{ $t("dashboard.check") }}
             </el-button>
           </span>
@@ -101,7 +109,11 @@
           <span>{{ $t("dashboard.bankCard") }}</span>
           <span>{{ item.bankCard }} 張</span>
           <span>
-            <el-button type="warning" size="small">
+            <el-button
+              type="warning"
+              size="small"
+              @click="handleBankList(item, 'bankCard')"
+            >
               {{ $t("dashboard.check") }}
             </el-button>
           </span>
@@ -134,6 +146,7 @@
         </div>
       </div>
     </div>
+
     <el-dialog
       :title="$t('dashboard.accountAvatar')"
       :visible.sync="dialogtAvatarShow"
@@ -141,54 +154,57 @@
       center
     >
       <div class="avatar-box">
-        <img :src="avatarImg" alt="">
+        <img :src="accountAvatarImage" alt="">
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="danger" @click="dialogVisible = true">刪 除</el-button>
+        <el-button
+          type="danger"
+          @click="dialogMessageShow = true"
+        >刪 除</el-button>
       </span>
     </el-dialog>
-
+    <!-- 彈窗 -->
     <el-dialog
-      :title="dialogVisibleTitle"
-      :visible.sync="dialogVisible"
+      :title="dialogMessageTitle"
+      :visible.sync="dialogMessageShow"
       width="30%"
       center
     >
       <el-dialog
         title="通知訊息"
-        :visible.sync="dialogVisibleSend"
+        :visible.sync="notificationMessageShow"
         width="30%"
         append-to-body
         center
       >
-        <span class="dialog-content" v-html="innerVisibleContent" />
+        <span class="dialog-content" v-html="innerMessageContent" />
         <span slot="footer" class="dialog-footer">
           <el-button
             type="primary"
             @click="
-              dialogVisibleSubmit(
-                rolesList,
-                dialogVisibleTitle,
+              dialogMessageShowSubmit(
+                accountDataList,
+                dialogMessageTitle,
                 advancedModifyForm
               )
             "
           >确 定</el-button>
         </span>
       </el-dialog>
-      <!-- 登入 交易 密碼-->
+      <!-- 登入 交易 密碼 表格-->
       <span
         v-if="generalModifyShow"
         class="dialog-content"
-        v-html="dialogVisibleContent"
+        v-html="dialogMessageContent"
       />
 
-      <!-- 暱稱-->
+      <!-- 暱稱表格 -->
       <el-form
         v-if="advancedModifyShow"
         ref="advancedModifyForm"
         :model="advancedModifyForm"
         :rules="advancedModifyRules"
-        label-width="100px"
+        label-width="150px"
         class="advancedModify-style"
       >
         <el-form-item :label="$t('dashboard.currentNickname')">
@@ -201,24 +217,79 @@
           <el-input
             v-model="advancedModifyForm.newNickName"
             type="text"
-            placeholder="請輸入新暱稱"
+            :placeholder="$t('dashboard.please_enter_a_new_nickname')"
             autocomplete="off"
           />
         </el-form-item>
       </el-form>
-
-      <!-- dialogVisibleSend =
-              advancedModifyForm.newNickName !== '' || generalModifyShow -->
       <span slot="footer" class="dialog-footer">
         <el-button
           type="primary"
-          @click="submitVisible(dialogVisibleTitle,advancedModifyShow?'advancedModifyForm':'')"
+          @click="
+            submitVisible(
+              advancedModifyShow ? 'advancedModifyForm' : advancedModifyShow
+            )
+          "
         >确 定</el-button>
         <el-button
           type="danger"
-          @click="dialogVisible = false"
+          @click="dialogMessageShow = false"
         >取 消</el-button>
       </span>
+    </el-dialog>
+    <!-- 銀行表格 常用對象 -->
+    <el-dialog
+      :title="dialogbankMessageTitle"
+      :visible.sync="dialogbankMessageShow"
+      :width="dialogbankMessageWidth"
+      class="bank-message-style"
+      center
+    >
+      <!-- 銀行表格 -->
+      <el-table
+        v-if="hiwalleDataShow"
+        :data="hiwalleDatatList"
+        height="500"
+        style="width: 50%; margin: 0 5px"
+      >
+        <el-table-column
+          :label="$t('dashboard.hiwalletAccount') + ` (${hiwalleDatatList.length}) 筆`"
+          align="center"
+        >
+          <el-table-column
+            prop="userName"
+            :label="$t('login.username')"
+            align="center"
+          />
+          <el-table-column
+            prop="note"
+            :label="$t('dashboard.nicknameRemark')"
+            align="center"
+          />
+        </el-table-column>
+      </el-table>
+      <!-- 銀行表格 -->
+      <el-table
+        :data="bankDatatList"
+        height="500"
+        style="width: 50%; margin: 0 5px"
+      >
+        <el-table-column
+          :label="$t('dashboard.bankCardAccountNumber') + ` (${bankDatatList.length}) 筆`"
+          align="center"
+        >
+          <el-table-column
+            prop="userName"
+            :label="$t('login.username')"
+            align="center"
+          />
+          <el-table-column
+            prop="note"
+            :label="$t('dashboard.nicknameRemark')"
+            align="center"
+          />
+        </el-table-column>
+      </el-table>
     </el-dialog>
   </div>
 </template>
@@ -230,14 +301,19 @@ export default {
   name: 'AdminPermission',
   data() {
     return {
-      advancedModifyLabelWidth: '160',
-      rolesList: [],
-      listQuery: {
+      accountDataList: [],
+      hiwalleDatatList: [],
+      bankDatatList: [],
+      listSearchKey: {
         searchKey: ''
       },
-      listQueryRules: {
+      listSearchKeyRules: {
         searchKey: [
-          { required: true, message: '请输入完整帳號', trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('dashboard.please_enter_the_full_account_number'),
+            trigger: 'blur'
+          }
         ]
       },
       advancedModifyForm: {
@@ -246,105 +322,134 @@ export default {
       },
       advancedModifyRules: {
         newNickName: [
-          { required: true, message: '帳號不可空白', trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('dashboard.the_account_cannot_be_blank'),
+            trigger: 'blur'
+          }
         ]
       },
-      avatarImg: '',
-      dialogVisibleTitle: '',
-      dialogVisibleContent: '',
-      innerVisibleContent: '',
-      searchSubmit: false,
-      dialogVisible: false,
-      dialogVisibleSend: false,
+      dialogbankMessageTitle: '',
+      dialogbankMessageWidth: '',
+      accountAvatarImage: '',
+      dialogMessageTitle: '',
+      dialogMessageContent: '',
+      innerMessageContent: '',
+      hiwalleDataShow: false,
+      searchListSubmit: false,
+      dialogMessageShow: false,
       dialogtAvatarShow: false,
       generalModifyShow: false,
-      advancedModifyShow: false
+      advancedModifyShow: false,
+      dialogbankMessageShow: false,
+      notificationMessageShow: false
     }
   },
   created() {
     this.getRoles()
   },
   methods: {
-    // 示意搜尋
-    handleFilter(rules) {
-      console.log(rules)
-      if (this.listQuery.searchKey.trim() === '') this.listQuery.searchKey = ''
-      this.$refs[rules].validate((valid) => {
-        if (!valid) return
-        this.searchSubmit = true
-      })
-    },
-    submitVisible(key, formkey) {
-      if (key !== this.$t('dashboard.accountNickname')) {
-        this.dialogVisibleSend = true
-      } else {
-        this.$refs[formkey].validate((valid) => {
-          if (!valid) return
-          this.dialogVisibleSend = true
-        })
-      }
-    },
     // 獲取表格資料
     async getRoles() {
       const res = await getRoles()
-      this.rolesList = res.data
+      this.accountDataList = res.data
+      this.hiwalleDatatList = res.data[0].hiwalletList
+      this.bankDatatList = res.data[0].bankList
     },
+    handleBankList(item, key) {
+      console.log(item, key)
+      this.dialogbankMessageShow = true
+      if (key === 'payObject') {
+        this.dialogbankMessageTitle = this.$t(
+          'dashboard.commonlyTradedCounterparties'
+        )
+        this.hiwalleDataShow = true
+        this.dialogbankMessageWidth = '70%'
+      } else {
+        this.dialogbankMessageTitle = this.$t(
+          'dashboard.bankCardAccountNumber'
+        )
+        this.hiwalleDataShow = false
+        this.dialogbankMessageWidth = '50%'
+      }
+    },
+    // 示意搜尋
+    handleFilter(rules) {
+      if (this.listSearchKey.searchKey.trim() === '') { this.listSearchKey.searchKey = '' }
+      this.$refs[rules].validate((valid) => {
+        if (!valid) return
+        this.searchListSubmit = true
+      })
+    },
+
+    // 過濾表單
+    submitVisible(formkey) {
+      if (!formkey) {
+        this.notificationMessageShow = true
+      } else {
+        this.$refs[formkey].validate((valid) => {
+          if (!valid) return
+          this.notificationMessageShow = true
+        })
+      }
+    },
+
     // 切換解鎖按鈕
     handleModifyStatus(row, status) {
-      this.dialogVisible = true
+      this.dialogMessageShow = true
       this.generalModifyShow = false
       this.advancedModifyShow = false
       if (status === 'normal' || status === 'locking') {
         this.generalModifyShow = true
-        this.dialogVisibleTitle = this.$t('dashboard.accountLock')
-        this.dialogVisibleContent = `是否要${
+        this.dialogMessageTitle = this.$t('dashboard.accountLock')
+        this.dialogMessageContent = `是否要${
           status === 'normal' ? '解鎖帳號' : '鎖定帳號'
         } ( <span style="color:red">${row.userName}</span> ) ?`
-        this.innerVisibleContent = `帳號已${
+        this.innerMessageContent = `帳號已${
           status === 'normal' ? '解鎖' : '鎖定'
         }。`
-        this.status = status
+        this.accountStatus = status
       } else if (status === 'loginPassword' || status === 'payPassword') {
         this.generalModifyShow = true
-        this.dialogVisibleTitle =
+        this.dialogMessageTitle =
           status === 'loginPassword'
             ? this.$t('dashboard.recordLoginPassword')
             : this.$t('dashboard.recordPayPassword')
-        this.dialogVisibleContent = `是否要重置帳號 ( <span style="color:red">${
+        this.dialogMessageContent = `是否要重置帳號 ( <span style="color:red">${
           row.userName
         }</span> ) 的${status === 'loginPassword' ? '登錄' : '交易'}密碼 ?`
-        this.innerVisibleContent = '密碼已重置'
+        this.innerMessageContent = '密碼已重置'
       } else if (status === 'editPermission') {
         this.advancedModifyShow = true
-        this.dialogVisibleTitle = `${this.$t('dashboard.accountNickname')}`
-        this.advancedModifyForm.oddNickName = row.nickName
-        this.innerVisibleContent = `${this.$t(
+        this.dialogMessageTitle = `${this.$t('dashboard.accountNickname')}`
+        this.innerMessageContent = `${this.$t(
           'dashboard.accountNickname'
         )}變更成功`
-        this.$nextTick(() => { this.$refs.advancedModifyForm.resetFields() })
+        this.advancedModifyForm.oddNickName = row.nickName
+        this.$nextTick(() => this.$refs.advancedModifyForm.resetFields())
       } else if (status === 'accountAvatar') {
-        this.dialogVisible = false
         this.dialogtAvatarShow = true
         this.generalModifyShow = true
-        this.avatarImg = row.avatar
-        this.dialogVisibleTitle = `${this.$t('dashboard.accountAvatar')}`
-        this.dialogVisibleContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`
-        this.innerVisibleContent = '帳號頭像刪除成功。'
+        this.dialogMessageShow = false
+        this.dialogMessageTitle = `${this.$t('dashboard.accountAvatar')}`
+        this.dialogMessageContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`
+        this.innerMessageContent = '帳號頭像刪除成功。'
         this.avatarStatus = 'noUpload'
+        this.accountAvatarImage = row.avatar
       }
     },
-    // 送出姐所按鈕
-    dialogVisibleSubmit(data, key, modify) {
-      console.log(data, key, modify)
-      this.dialogVisible = false
-      this.dialogVisibleSend = false
+
+    // 送出解鎖按鈕
+    dialogMessageShowSubmit(data, key, modify) {
+      this.dialogMessageShow = false
       this.dialogtAvatarShow = false
+      this.notificationMessageShow = false
       this.$message({
         message: '操作成功',
         type: 'success'
       })
       if (key === this.$t('dashboard.accountLock')) {
-        data[0].status = this.status
+        data[0].status = this.accountStatus
       } else if (key === this.$t('dashboard.accountNickname')) {
         data[0].nickName = modify.newNickName
       } else if (key === this.$t('dashboard.accountAvatar')) {
@@ -413,10 +518,18 @@ export default {
         }
       }
       .advancedModify-style {
-        .el-form-item__content{
+        .el-form-item__content {
           text-align: left;
         }
       }
+    }
+  }
+}
+.bank-message-style {
+  ::v-deep.el-dialog {
+    .el-dialog__body {
+      display: flex;
+      justify-content: space-between;
     }
   }
 }

@@ -18,6 +18,9 @@ import './icons' // icon
 import './permission' // permission control
 
 import * as filters from './filters' // global filters
+import moment from 'moment'
+// 引入根组件mixins
+import mixins from './mixins/root'
 
 /**
  * If you don't want to use mock-server
@@ -44,8 +47,11 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
+Vue.prototype.$moment = moment
+
 new Vue({
   el: '#app',
+  mixins: [mixins],
   router,
   store,
   i18n,

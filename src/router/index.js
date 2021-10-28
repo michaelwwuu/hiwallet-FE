@@ -6,9 +6,6 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* Router Modules */
-import tableRouter from './modules/table'
-
 export const constantRoutes = [
   {
     path: '/redirect',
@@ -79,8 +76,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  /** when your routing map is too long, you can split it into small modules **/
-  tableRouter,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

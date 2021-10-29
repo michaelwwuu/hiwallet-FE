@@ -72,7 +72,7 @@ module.exports = [
     response: _ => {
       return {
         code: 20000,
-        data: routes
+        data: routes,
       }
     }
   },
@@ -84,7 +84,8 @@ module.exports = [
     response: _ => {
       return {
         code: 20000,
-        data: roles
+        data: roles,
+        status: 'success'
       }
     }
   },

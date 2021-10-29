@@ -10,7 +10,8 @@ export default {
     page401: '401',
     page404: '404',
     clipboardDemo: 'Clipboard',
-    profile: 'Profile'
+    profile: 'Profile',
+    storeManagement: 'Merchant manage'
   },
   navbar: {
     dashboard: 'Dashboard',

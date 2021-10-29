@@ -10,7 +10,8 @@ export default {
     page401: '401',
     page404: '404',
     clipboardDemo: 'Clipboard',
-    profile: '个人中心'
+    profile: '个人中心',
+    storeManagement: '商家管理'
   },
   navbar: {
     dashboard: '首页',

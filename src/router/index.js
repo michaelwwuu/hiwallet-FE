@@ -76,6 +76,27 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/storeManagement',
+    component: Layout,
+    redirect: '/storeManagement/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'storeManagement',
+    meta: {
+      title: 'storeManagement',
+      icon: 'money'
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/storeManagement/page'),
+        name: 'storeManagement',
+        meta: {
+          title: 'storeManagement'
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

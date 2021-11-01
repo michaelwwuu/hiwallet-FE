@@ -66,7 +66,8 @@
             </el-button>
           </span>
         </div>
-        <div class="el-form">
+        <!-- 帳號管理 -->
+        <div v-if="accountRouter" class="el-form">
           <span>{{ $t("dashboard.payObject") }}</span>
           <span>{{ item.payObject }} 筆 / {{ item.bankCard }} 筆</span>
           <span>
@@ -79,6 +80,22 @@
             </el-button>
           </span>
         </div>
+
+        <!-- 當前費率 -->
+        <div v-if="storeRouter" class="el-form">
+          <span>{{ $t("dashboard.current_rates") }}</span>
+          <span>{{ item.currentRates }} %</span>
+          <span>
+            <el-button
+              type="warning"
+              size="small"
+              @click="merchantCityBranches('currentRates')"
+            >
+              {{ $t("dashboard.check") }}
+            </el-button>
+          </span>
+        </div>
+
         <div class="el-form">
           <span>{{ $t("dashboard.bankCard") }}</span>
           <span>{{ item.bankCard }} 張</span>
@@ -92,8 +109,10 @@
             </el-button>
           </span>
         </div>
+
+        <!-- 名稱 -->
         <div class="el-form">
-          <span>{{ $t("dashboard.nickName") }}</span>
+          <span>{{ accountRouter ? $t("dashboard.nickName") : $t("dashboard.merchant_name") }}</span>
           <span>{{ item.nickName }}</span>
           <span>
             <el-button
@@ -105,8 +124,10 @@
             </el-button>
           </span>
         </div>
+
+        <!-- 頭像 -->
         <div class="el-form">
-          <span>{{ $t("dashboard.avatar") }}</span>
+          <span>{{ accountRouter ? $t("dashboard.avatar") : $t("dashboard.merchant_photos") }}</span>
           <span>{{ item.avatarStatus === "done" ? "已上傳" : "未上傳" }}</span>
           <span>
             <el-button
@@ -118,9 +139,166 @@
             </el-button>
           </span>
         </div>
+
+        <!-- 商家成與分行 -->
+        <div class="el-form">
+          <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
+          <span>{{ item.merchantData.merchantCities }} / {{ item.merchantData.merchantBranches }}</span>
+          <span>
+            <el-button
+              type="warning"
+              size="small"
+              @click="merchantCityBranches('merchant')"
+            >
+              {{ $t("dashboard.check") }}
+            </el-button>
+          </span>
+        </div>
+
+        <!-- 進行中活動 -->
+        <div class="el-form">
+          <span>{{ $t("dashboard.in_progress_activities") }}</span>
+          <div>
+            <span v-for="el in item.in_progress_activities" :key="el">{{ el.activeName }},</span>
+          </div>
+          <span>
+            <el-button
+              type="warning"
+              size="small"
+              @click="handleBankList('activities')"
+            >
+              {{ $t("dashboard.check") }}
+            </el-button>
+          </span>
+        </div>
+
       </div>
     </div>
 
+    <!-- 商家城市與分行 // 費率-->
+    <el-dialog
+      :title="dialogMessageTitle"
+      :visible.sync="merchantShow"
+      :width="dialogbankMessageWidth"
+      center
+    >
+      <!-- 當前費率 -->
+      <div v-if="merchantCurrentRatesShow">
+        <el-form
+          ref="mechantModifyForm"
+          :model="mechantModifyForm"
+          label-width="150px"
+          class="advancedModify-style"
+        >
+          <el-form-item
+            prop="nowRate"
+            :label="$t('dashboard.current_rates')"
+          >
+            <el-input
+              v-model="mechantModifyForm.nowRate"
+              type="text"
+              :disabled="merchantdisabled"
+              :placeholder="$t('dashboard.please_enter_a_new_nickname')"
+              autocomplete="off"
+              style="width:380px !important;"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="time"
+            :label="$t('dashboard.expiration_date')"
+          >
+            <el-date-picker
+              v-model="mechantModifyForm.nowCreatStartTime"
+              type="date"
+              placeholder="选择日期"
+              :disabled="merchantdisabled"
+              style="margin-right: 18px; width:180px !important;"
+            />
+            <el-date-picker
+              v-model="mechantModifyForm.nowCreatEndTime"
+              type="date"
+              placeholder="选择日期"
+              :disabled="merchantdisabled"
+              style="width:180px !important;"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="newNickName"
+            :label="$t('dashboard.next_rate')"
+          >
+            <el-input
+              v-model="mechantModifyForm.nextRate"
+              type="text"
+              :disabled="merchantdisabled"
+              :placeholder="$t('dashboard.please_enter_a_new_nickname')"
+              autocomplete="off"
+              style="width:380px !important;"
+            />
+          </el-form-item>
+          <el-form-item
+            prop="newNickName"
+            :label="$t('dashboard.expiration_date')"
+          >
+            <el-date-picker
+              v-model="mechantModifyForm.nextCreatStartTime"
+              type="date"
+              placeholder="选择日期"
+              :disabled="merchantdisabled"
+              style="margin-right: 18px; width:180px !important;"
+            />
+            <el-date-picker
+              v-model="mechantModifyForm.nextCreatEndTime"
+              type="date"
+              placeholder="选择日期"
+              :disabled="merchantdisabled"
+              style="width:180px !important;"
+            />
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button
+            v-if="merchantModify"
+            type="danger"
+            @click="merchantStepOne"
+          >修 改</el-button>
+          <div v-if="merchantSubmit">
+            <el-button
+              type="success"
+              @click="merchantStepTwo('OK')"
+            >確 定</el-button>
+            <el-button
+              type="danger"
+              @click="merchantStepTwo('Canel')"
+            >取 消</el-button>
+          </div>
+        </span>
+      </div>
+      <div v-if="merchantCityBranchesShow">
+        <el-form
+          :model="merchantData"
+          label-width="150px"
+          class="advancedModify-style"
+        >
+          <el-form-item prop="name" :label="$t('dashboard.merchant_name')">
+            <span>{{ merchantData.name }}</span>
+          </el-form-item>
+          <el-form-item prop="groups" :label="$t('dashboard.affiliated_groups')">
+            <span>{{ merchantData.groups }}</span>
+          </el-form-item>
+          <el-form-item prop="groupsChain" :label="$t('dashboard.affiliated_chains')">
+            <span>{{ merchantData.groupsChain }}</span>
+          </el-form-item>
+          <el-form-item prop="groupsBranches" :label="$t('dashboard.affiliated_stores')">
+            <span>{{ merchantData.groupsBranches }}</span>
+          </el-form-item>
+          <el-form-item prop="merchantCities" :label="$t('dashboard.affiliated_city')">
+            <span>{{ merchantData.merchantCities }}</span>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
+
+    <!-- 頭像 -->
     <el-dialog
       :title="$t('dashboard.accountAvatar')"
       :visible.sync="dialogtAvatarShow"
@@ -244,6 +422,7 @@
           />
         </el-table-column>
       </el-table>
+
       <!-- 銀行表格 -->
       <el-table
         :data="bankDatatList"
@@ -267,7 +446,6 @@
         </el-table-column>
       </el-table>
     </el-dialog>
-
   </div>
 </template>
 
@@ -283,6 +461,8 @@ export default {
     return {
       bankDatatList: [],
       hiwalleDatatList: [],
+      mechantModifyForm: {},
+      merchantData: {},
       advancedModifyForm: {
         oddNickName: '',
         newNickName: ''
@@ -309,18 +489,49 @@ export default {
       generalModifyShow: false,
       advancedModifyShow: false,
       dialogbankMessageShow: false,
-      notificationMessageShow: false
+      notificationMessageShow: false,
+      merchantCityBranchesShow: false,
+      merchantCurrentRatesShow: false,
+      merchantShow: false,
+      storeRouter: false,
+      accountRouter: false,
+      merchantModify: true,
+      merchantSubmit: false,
+      merchantdisabled: true
     }
   },
   created() {
     this.getMemberList()
-    const routerParams = this.$route
-    console.log(routerParams)
+    const routerKey = this.$route.name
+    if (routerKey === 'PagePermission') {
+      this.accountRouter = true
+      this.storeRouter = false
+    } else if (routerKey === 'storeManagement') {
+      this.accountRouter = false
+      this.storeRouter = true
+    }
   },
   methods: {
     getMemberList() {
       this.hiwalleDatatList = this.memberDataList[0].hiwalletList
       this.bankDatatList = this.memberDataList[0].bankList
+      this.mechantModifyForm = this.memberDataList[0].mechantModifyForm
+      this.merchantData = this.memberDataList[0].merchantData
+      console.log(this.memberDataList[0])
+    },
+    merchantStepOne() {
+      this.merchantSubmit = true
+      this.merchantdisabled = false
+      this.merchantModify = false
+    },
+    merchantStepTwo(key) {
+      // 未來做區分
+      this.merchantSubmit = false
+      this.merchantdisabled = true
+      this.merchantModify = true
+      if (key === 'OK') {
+        console.log(123)
+      }
     },
     // 常用對象 綁定銀行
     handleBankList(key) {
@@ -339,18 +550,33 @@ export default {
         this.dialogbankMessageWidth = '50%'
       }
     },
+
     // 過濾表單
-    submitVisible(formkey) {
-      if (!formkey) {
+    submitVisible(formKey) {
+      if (!formKey) {
         this.notificationMessageShow = true
       } else {
-        this.$refs[formkey].validate((valid) => {
+        this.$refs[formKey].validate((valid) => {
           if (!valid) return
           this.notificationMessageShow = true
         })
       }
     },
-
+    merchantCityBranches(key) {
+      console.log(key)
+      this.merchantShow = true
+      if (key === 'currentRates') {
+        this.merchantCurrentRatesShow = true
+        this.merchantCityBranchesShow = false
+        this.dialogMessageTitle = this.$t('dashboard.merchant_current_rates')
+        this.dialogbankMessageWidth = '40%'
+      } else if (key === 'merchant') {
+        this.merchantCurrentRatesShow = false
+        this.merchantCityBranchesShow = true
+        this.dialogMessageTitle = this.$t('dashboard.merchant_city_branch_information')
+        this.dialogbankMessageWidth = '30%'
+      }
+    },
     // 切換解鎖按鈕
     handleModifyStatus(row, status) {
       this.dialogMessageShow = true

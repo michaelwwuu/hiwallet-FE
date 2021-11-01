@@ -14,6 +14,7 @@ const roles = [
     hiwalletCard:'20',
     bankCard:'20',
     payObject:'20',
+    currentRates:'2',
     status: 'normal',
     avatar:'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
     avatarStatus:'done',
@@ -61,6 +62,34 @@ const roles = [
       { userName: '國泰-22903029320', note: '金主19'},
       { userName: '國泰-22903029321', note: '金主20'},
     ],
+    merchantData:{
+      merchantCities:'長沙市',
+      merchantBranches:'1號店',
+      name:'好喝來一杯-長沙1號店',
+      groups:'非凡飲食',
+      groupsChain:'好喝來一杯',
+      groupsBranches:'長沙1號店',
+    },
+    mechantModifyForm:{
+      nowRate:'1%',
+      nowCreatStartTime:'2021/10/01',
+      nowCreatEndTime:'2021/10/31',
+      nextRate:'1%',
+      nextCreatStartTime:'2021/10/01',
+      nextCreatEndTime:'2021/10/01',
+    },
+    in_progress_activities:[
+      {
+        activeName:'每月IN-APP廣告',
+        activeStartTime:'2021/10/01',
+        activeEndTime:'2021/10/31',
+      },
+      {
+        activeName:'11月感恩節',
+        activeStartTime:'2021/11/10',
+        activeEndTime:'2021/11/30',
+      },  
+    ]
   },
 ]
 

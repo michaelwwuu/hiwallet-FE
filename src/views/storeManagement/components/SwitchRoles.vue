@@ -7,14 +7,14 @@
       @submit.native.prevent
     >
       <el-form-item
-        :label="$t('dashboard.account_enquiry')"
+        :label="$t('dashboard.store_enquiry')"
         label-width="80px"
         prop="searchKey"
       >
         <el-input
           ref="searchKey"
           v-model="listSearchKey.searchKey"
-          :placeholder="$t('dashboard.searchKey')"
+          :placeholder="$t('dashboard.Please_enter_the_merchant_account_number_you_want_to_check')"
           name="searchKey"
           type="text"
           style="width: 400px"
@@ -42,7 +42,7 @@ import { getRoles } from '@/api/role'
 import PublicUserForm from '@/views/components/publicUserForm.vue'
 
 export default {
-  name: 'AdminPermission',
+  name: 'StoreManagement',
   components: {
     PublicUserForm
   },

@@ -30,6 +30,7 @@ export default {
   dashboard: {
     adminPermission: 'Account manage',
     account_enquiry: 'Account Enquiry',
+    store_enquiry: 'Store Enquiry',
     editPermission: 'Edit',
     confirm: 'Confirm',
     cancel: 'Cancel',
@@ -62,6 +63,21 @@ export default {
     hiwalletAccount: 'Hiwallet Account',
     the_account_cannot_be_blank: 'The account cannot be blank',
     please_enter_the_full_account_number: 'Please enter the full account number',
-    please_enter_a_new_nickname: 'Please enter a new nickname'
+    Please_enter_the_merchant_account_number_you_want_to_check: 'Please_enter_the_merchant_account_number_you_want_to_check',
+    please_enter_a_new_nickname: 'Please enter a new nickname',
+    current_rates: 'Current Rates',
+    expiration_date: 'Expiration date',
+    next_rate: 'Next Rate',
+    merchant_name: 'Merchant Name',
+    merchant_photos: 'Merchant Photos',
+    merchant_cities_and_branches: 'Merchant Cities and Branches',
+    merchant_city_branch_information: 'Merchant city branch information',
+    merchant_current_rates: "Merchant's current rates",
+    affiliated_groups: 'Affiliated Groups',
+    affiliated_chains: 'Affiliated Chains',
+    affiliated_stores: 'affiliated Stores',
+    affiliated_city: 'Affiliated Cities',
+    in_progress_activities: 'In-progress activities'
+
   }
 }

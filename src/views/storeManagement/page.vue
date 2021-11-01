@@ -8,13 +8,13 @@
 import SwitchRoles from './components/SwitchRoles'
 
 export default {
-  name: 'PagePermission',
+  name: 'PageStoreManagement',
   components: {
     SwitchRoles
   },
   methods: {
     handleRolesChange() {
-      this.$router.push({ path: '/permission/index?' + +new Date() })
+      this.$router.push({ path: '/storeManagement/index?' + +new Date() })
     }
   }
 }

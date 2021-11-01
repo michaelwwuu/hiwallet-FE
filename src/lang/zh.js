@@ -30,6 +30,7 @@ export default {
   dashboard: {
     adminPermission: '账号管理',
     account_enquiry: '账号查詢',
+    store_enquiry: '商家查询',
     editPermission: '變更',
     confirm: '确定',
     cancel: '取消',
@@ -62,6 +63,20 @@ export default {
     hiwalletAccount: '嗨錢包账号',
     the_account_cannot_be_blank: '账号不可空白',
     please_enter_the_full_account_number: '请输入完整账号',
-    please_enter_a_new_nickname: '請輸入新暱稱'
+    Please_enter_the_merchant_account_number_you_want_to_check: '请输入要查询的商家帐号',
+    please_enter_a_new_nickname: '請輸入新暱稱',
+    current_rates: '當前費率',
+    expiration_date: '有效期限',
+    next_rate: '下期費率',
+    merchant_name: '商家名稱',
+    merchant_photos: '商家頭像',
+    merchant_cities_and_branches: '商家城市與分行',
+    merchant_city_branch_information: '商家城市分店資訊',
+    merchant_current_rates: '商家當前費率',
+    affiliated_groups: '所屬集團',
+    affiliated_chains: '所屬連鎖',
+    affiliated_stores: '所屬分店',
+    affiliated_city: '所屬城市',
+    in_progress_activities: '進行中活動'
   }
 }

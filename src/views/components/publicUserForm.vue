@@ -66,7 +66,7 @@
             </el-button>
           </span>
         </div>
-        <!-- 帳號管理 -->
+        <!-- 帳號管理 常用交易對象-->
         <div v-if="accountRouter" class="el-form">
           <span>{{ $t("dashboard.payObject") }}</span>
           <span>{{ item.payObject }} 筆 / {{ item.bankCard }} 筆</span>
@@ -81,7 +81,7 @@
           </span>
         </div>
 
-        <!-- 當前費率 -->
+        <!-- 商家管理 當前費率 -->
         <div v-if="storeRouter" class="el-form">
           <span>{{ $t("dashboard.current_rates") }}</span>
           <span>{{ item.currentRates }} %</span>
@@ -140,6 +140,7 @@
           </span>
         </div>
 
+        <!-- 商家管理 -->
         <div v-if="storeRouter">
           <!-- 商家成與分行 -->
           <div class="el-form">
@@ -492,14 +493,15 @@ export default {
       advancedModifyShow: false,
       dialogbankMessageShow: false,
       notificationMessageShow: false,
-      merchantCityBranchesShow: false,
-      merchantCurrentRatesShow: false,
-      merchantShow: false,
+
       storeRouter: false,
       accountRouter: false,
+      merchantShow: false,
       merchantModify: true,
       merchantSubmit: false,
-      merchantdisabled: true
+      merchantdisabled: true,
+      merchantCityBranchesShow: false,
+      merchantCurrentRatesShow: false
     }
   },
   created() {

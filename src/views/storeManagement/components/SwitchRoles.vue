@@ -70,17 +70,13 @@ export default {
   methods: {
     // 獲取表格資料
     getMemberList() {
-      getRoles().then((res) => {
-        if (res.code === 20000) {
-          this.memberDataList = res.data
-        }
+      getRoles().then(res => {
+        if (res.code === 20000) this.memberDataList = res.data
       })
     },
     // 示意搜尋
     handleFilter(rules) {
-      if (this.listSearchKey.searchKey.trim() === '') {
-        this.listSearchKey.searchKey = ''
-      }
+      if (this.listSearchKey.searchKey.trim() === '') this.listSearchKey.searchKey = ''
       this.$refs[rules].validate(valid => {
         if (!valid) return
         this.searchListSubmit = true

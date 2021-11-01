@@ -228,7 +228,7 @@
               style="width: 180px !important"
             />
           </el-form-item>
-          <el-form-item prop="newNickName" :label="$t('dashboard.next_rate')">
+          <el-form-item prop="nextRate" :label="$t('dashboard.next_rate')">
             <el-input
               v-model="mechantModifyForm.nextRate"
               type="text"
@@ -238,10 +238,7 @@
               style="width: 380px !important"
             />
           </el-form-item>
-          <el-form-item
-            prop="newNickName"
-            :label="$t('dashboard.expiration_date')"
-          >
+          <el-form-item prop="time" :label="$t('dashboard.expiration_date')">
             <el-date-picker
               v-model="mechantModifyForm.nextCreatStartTime"
               type="date"
@@ -276,6 +273,7 @@
           </div>
         </span>
       </div>
+
       <!-- 商家城市與分行 -->
       <div v-if="merchantCityBranchesShow">
         <el-form
@@ -322,7 +320,7 @@
       center
     >
       <div class="avatar-box">
-        <img :src="accountAvatarImage" alt="">
+        <img :src="accountAvatarImage">
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button
@@ -360,37 +358,37 @@
           >确 定</el-button>
         </span>
       </el-dialog>
+
       <!-- 登入 交易 密碼 表格-->
-      <span
-        v-if="generalModifyShow"
-        class="dialog-content"
-        v-html="dialogMessageContent"
-      />
+      <div v-if="generalModifyShow">
+        <span class="dialog-content" v-html="dialogMessageContent" />
+      </div>
 
       <!-- 暱稱表格 -->
-      <el-form
-        v-if="advancedModifyShow"
-        ref="advancedModifyForm"
-        :model="advancedModifyForm"
-        :rules="advancedModifyRules"
-        label-width="150px"
-        class="advancedModify-style"
-      >
-        <el-form-item :label="$t('dashboard.currentNickname')">
-          <span>{{ advancedModifyForm.oddNickName }}</span>
-        </el-form-item>
-        <el-form-item
-          prop="newNickName"
-          :label="$t('dashboard.changeNickname')"
+      <div v-if="advancedModifyShow">
+        <el-form
+          ref="advancedModifyForm"
+          :model="advancedModifyForm"
+          :rules="advancedModifyRules"
+          label-width="150px"
+          class="advancedModify-style"
         >
-          <el-input
-            v-model="advancedModifyForm.newNickName"
-            type="text"
-            :placeholder="$t('dashboard.please_enter_a_new_nickname')"
-            autocomplete="off"
-          />
-        </el-form-item>
-      </el-form>
+          <el-form-item :label="$t('dashboard.currentNickname')">
+            <span>{{ advancedModifyForm.oddNickName }}</span>
+          </el-form-item>
+          <el-form-item
+            prop="newNickName"
+            :label="$t('dashboard.changeNickname')"
+          >
+            <el-input
+              v-model="advancedModifyForm.newNickName"
+              type="text"
+              :placeholder="$t('dashboard.please_enter_a_new_nickname')"
+              autocomplete="off"
+            />
+          </el-form-item>
+        </el-form>
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button
           type="primary"
@@ -407,17 +405,17 @@
       </span>
     </el-dialog>
 
-    <!-- 銀行表格 常用對象 -->
+    <!-- 嗨錢包 / 銀行帳戶 常用對象 -->
     <el-dialog
-      :title="dialogbankMessageTitle"
+      :title="dialogMessageTitle"
       :visible.sync="dialogbankMessageShow"
       :width="dialogbankMessageWidth"
       class="bank-message-style"
       center
     >
-      <!-- 銀行表格 -->
+      <!-- 嗨錢包帳戶表格 -->
       <el-table
-        v-if="hiwalleBankDataShow"
+        v-if="hiwalletBankDataShow"
         :data="hiwalleDatatList"
         height="500"
         style="width: 50%; margin: 0 5px"
@@ -441,7 +439,7 @@
         </el-table-column>
       </el-table>
 
-      <!-- 銀行表格 -->
+      <!-- 銀行帳戶表格 -->
       <el-table
         :data="bankDatatList"
         height="500"
@@ -467,6 +465,7 @@
         </el-table-column>
       </el-table>
     </el-dialog>
+
   </div>
 </template>
 
@@ -482,8 +481,8 @@ export default {
     return {
       bankDatatList: [],
       hiwalleDatatList: [],
-      mechantModifyForm: {},
       merchantData: {},
+      mechantModifyForm: {},
       advancedModifyForm: {
         oddNickName: '',
         newNickName: ''
@@ -497,17 +496,16 @@ export default {
           }
         ]
       },
-      dialogbankMessageTitle: '',
       dialogbankMessageWidth: '',
       accountAvatarImage: '',
       dialogMessageTitle: '',
       dialogMessageContent: '',
       innerMessageContent: '',
-      hiwalleBankDataShow: false,
       dialogMessageShow: false,
       dialogtAvatarShow: false,
       generalModifyShow: false,
       advancedModifyShow: false,
+      hiwalletBankDataShow: false,
       dialogbankMessageShow: false,
       notificationMessageShow: false,
 
@@ -538,7 +536,6 @@ export default {
       this.bankDatatList = this.memberDataList.bankList
       this.mechantModifyForm = this.memberDataList.mechantModifyForm
       this.merchantData = this.memberDataList.merchantData
-      console.log(this.merchantData)
     },
     merchantStepOne() {
       this.merchantSubmit = true
@@ -558,16 +555,16 @@ export default {
     handleBankList(key) {
       this.dialogbankMessageShow = true
       if (key === 'payObject') {
-        this.dialogbankMessageTitle = this.$t(
+        this.dialogMessageTitle = this.$t(
           'dashboard.commonlyTradedCounterparties'
         )
-        this.hiwalleBankDataShow = true
+        this.hiwalletBankDataShow = true
         this.dialogbankMessageWidth = '70%'
       } else {
-        this.dialogbankMessageTitle = this.$t(
+        this.dialogMessageTitle = this.$t(
           'dashboard.bankCardAccountNumber'
         )
-        this.hiwalleBankDataShow = false
+        this.hiwalletBankDataShow = false
         this.dialogbankMessageWidth = '50%'
       }
     },
@@ -584,7 +581,6 @@ export default {
       }
     },
     merchantCityBranches(key) {
-      console.log(key)
       this.merchantShow = true
       if (key === 'currentRates') {
         this.merchantCurrentRatesShow = true
@@ -594,9 +590,7 @@ export default {
       } else if (key === 'merchant') {
         this.merchantCurrentRatesShow = false
         this.merchantCityBranchesShow = true
-        this.dialogMessageTitle = this.$t(
-          'dashboard.merchant_city_branch_information'
-        )
+        this.dialogMessageTitle = this.$t('dashboard.merchant_city_branch_information')
         this.dialogbankMessageWidth = '30%'
       }
     },
@@ -649,10 +643,7 @@ export default {
       this.dialogMessageShow = false
       this.dialogtAvatarShow = false
       this.notificationMessageShow = false
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
+      this.$message({ message: '操作成功', type: 'success' })
       if (key === this.$t('dashboard.accountLock')) {
         data.status = this.accountStatus
       } else if (key === this.$t('dashboard.accountNickname')) {

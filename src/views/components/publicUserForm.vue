@@ -140,36 +140,38 @@
           </span>
         </div>
 
-        <!-- 商家成與分行 -->
-        <div class="el-form">
-          <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
-          <span>{{ item.merchantData.merchantCities }} / {{ item.merchantData.merchantBranches }}</span>
-          <span>
-            <el-button
-              type="warning"
-              size="small"
-              @click="merchantCityBranches('merchant')"
-            >
-              {{ $t("dashboard.check") }}
-            </el-button>
-          </span>
-        </div>
-
-        <!-- 進行中活動 -->
-        <div class="el-form">
-          <span>{{ $t("dashboard.in_progress_activities") }}</span>
-          <div>
-            <span v-for="el in item.in_progress_activities" :key="el">{{ el.activeName }},</span>
+        <div v-if="storeRouter">
+          <!-- 商家成與分行 -->
+          <div class="el-form">
+            <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
+            <span>{{ item.merchantData.merchantCities }} / {{ item.merchantData.merchantBranches }}</span>
+            <span>
+              <el-button
+                type="warning"
+                size="small"
+                @click="merchantCityBranches('merchant')"
+              >
+                {{ $t("dashboard.check") }}
+              </el-button>
+            </span>
           </div>
-          <span>
-            <el-button
-              type="warning"
-              size="small"
-              @click="handleBankList('activities')"
-            >
-              {{ $t("dashboard.check") }}
-            </el-button>
-          </span>
+
+          <!-- 進行中活動 -->
+          <div class="el-form">
+            <span>{{ $t("dashboard.in_progress_activities") }}</span>
+            <div>
+              <span v-for="el in item.in_progress_activities" :key="el">{{ el.activeName }},</span>
+            </div>
+            <span>
+              <el-button
+                type="warning"
+                size="small"
+                @click="handleBankList('activities')"
+              >
+                {{ $t("dashboard.check") }}
+              </el-button>
+            </span>
+          </div>
         </div>
 
       </div>
@@ -296,6 +298,7 @@
           </el-form-item>
         </el-form>
       </div>
+
     </el-dialog>
 
     <!-- 頭像 -->
@@ -401,7 +404,7 @@
     >
       <!-- 銀行表格 -->
       <el-table
-        v-if="hiwalleDataShow"
+        v-if="hiwalleBankDataShow"
         :data="hiwalleDatatList"
         height="500"
         style="width: 50%; margin: 0 5px"
@@ -482,8 +485,7 @@ export default {
       dialogMessageTitle: '',
       dialogMessageContent: '',
       innerMessageContent: '',
-      hiwalleDataShow: false,
-      searchListSubmit: false,
+      hiwalleBankDataShow: false,
       dialogMessageShow: false,
       dialogtAvatarShow: false,
       generalModifyShow: false,
@@ -540,13 +542,13 @@ export default {
         this.dialogbankMessageTitle = this.$t(
           'dashboard.commonlyTradedCounterparties'
         )
-        this.hiwalleDataShow = true
+        this.hiwalleBankDataShow = true
         this.dialogbankMessageWidth = '70%'
       } else {
         this.dialogbankMessageTitle = this.$t(
           'dashboard.bankCardAccountNumber'
         )
-        this.hiwalleDataShow = false
+        this.hiwalleBankDataShow = false
         this.dialogbankMessageWidth = '50%'
       }
     },

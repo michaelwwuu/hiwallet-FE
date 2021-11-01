@@ -4,8 +4,7 @@ const { asyncRoutes, constantRoutes } = require('./routes.js')
 
 const routes = deepClone([...constantRoutes, ...asyncRoutes])
 
-const roles = [
-  {
+const roles = {
     userName: 'peterwu0987',
     nickName: '高雄發大財',
     hiwalletMoney: '10,213',
@@ -90,8 +89,7 @@ const roles = [
         activeEndTime:'2021/11/30',
       },  
     ]
-  },
-]
+  };
 
 module.exports = [
   // mock get all routes form server

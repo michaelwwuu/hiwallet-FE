@@ -1,180 +1,189 @@
 <template>
   <div>
-    <div>
-      <div
-        v-for="(item, index) in memberDataList"
-        :key="index"
-        class="form-table"
-      >
+    <div class="form-table">
+      <div class="el-form">
+        <span>{{ $t("dashboard.userName") }}</span>
+        <span>{{ memberDataList.userName }}</span>
+        <span>
+          <el-button
+            v-if="memberDataList.status !== 'locking'"
+            type="danger"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'locking')"
+          >
+            {{ $t("dashboard.locking") }}
+          </el-button>
+          <el-button
+            v-if="memberDataList.status !== 'normal'"
+            type="success"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'normal')"
+          >
+            {{ $t("dashboard.normal") }}
+          </el-button>
+        </span>
+      </div>
+      <div class="el-form">
+        <span>{{ $t("dashboard.hiwalletMoney") }}</span>
+        <span>{{ memberDataList.hiwalletMoney }}</span>
+        <span>
+          <el-button type="success" size="small">
+            {{ $t("dashboard.increase") }}
+          </el-button>
+          <el-button type="danger" size="small">
+            {{ $t("dashboard.reduce") }}
+          </el-button>
+        </span>
+      </div>
+      <div class="el-form">
+        <span>{{ $t("dashboard.loginPassword") }}</span>
+        <span>{{ memberDataList.loginPassword }}</span>
+        <span>
+          <el-button
+            type="primary"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'loginPassword')"
+          >
+            {{ $t("dashboard.record") }}
+          </el-button>
+        </span>
+      </div>
+      <div class="el-form">
+        <span>{{ $t("dashboard.payPassword") }}</span>
+        <span>{{ memberDataList.payPassword }}</span>
+        <span>
+          <el-button
+            type="primary"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'payPassword')"
+          >
+            {{ $t("dashboard.record") }}
+          </el-button>
+        </span>
+      </div>
+      <!-- 帳號管理 常用交易對象-->
+      <div v-if="accountRouter" class="el-form">
+        <span>{{ $t("dashboard.payObject") }}</span>
+        <span>{{ memberDataList.payObject }} 筆 /
+          {{ memberDataList.bankCard }} 筆</span>
+        <span>
+          <el-button
+            type="warning"
+            size="small"
+            @click="handleBankList('payObject')"
+          >
+            {{ $t("dashboard.check") }}
+          </el-button>
+        </span>
+      </div>
+
+      <!-- 商家管理 當前費率 -->
+      <div v-if="storeRouter" class="el-form">
+        <span>{{ $t("dashboard.current_rates") }}</span>
+        <span>{{ memberDataList.currentRates }} %</span>
+        <span>
+          <el-button
+            type="warning"
+            size="small"
+            @click="merchantCityBranches('currentRates')"
+          >
+            {{ $t("dashboard.check") }}
+          </el-button>
+        </span>
+      </div>
+
+      <div class="el-form">
+        <span>{{ $t("dashboard.bankCard") }}</span>
+        <span>{{ memberDataList.bankCard }} 張</span>
+        <span>
+          <el-button
+            type="warning"
+            size="small"
+            @click="handleBankList('bankCard')"
+          >
+            {{ $t("dashboard.check") }}
+          </el-button>
+        </span>
+      </div>
+
+      <!-- 名稱 -->
+      <div class="el-form">
+        <span>{{
+          accountRouter
+            ? $t("dashboard.nickName")
+            : $t("dashboard.merchant_name")
+        }}</span>
+        <span>{{ memberDataList.nickName }}</span>
+        <span>
+          <el-button
+            type="primary"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'editPermission')"
+          >
+            {{ $t("dashboard.editPermission") }}
+          </el-button>
+        </span>
+      </div>
+
+      <!-- 頭像 -->
+      <div class="el-form">
+        <span>{{
+          accountRouter
+            ? $t("dashboard.avatar")
+            : $t("dashboard.merchant_photos")
+        }}</span>
+        <span>{{
+          memberDataList.avatarStatus === "done" ? "已上傳" : "未上傳"
+        }}</span>
+        <span>
+          <el-button
+            type="warning"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'accountAvatar')"
+          >
+            {{ $t("dashboard.check") }}
+          </el-button>
+        </span>
+      </div>
+
+      <!-- 商家管理 -->
+      <div v-if="storeRouter">
+        <!-- 商家成與分行 -->
         <div class="el-form">
-          <span>{{ $t("dashboard.userName") }}</span>
-          <span>{{ item.userName }}</span>
-          <span>
-            <el-button
-              v-if="item.status != 'locking'"
-              type="danger"
-              size="small"
-              @click="handleModifyStatus(item, 'locking')"
-            >
-              {{ $t("dashboard.locking") }}
-            </el-button>
-            <el-button
-              v-if="item.status != 'normal'"
-              type="success"
-              size="small"
-              @click="handleModifyStatus(item, 'normal')"
-            >
-              {{ $t("dashboard.normal") }}
-            </el-button>
-          </span>
-        </div>
-        <div class="el-form">
-          <span>{{ $t("dashboard.hiwalletMoney") }}</span>
-          <span>{{ item.hiwalletMoney }}</span>
-          <span>
-            <el-button type="success" size="small">
-              {{ $t("dashboard.increase") }}
-            </el-button>
-            <el-button type="danger" size="small">
-              {{ $t("dashboard.reduce") }}
-            </el-button>
-          </span>
-        </div>
-        <div class="el-form">
-          <span>{{ $t("dashboard.loginPassword") }}</span>
-          <span>{{ item.loginPassword }}</span>
-          <span>
-            <el-button
-              type="primary"
-              size="small"
-              @click="handleModifyStatus(item, 'loginPassword')"
-            >
-              {{ $t("dashboard.record") }}
-            </el-button>
-          </span>
-        </div>
-        <div class="el-form">
-          <span>{{ $t("dashboard.payPassword") }}</span>
-          <span>{{ item.payPassword }}</span>
-          <span>
-            <el-button
-              type="primary"
-              size="small"
-              @click="handleModifyStatus(item, 'payPassword')"
-            >
-              {{ $t("dashboard.record") }}
-            </el-button>
-          </span>
-        </div>
-        <!-- 帳號管理 常用交易對象-->
-        <div v-if="accountRouter" class="el-form">
-          <span>{{ $t("dashboard.payObject") }}</span>
-          <span>{{ item.payObject }} 筆 / {{ item.bankCard }} 筆</span>
+          <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
+          <span>{{ memberDataList.merchantData.merchantCities }} /
+            {{ memberDataList.merchantData.merchantBranches }}</span>
           <span>
             <el-button
               type="warning"
               size="small"
-              @click="handleBankList('payObject')"
+              @click="merchantCityBranches('merchant')"
             >
               {{ $t("dashboard.check") }}
             </el-button>
           </span>
         </div>
 
-        <!-- 商家管理 當前費率 -->
-        <div v-if="storeRouter" class="el-form">
-          <span>{{ $t("dashboard.current_rates") }}</span>
-          <span>{{ item.currentRates }} %</span>
-          <span>
-            <el-button
-              type="warning"
-              size="small"
-              @click="merchantCityBranches('currentRates')"
-            >
-              {{ $t("dashboard.check") }}
-            </el-button>
-          </span>
-        </div>
-
+        <!-- 進行中活動 -->
         <div class="el-form">
-          <span>{{ $t("dashboard.bankCard") }}</span>
-          <span>{{ item.bankCard }} 張</span>
+          <span>{{ $t("dashboard.in_progress_activities") }}</span>
           <span>
-            <el-button
-              type="warning"
-              size="small"
-              @click="handleBankList('bankCard')"
-            >
-              {{ $t("dashboard.check") }}
-            </el-button>
-          </span>
-        </div>
-
-        <!-- 名稱 -->
-        <div class="el-form">
-          <span>{{ accountRouter ? $t("dashboard.nickName") : $t("dashboard.merchant_name") }}</span>
-          <span>{{ item.nickName }}</span>
-          <span>
-            <el-button
-              type="primary"
-              size="small"
-              @click="handleModifyStatus(item, 'editPermission')"
-            >
-              {{ $t("dashboard.editPermission") }}
-            </el-button>
-          </span>
-        </div>
-
-        <!-- 頭像 -->
-        <div class="el-form">
-          <span>{{ accountRouter ? $t("dashboard.avatar") : $t("dashboard.merchant_photos") }}</span>
-          <span>{{ item.avatarStatus === "done" ? "已上傳" : "未上傳" }}</span>
-          <span>
-            <el-button
-              type="warning"
-              size="small"
-              @click="handleModifyStatus(item, 'accountAvatar')"
-            >
-              {{ $t("dashboard.check") }}
-            </el-button>
-          </span>
-        </div>
-
-        <!-- 商家管理 -->
-        <div v-if="storeRouter">
-          <!-- 商家成與分行 -->
-          <div class="el-form">
-            <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
-            <span>{{ item.merchantData.merchantCities }} / {{ item.merchantData.merchantBranches }}</span>
-            <span>
-              <el-button
-                type="warning"
-                size="small"
-                @click="merchantCityBranches('merchant')"
-              >
-                {{ $t("dashboard.check") }}
-              </el-button>
+            <span
+              v-for="(item, index) in memberDataList.in_progress_activities"
+              :key="index"
+            >{{ item.activeName }},
             </span>
-          </div>
-
-          <!-- 進行中活動 -->
-          <div class="el-form">
-            <span>{{ $t("dashboard.in_progress_activities") }}</span>
-            <div>
-              <span v-for="el in item.in_progress_activities" :key="el">{{ el.activeName }},</span>
-            </div>
-            <span>
-              <el-button
-                type="warning"
-                size="small"
-                @click="handleBankList('activities')"
-              >
-                {{ $t("dashboard.check") }}
-              </el-button>
-            </span>
-          </div>
+          </span>
+          <span>
+            <el-button
+              type="warning"
+              size="small"
+              @click="handleBankList('activities')"
+            >
+              {{ $t("dashboard.check") }}
+            </el-button>
+          </span>
         </div>
-
       </div>
     </div>
 
@@ -193,49 +202,40 @@
           label-width="150px"
           class="advancedModify-style"
         >
-          <el-form-item
-            prop="nowRate"
-            :label="$t('dashboard.current_rates')"
-          >
+          <el-form-item prop="nowRate" :label="$t('dashboard.current_rates')">
             <el-input
               v-model="mechantModifyForm.nowRate"
               type="text"
               :disabled="merchantdisabled"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
               autocomplete="off"
-              style="width:380px !important;"
+              style="width: 380px !important"
             />
           </el-form-item>
-          <el-form-item
-            prop="time"
-            :label="$t('dashboard.expiration_date')"
-          >
+          <el-form-item prop="time" :label="$t('dashboard.expiration_date')">
             <el-date-picker
               v-model="mechantModifyForm.nowCreatStartTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
-              style="margin-right: 18px; width:180px !important;"
+              style="margin-right: 18px; width: 180px !important"
             />
             <el-date-picker
               v-model="mechantModifyForm.nowCreatEndTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
-              style="width:180px !important;"
+              style="width: 180px !important"
             />
           </el-form-item>
-          <el-form-item
-            prop="newNickName"
-            :label="$t('dashboard.next_rate')"
-          >
+          <el-form-item prop="newNickName" :label="$t('dashboard.next_rate')">
             <el-input
               v-model="mechantModifyForm.nextRate"
               type="text"
               :disabled="merchantdisabled"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
               autocomplete="off"
-              style="width:380px !important;"
+              style="width: 380px !important"
             />
           </el-form-item>
           <el-form-item
@@ -247,14 +247,14 @@
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
-              style="margin-right: 18px; width:180px !important;"
+              style="margin-right: 18px; width: 180px !important"
             />
             <el-date-picker
               v-model="mechantModifyForm.nextCreatEndTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
-              style="width:180px !important;"
+              style="width: 180px !important"
             />
           </el-form-item>
         </el-form>
@@ -276,6 +276,7 @@
           </div>
         </span>
       </div>
+      <!-- 商家城市與分行 -->
       <div v-if="merchantCityBranchesShow">
         <el-form
           :model="merchantData"
@@ -285,21 +286,32 @@
           <el-form-item prop="name" :label="$t('dashboard.merchant_name')">
             <span>{{ merchantData.name }}</span>
           </el-form-item>
-          <el-form-item prop="groups" :label="$t('dashboard.affiliated_groups')">
+          <el-form-item
+            prop="groups"
+            :label="$t('dashboard.affiliated_groups')"
+          >
             <span>{{ merchantData.groups }}</span>
           </el-form-item>
-          <el-form-item prop="groupsChain" :label="$t('dashboard.affiliated_chains')">
+          <el-form-item
+            prop="groupsChain"
+            :label="$t('dashboard.affiliated_chains')"
+          >
             <span>{{ merchantData.groupsChain }}</span>
           </el-form-item>
-          <el-form-item prop="groupsBranches" :label="$t('dashboard.affiliated_stores')">
+          <el-form-item
+            prop="groupsBranches"
+            :label="$t('dashboard.affiliated_stores')"
+          >
             <span>{{ merchantData.groupsBranches }}</span>
           </el-form-item>
-          <el-form-item prop="merchantCities" :label="$t('dashboard.affiliated_city')">
+          <el-form-item
+            prop="merchantCities"
+            :label="$t('dashboard.affiliated_city')"
+          >
             <span>{{ merchantData.merchantCities }}</span>
           </el-form-item>
         </el-form>
       </div>
-
     </el-dialog>
 
     <!-- 頭像 -->
@@ -411,7 +423,9 @@
         style="width: 50%; margin: 0 5px"
       >
         <el-table-column
-          :label="$t('dashboard.hiwalletAccount') + ` (${hiwalleDatatList.length}) 筆`"
+          :label="
+            $t('dashboard.hiwalletAccount') + ` (${hiwalleDatatList.length}) 筆`
+          "
           align="center"
         >
           <el-table-column
@@ -434,7 +448,10 @@
         style="width: 50%; margin: 0 5px"
       >
         <el-table-column
-          :label="$t('dashboard.bankCardAccountNumber') + ` (${bankDatatList.length}) 筆`"
+          :label="
+            $t('dashboard.bankCardAccountNumber') +
+              ` (${bankDatatList.length}) 筆`
+          "
           align="center"
         >
           <el-table-column
@@ -455,10 +472,10 @@
 
 <script>
 export default {
-  name: 'AdminPermission',
+  name: 'PublicUserForm',
   props: {
     memberDataList: {
-      type: Array
+      type: Object
     }
   },
   data() {
@@ -517,11 +534,11 @@ export default {
   },
   methods: {
     getMemberList() {
-      this.hiwalleDatatList = this.memberDataList[0].hiwalletList
-      this.bankDatatList = this.memberDataList[0].bankList
-      this.mechantModifyForm = this.memberDataList[0].mechantModifyForm
-      this.merchantData = this.memberDataList[0].merchantData
-      console.log(this.memberDataList[0])
+      this.hiwalleDatatList = this.memberDataList.hiwalletList
+      this.bankDatatList = this.memberDataList.bankList
+      this.mechantModifyForm = this.memberDataList.mechantModifyForm
+      this.merchantData = this.memberDataList.merchantData
+      console.log(this.merchantData)
     },
     merchantStepOne() {
       this.merchantSubmit = true
@@ -577,7 +594,9 @@ export default {
       } else if (key === 'merchant') {
         this.merchantCurrentRatesShow = false
         this.merchantCityBranchesShow = true
-        this.dialogMessageTitle = this.$t('dashboard.merchant_city_branch_information')
+        this.dialogMessageTitle = this.$t(
+          'dashboard.merchant_city_branch_information'
+        )
         this.dialogbankMessageWidth = '30%'
       }
     },
@@ -635,12 +654,12 @@ export default {
         type: 'success'
       })
       if (key === this.$t('dashboard.accountLock')) {
-        data[0].status = this.accountStatus
+        data.status = this.accountStatus
       } else if (key === this.$t('dashboard.accountNickname')) {
-        data[0].nickName = modify.newNickName
+        data.nickName = modify.newNickName
       } else if (key === this.$t('dashboard.accountAvatar')) {
-        data[0].avatar = require('@/assets/no_data_images/no_data.png')
-        data[0].avatarStatus = this.avatarStatus
+        data.avatar = require('@/assets/no_data_images/no_data.png')
+        data.avatarStatus = this.avatarStatus
       }
     }
   }

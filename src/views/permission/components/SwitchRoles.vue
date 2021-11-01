@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      memberDataList: [],
+      memberDataList: {},
       listSearchKey: {
         searchKey: ''
       },
@@ -71,7 +71,10 @@ export default {
     // 獲取表格資料
     getMemberList() {
       getRoles().then((res) => {
-        if (res.code === 20000) this.memberDataList = res.data
+        if (res.code === 20000) {
+          this.memberDataList = res.data
+          console.log(this.memberDataList)
+        }
       })
     },
     // 示意搜尋

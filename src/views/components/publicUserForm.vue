@@ -151,8 +151,8 @@
         <!-- 商家成與分行 -->
         <div class="el-form">
           <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
-          <span>{{ memberDataList.merchantData.merchantCities }} /
-            {{ memberDataList.merchantData.merchantBranches }}</span>
+          <span>{{ merchantData.merchantCities }} /
+            {{ merchantData.merchantBranches }}</span>
           <span>
             <el-button
               type="warning"
@@ -429,7 +429,7 @@
     >
       <!-- 嗨錢包帳戶表格 -->
       <el-table
-        v-if="hiwalletBankDataShow"
+        v-show="hiwalletBankDataShow"
         :data="hiwalleDatatList"
         height="500"
         style="width: 50%; margin: 0 5px"
@@ -455,7 +455,7 @@
 
       <!-- 銀行帳戶表格 -->
       <el-table
-        v-if="bankDataShow"
+        v-show="bankDataShow"
         :data="bankDatatList"
         height="500"
         style="width: 50%; margin: 0 5px"
@@ -482,7 +482,7 @@
 
       <!-- 商家管理 進行中活動 -->
       <el-table
-        v-if="activeEventDataListShow"
+        v-show="activeEventDataListShow"
         :data="activeDataList"
         border
         style="width: 50%; margin: 0 5px"
@@ -502,16 +502,12 @@ export default {
   name: 'PublicUserForm',
   props: {
     memberDataList: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
   data() {
     return {
-      merchantData: {},
-      mechantModifyForm: {},
-      bankDatatList: [],
-      activeDataList: [],
-      hiwalleDatatList: [],
       advancedModifyForm: {
         newNickName: ''
       },
@@ -529,13 +525,12 @@ export default {
       innerMessageContent: '',
       dialogMessageContent: '',
       dialogbankMessageWidth: '',
+      bankDataShow: false,
       dialogMessageShow: false,
       dialogtAvatarShow: false,
       hiwalletBankDataShow: false,
-      bankDataShow: false,
       dialogbankMessageShow: false,
       notificationMessageShow: false,
-
       nickNameMessageShow: false,
       activeEventDataListShow: false,
       storeRouter: false,
@@ -566,7 +561,6 @@ export default {
       this.mechantModifyForm = this.memberDataList.mechantModifyForm
       this.merchantData = this.memberDataList.merchantData
       this.activeDataList = this.memberDataList.in_progress_activities
-      console.log(this.activeDataList)
     },
     merchantStepOne() {
       this.merchantSubmit = true
@@ -579,7 +573,6 @@ export default {
       this.merchantModify = true
       this.merchantdisabled = true
       if (key === 'OK') {
-        console.log(123)
       }
     },
     merchantMessageShowSubmit(data, key, modify) {
@@ -591,7 +584,6 @@ export default {
     },
     // 常用對象 綁定銀行
     handleBankList(key) {
-      console.log(key)
       this.dialogbankMessageShow = true
       if (key === 'payObject') {
         this.bankDataShow = true

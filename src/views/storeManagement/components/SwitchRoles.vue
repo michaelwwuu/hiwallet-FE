@@ -31,7 +31,7 @@
       </el-form-item>
     </el-form>
     <publicUserForm
-      v-if="searchListSubmit"
+      v-if="serachDataListShow"
       :member-data-list="memberDataList"
     />
   </div>
@@ -56,22 +56,20 @@ export default {
         searchKey: [
           {
             required: true,
-            message: this.$t('dashboard.please_enter_the_full_account_number'),
+            message: this.$t('dashboard.Please_enter_the_merchant_account_number_you_want_to_check'),
             trigger: 'blur'
           }
         ]
       },
-      searchListSubmit: false
+      serachDataListShow: false
     }
-  },
-  created() {
-    this.getMemberList()
   },
   methods: {
     // 獲取表格資料
     getMemberList() {
       getRoles().then(res => {
         if (res.code === 20000) {
+          this.serachDataListShow = true
           this.memberDataList = res.data
         }
       })
@@ -81,7 +79,7 @@ export default {
       if (this.listSearchKey.searchKey.trim() === '') this.listSearchKey.searchKey = ''
       this.$refs[rules].validate(valid => {
         if (!valid) return
-        this.searchListSubmit = true
+        this.getMemberList()
       })
     }
   }

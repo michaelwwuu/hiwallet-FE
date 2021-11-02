@@ -1,5 +1,6 @@
 export default {
   hiwalletTitle: 'Hiwallet Admin',
+  switch_language_success: 'Switch Language Success',
   route: {
     dashboard: 'dashboard',
     permission: 'Account manage',
@@ -77,7 +78,10 @@ export default {
     affiliated_chains: 'Affiliated Chains',
     affiliated_stores: 'affiliated Stores',
     affiliated_city: 'Affiliated Cities',
-    in_progress_activities: 'In-progress activities'
-
+    in_progress_activities: 'In-progress activities',
+    list_of_in_progress_events: 'List of In-Progress Events',
+    event_name: 'Event Name',
+    event_start_date: 'Event Start Date',
+    event_end_date: 'Event End Date'
   }
 }

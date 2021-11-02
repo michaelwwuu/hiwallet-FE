@@ -118,7 +118,7 @@
           <el-button
             type="primary"
             size="small"
-            @click="handleModifyStatus(memberDataList, 'editPermission')"
+            @click="merchantCityBranches('editPermission')"
           >
             {{ $t("dashboard.editPermission") }}
           </el-button>
@@ -194,8 +194,59 @@
       :width="dialogbankMessageWidth"
       center
     >
+      <!-- 暱稱或商家名稱 -->
+      <div v-show="merchantNickNameShow">
+        <el-dialog
+          title="通知訊息"
+          :visible.sync="nickNameMessageShow"
+          width="30%"
+          append-to-body
+          center
+        >
+          <span class="dialog-content" v-html="innerMessageContent" />
+          <span slot="footer" class="dialog-footer">
+            <el-button
+              type="primary"
+              @click="merchantMessageShowSubmit(memberDataList, dialogMessageTitle,advancedModifyForm)"
+            >确 定</el-button>
+          </span>
+        </el-dialog>
+        <el-form
+          ref="advancedModifyForm"
+          :model="advancedModifyForm"
+          :rules="advancedModifyRules"
+          label-width="150px"
+          class="advancedModify-style"
+        >
+          <el-form-item :label="$t('dashboard.currentNickname')">
+            <span>{{ memberDataList.nickName }}</span>
+          </el-form-item>
+          <el-form-item
+            prop="newNickName"
+            :label="$t('dashboard.changeNickname')"
+          >
+            <el-input
+              v-model="advancedModifyForm.newNickName"
+              type="text"
+              :placeholder="$t('dashboard.please_enter_a_new_nickname')"
+              autocomplete="off"
+            />
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button
+            type="primary"
+            @click="submitVisible('advancedModifyForm')"
+          >确 定</el-button>
+          <el-button
+            type="danger"
+            @click="merchantShow = false"
+          >取 消</el-button>
+        </span>
+      </div>
+
       <!-- 當前費率 -->
-      <div v-if="merchantCurrentRatesShow">
+      <div v-show="merchantCurrentRatesShow">
         <el-form
           ref="mechantModifyForm"
           :model="mechantModifyForm"
@@ -275,7 +326,7 @@
       </div>
 
       <!-- 商家城市與分行 -->
-      <div v-if="merchantCityBranchesShow">
+      <div v-show="merchantCityBranchesShow">
         <el-form
           :model="merchantData"
           label-width="150px"
@@ -310,6 +361,7 @@
           </el-form-item>
         </el-form>
       </div>
+
     </el-dialog>
 
     <!-- 頭像 -->
@@ -348,55 +400,17 @@
         <span slot="footer" class="dialog-footer">
           <el-button
             type="primary"
-            @click="
-              dialogMessageShowSubmit(
-                memberDataList,
-                dialogMessageTitle,
-                advancedModifyForm
-              )
-            "
+            @click="dialogMessageShowSubmit(memberDataList, dialogMessageTitle)"
           >确 定</el-button>
         </span>
       </el-dialog>
 
       <!-- 登入 交易 密碼 表格-->
-      <div v-if="generalModifyShow">
-        <span class="dialog-content" v-html="dialogMessageContent" />
-      </div>
-
-      <!-- 暱稱表格 -->
-      <div v-if="advancedModifyShow">
-        <el-form
-          ref="advancedModifyForm"
-          :model="advancedModifyForm"
-          :rules="advancedModifyRules"
-          label-width="150px"
-          class="advancedModify-style"
-        >
-          <el-form-item :label="$t('dashboard.currentNickname')">
-            <span>{{ advancedModifyForm.oddNickName }}</span>
-          </el-form-item>
-          <el-form-item
-            prop="newNickName"
-            :label="$t('dashboard.changeNickname')"
-          >
-            <el-input
-              v-model="advancedModifyForm.newNickName"
-              type="text"
-              :placeholder="$t('dashboard.please_enter_a_new_nickname')"
-              autocomplete="off"
-            />
-          </el-form-item>
-        </el-form>
-      </div>
+      <span class="dialog-content" v-html="dialogMessageContent" />
       <span slot="footer" class="dialog-footer">
         <el-button
           type="primary"
-          @click="
-            submitVisible(
-              advancedModifyShow ? 'advancedModifyForm' : advancedModifyShow
-            )
-          "
+          @click="notificationMessageShow = true"
         >确 定</el-button>
         <el-button
           type="danger"
@@ -441,6 +455,7 @@
 
       <!-- 銀行帳戶表格 -->
       <el-table
+        v-if="bankDataShow"
         :data="bankDatatList"
         height="500"
         style="width: 50%; margin: 0 5px"
@@ -464,6 +479,19 @@
           />
         </el-table-column>
       </el-table>
+
+      <!-- 商家管理 進行中活動 -->
+      <el-table
+        v-if="activeEventDataListShow"
+        :data="activeDataList"
+        border
+        style="width: 50%; margin: 0 5px"
+      >
+        <el-table-column align="center" prop="activeName" :label="$t('dashboard.event_name')" />
+        <el-table-column align="center" prop="activeStartTime" :label="$t('dashboard.event_start_date')" />
+        <el-table-column align="center" prop="activeEndTime" :label="$t('dashboard.event_end_date')" />
+      </el-table>
+
     </el-dialog>
 
   </div>
@@ -479,12 +507,12 @@ export default {
   },
   data() {
     return {
-      bankDatatList: [],
-      hiwalleDatatList: [],
       merchantData: {},
       mechantModifyForm: {},
+      bankDatatList: [],
+      activeDataList: [],
+      hiwalleDatatList: [],
       advancedModifyForm: {
-        oddNickName: '',
         newNickName: ''
       },
       advancedModifyRules: {
@@ -496,27 +524,30 @@ export default {
           }
         ]
       },
-      dialogbankMessageWidth: '',
       accountAvatarImage: '',
       dialogMessageTitle: '',
-      dialogMessageContent: '',
       innerMessageContent: '',
+      dialogMessageContent: '',
+      dialogbankMessageWidth: '',
       dialogMessageShow: false,
       dialogtAvatarShow: false,
-      generalModifyShow: false,
-      advancedModifyShow: false,
       hiwalletBankDataShow: false,
+      bankDataShow: false,
       dialogbankMessageShow: false,
       notificationMessageShow: false,
 
+      nickNameMessageShow: false,
+      activeEventDataListShow: false,
       storeRouter: false,
       accountRouter: false,
       merchantShow: false,
       merchantModify: true,
       merchantSubmit: false,
       merchantdisabled: true,
+      merchantNickNameShow: false,
       merchantCityBranchesShow: false,
       merchantCurrentRatesShow: false
+
     }
   },
   created() {
@@ -524,9 +555,7 @@ export default {
     const routerKey = this.$route.name
     if (routerKey === 'PagePermission') {
       this.accountRouter = true
-      this.storeRouter = false
     } else if (routerKey === 'storeManagement') {
-      this.accountRouter = false
       this.storeRouter = true
     }
   },
@@ -536,71 +565,96 @@ export default {
       this.bankDatatList = this.memberDataList.bankList
       this.mechantModifyForm = this.memberDataList.mechantModifyForm
       this.merchantData = this.memberDataList.merchantData
+      this.activeDataList = this.memberDataList.in_progress_activities
+      console.log(this.activeDataList)
     },
     merchantStepOne() {
       this.merchantSubmit = true
-      this.merchantdisabled = false
       this.merchantModify = false
+      this.merchantdisabled = false
     },
     merchantStepTwo(key) {
       // 未來做區分
       this.merchantSubmit = false
-      this.merchantdisabled = true
       this.merchantModify = true
+      this.merchantdisabled = true
       if (key === 'OK') {
         console.log(123)
       }
     },
+    merchantMessageShowSubmit(data, key, modify) {
+      if (key === this.$t('dashboard.accountNickname')) {
+        this.merchantShow = false
+        this.nickNameMessageShow = false
+        data.nickName = modify.newNickName
+      }
+    },
     // 常用對象 綁定銀行
     handleBankList(key) {
+      console.log(key)
       this.dialogbankMessageShow = true
       if (key === 'payObject') {
-        this.dialogMessageTitle = this.$t(
-          'dashboard.commonlyTradedCounterparties'
-        )
+        this.bankDataShow = true
         this.hiwalletBankDataShow = true
+        this.activeEventDataListShow = false
+        this.dialogMessageTitle = this.$t('dashboard.commonlyTradedCounterparties')
         this.dialogbankMessageWidth = '70%'
-      } else {
-        this.dialogMessageTitle = this.$t(
-          'dashboard.bankCardAccountNumber'
-        )
+      } else if (key === 'bankCard') {
+        this.bankDataShow = true
         this.hiwalletBankDataShow = false
+        this.activeEventDataListShow = false
+        this.dialogMessageTitle = this.$t('dashboard.bankCardAccountNumber')
         this.dialogbankMessageWidth = '50%'
+      } else if (key === 'activities') {
+        this.bankDataShow = false
+        this.hiwalletBankDataShow = false
+        this.activeEventDataListShow = true
+        this.dialogMessageTitle = this.$t('dashboard.list_of_in_progress_events')
+        this.dialogbankMessageWidth = '60%'
       }
     },
 
     // 過濾表單
     submitVisible(formKey) {
-      if (!formKey) {
-        this.notificationMessageShow = true
-      } else {
-        this.$refs[formKey].validate((valid) => {
-          if (!valid) return
-          this.notificationMessageShow = true
-        })
-      }
+      this.$refs[formKey].validate((valid) => {
+        if (!valid) return
+        this.innerMessageContent = `${this.$t(
+          'dashboard.accountNickname'
+        )}變更成功`
+        this.nickNameMessageShow = true
+      })
     },
     merchantCityBranches(key) {
       this.merchantShow = true
-      if (key === 'currentRates') {
-        this.merchantCurrentRatesShow = true
-        this.merchantCityBranchesShow = false
-        this.dialogMessageTitle = this.$t('dashboard.merchant_current_rates')
-        this.dialogbankMessageWidth = '40%'
-      } else if (key === 'merchant') {
-        this.merchantCurrentRatesShow = false
-        this.merchantCityBranchesShow = true
-        this.dialogMessageTitle = this.$t('dashboard.merchant_city_branch_information')
-        this.dialogbankMessageWidth = '30%'
+      switch (key) {
+        case 'editPermission':
+          this.merchantNickNameShow = true
+          this.merchantCurrentRatesShow = false
+          this.merchantCityBranchesShow = false
+          this.dialogMessageTitle = this.$t('dashboard.accountNickname')
+          this.dialogbankMessageWidth = '30%'
+          this.$nextTick(() => this.$refs.advancedModifyForm.resetFields())
+          break
+        case 'currentRates':
+          this.merchantNickNameShow = false
+          this.merchantCurrentRatesShow = true
+          this.merchantCityBranchesShow = false
+          this.dialogMessageTitle = this.$t('dashboard.merchant_current_rates')
+          this.dialogbankMessageWidth = '40%'
+          break
+        case 'merchant':
+          this.merchantNickNameShow = false
+          this.merchantCurrentRatesShow = false
+          this.merchantCityBranchesShow = true
+          this.dialogMessageTitle = this.$t('dashboard.merchant_city_branch_information')
+          this.dialogbankMessageWidth = '30%'
+          break
       }
     },
     // 切換解鎖按鈕
     handleModifyStatus(row, status) {
       this.dialogMessageShow = true
-      this.generalModifyShow = false
-      this.advancedModifyShow = false
       if (status === 'normal' || status === 'locking') {
-        this.generalModifyShow = true
         this.dialogMessageTitle = this.$t('dashboard.accountLock')
         this.dialogMessageContent = `是否要${
           status === 'normal' ? '解鎖帳號' : '鎖定帳號'
@@ -610,7 +664,6 @@ export default {
         }。`
         this.accountStatus = status
       } else if (status === 'loginPassword' || status === 'payPassword') {
-        this.generalModifyShow = true
         this.dialogMessageTitle =
           status === 'loginPassword'
             ? this.$t('dashboard.recordLoginPassword')
@@ -619,17 +672,8 @@ export default {
           row.userName
         }</span> ) 的${status === 'loginPassword' ? '登錄' : '交易'}密碼 ?`
         this.innerMessageContent = '密碼已重置'
-      } else if (status === 'editPermission') {
-        this.advancedModifyShow = true
-        this.dialogMessageTitle = `${this.$t('dashboard.accountNickname')}`
-        this.innerMessageContent = `${this.$t(
-          'dashboard.accountNickname'
-        )}變更成功`
-        this.advancedModifyForm.oddNickName = row.nickName
-        this.$nextTick(() => this.$refs.advancedModifyForm.resetFields())
       } else if (status === 'accountAvatar') {
         this.dialogtAvatarShow = true
-        this.generalModifyShow = true
         this.dialogMessageShow = false
         this.dialogMessageTitle = `${this.$t('dashboard.accountAvatar')}`
         this.dialogMessageContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`
@@ -639,15 +683,14 @@ export default {
       }
     },
     // 送出解鎖按鈕
-    dialogMessageShowSubmit(data, key, modify) {
+    dialogMessageShowSubmit(data, key) {
+      this.merchantShow = false
       this.dialogMessageShow = false
       this.dialogtAvatarShow = false
       this.notificationMessageShow = false
       this.$message({ message: '操作成功', type: 'success' })
       if (key === this.$t('dashboard.accountLock')) {
         data.status = this.accountStatus
-      } else if (key === this.$t('dashboard.accountNickname')) {
-        data.nickName = modify.newNickName
       } else if (key === this.$t('dashboard.accountAvatar')) {
         data.avatar = require('@/assets/no_data_images/no_data.png')
         data.avatarStatus = this.avatarStatus

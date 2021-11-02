@@ -1,5 +1,6 @@
 export default {
   hiwalletTitle: '嗨錢包後台',
+  switch_language_success: '切換語言成功',
   route: {
     dashboard: '首頁',
     permission: '账号管理',
@@ -77,6 +78,10 @@ export default {
     affiliated_chains: '所屬連鎖',
     affiliated_stores: '所屬分店',
     affiliated_city: '所屬城市',
-    in_progress_activities: '進行中活動'
+    in_progress_activities: '進行中活動',
+    list_of_in_progress_events: '進行中活動列表',
+    event_name: '活動名稱',
+    event_start_date: '活動開始日期',
+    event_end_date: '活動結束日期'
   }
 }

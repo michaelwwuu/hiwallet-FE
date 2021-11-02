@@ -73,7 +73,6 @@ export default {
       getRoles().then((res) => {
         if (res.code === 20000) {
           this.memberDataList = res.data
-          console.log(this.memberDataList)
         }
       })
     },

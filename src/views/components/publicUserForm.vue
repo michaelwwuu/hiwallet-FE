@@ -23,6 +23,7 @@
           </el-button>
         </span>
       </div>
+
       <div class="el-form">
         <span>{{ $t("dashboard.hiwalletMoney") }}</span>
         <span>{{ memberDataList.hiwalletMoney }}</span>
@@ -35,6 +36,7 @@
           </el-button>
         </span>
       </div>
+
       <div class="el-form">
         <span>{{ $t("dashboard.loginPassword") }}</span>
         <span>{{ memberDataList.loginPassword }}</span>
@@ -48,6 +50,7 @@
           </el-button>
         </span>
       </div>
+
       <div class="el-form">
         <span>{{ $t("dashboard.payPassword") }}</span>
         <span>{{ memberDataList.payPassword }}</span>
@@ -61,11 +64,14 @@
           </el-button>
         </span>
       </div>
+
       <!-- 帳號管理 常用交易對象-->
       <div v-if="accountRouter" class="el-form">
         <span>{{ $t("dashboard.payObject") }}</span>
-        <span>{{ memberDataList.payObject }} 筆 /
-          {{ memberDataList.bankCard }} 筆</span>
+        <span
+          >{{ memberDataList.payObject }} 筆 /
+          {{ memberDataList.bankCard }} 筆</span
+        >
         <span>
           <el-button
             type="warning"
@@ -151,8 +157,10 @@
         <!-- 商家成與分行 -->
         <div class="el-form">
           <span>{{ $t("dashboard.merchant_cities_and_branches") }}</span>
-          <span>{{ merchantData.merchantCities }} /
-            {{ merchantData.merchantBranches }}</span>
+          <span
+            >{{ memberDataList.merchantData.merchantCities }} /
+            {{ memberDataList.merchantData.merchantBranches }}</span
+          >
           <span>
             <el-button
               type="warning"
@@ -171,7 +179,7 @@
             <span
               v-for="(item, index) in memberDataList.in_progress_activities"
               :key="index"
-            >{{ item.activeName }},
+              >{{ item.activeName }},
             </span>
           </span>
           <span>
@@ -207,8 +215,15 @@
           <span slot="footer" class="dialog-footer">
             <el-button
               type="primary"
-              @click="merchantMessageShowSubmit(memberDataList, dialogMessageTitle,advancedModifyForm)"
-            >确 定</el-button>
+              @click="
+                merchantMessageShowSubmit(
+                  memberDataList,
+                  dialogMessageTitle,
+                  advancedModifyForm
+                )
+              "
+              >确 定</el-button
+            >
           </span>
         </el-dialog>
         <el-form
@@ -218,12 +233,12 @@
           label-width="150px"
           class="advancedModify-style"
         >
-          <el-form-item :label="$t('dashboard.currentNickname')">
+          <el-form-item :label="$t('dashboard.current_nickName')">
             <span>{{ memberDataList.nickName }}</span>
           </el-form-item>
           <el-form-item
             prop="newNickName"
-            :label="$t('dashboard.changeNickname')"
+            :label="$t('dashboard.change_nickName')"
           >
             <el-input
               v-model="advancedModifyForm.newNickName"
@@ -234,14 +249,12 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button
-            type="primary"
-            @click="submitVisible('advancedModifyForm')"
-          >确 定</el-button>
-          <el-button
-            type="danger"
-            @click="merchantShow = false"
-          >取 消</el-button>
+          <el-button type="primary" @click="submitVisible('advancedModifyForm')"
+            >确 定</el-button
+          >
+          <el-button type="danger" @click="merchantShow = false"
+            >取 消</el-button
+          >
         </span>
       </div>
 
@@ -249,13 +262,13 @@
       <div v-show="merchantCurrentRatesShow">
         <el-form
           ref="mechantModifyForm"
-          :model="mechantModifyForm"
+          :model="memberDataList.mechantModifyForm"
           label-width="150px"
           class="advancedModify-style"
         >
           <el-form-item prop="nowRate" :label="$t('dashboard.current_rates')">
             <el-input
-              v-model="mechantModifyForm.nowRate"
+              v-model="memberDataList.mechantModifyForm.nowRate"
               type="text"
               :disabled="merchantdisabled"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
@@ -265,14 +278,14 @@
           </el-form-item>
           <el-form-item prop="time" :label="$t('dashboard.expiration_date')">
             <el-date-picker
-              v-model="mechantModifyForm.nowCreatStartTime"
+              v-model="memberDataList.mechantModifyForm.nowCreatStartTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
               style="margin-right: 18px; width: 180px !important"
             />
             <el-date-picker
-              v-model="mechantModifyForm.nowCreatEndTime"
+              v-model="memberDataList.mechantModifyForm.nowCreatEndTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
@@ -281,7 +294,7 @@
           </el-form-item>
           <el-form-item prop="nextRate" :label="$t('dashboard.next_rate')">
             <el-input
-              v-model="mechantModifyForm.nextRate"
+              v-model="memberDataList.mechantModifyForm.nextRate"
               type="text"
               :disabled="merchantdisabled"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
@@ -291,14 +304,14 @@
           </el-form-item>
           <el-form-item prop="time" :label="$t('dashboard.expiration_date')">
             <el-date-picker
-              v-model="mechantModifyForm.nextCreatStartTime"
+              v-model="memberDataList.mechantModifyForm.nextCreatStartTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
               style="margin-right: 18px; width: 180px !important"
             />
             <el-date-picker
-              v-model="mechantModifyForm.nextCreatEndTime"
+              v-model="memberDataList.mechantModifyForm.nextCreatEndTime"
               type="date"
               placeholder="选择日期"
               :disabled="merchantdisabled"
@@ -311,16 +324,15 @@
             v-if="merchantModify"
             type="danger"
             @click="merchantStepOne"
-          >修 改</el-button>
+            >修 改</el-button
+          >
           <div v-if="merchantSubmit">
-            <el-button
-              type="success"
-              @click="merchantStepTwo('OK')"
-            >確 定</el-button>
-            <el-button
-              type="danger"
-              @click="merchantStepTwo('Canel')"
-            >取 消</el-button>
+            <el-button type="success" @click="merchantStepTwo('OK')"
+              >確 定</el-button
+            >
+            <el-button type="danger" @click="merchantStepTwo('Canel')"
+              >取 消</el-button
+            >
           </div>
         </span>
       </div>
@@ -328,40 +340,39 @@
       <!-- 商家城市與分行 -->
       <div v-show="merchantCityBranchesShow">
         <el-form
-          :model="merchantData"
+          :model="memberDataList.merchantData"
           label-width="150px"
           class="advancedModify-style"
         >
           <el-form-item prop="name" :label="$t('dashboard.merchant_name')">
-            <span>{{ merchantData.name }}</span>
+            <span>{{ memberDataList.merchantData.name }}</span>
           </el-form-item>
           <el-form-item
             prop="groups"
             :label="$t('dashboard.affiliated_groups')"
           >
-            <span>{{ merchantData.groups }}</span>
+            <span>{{ memberDataList.merchantData.groups }}</span>
           </el-form-item>
           <el-form-item
             prop="groupsChain"
             :label="$t('dashboard.affiliated_chains')"
           >
-            <span>{{ merchantData.groupsChain }}</span>
+            <span>{{ memberDataList.merchantData.groupsChain }}</span>
           </el-form-item>
           <el-form-item
             prop="groupsBranches"
             :label="$t('dashboard.affiliated_stores')"
           >
-            <span>{{ merchantData.groupsBranches }}</span>
+            <span>{{ memberDataList.merchantData.groupsBranches }}</span>
           </el-form-item>
           <el-form-item
             prop="merchantCities"
             :label="$t('dashboard.affiliated_city')"
           >
-            <span>{{ merchantData.merchantCities }}</span>
+            <span>{{ memberDataList.merchantData.merchantCities }}</span>
           </el-form-item>
         </el-form>
       </div>
-
     </el-dialog>
 
     <!-- 頭像 -->
@@ -372,13 +383,12 @@
       center
     >
       <div class="avatar-box">
-        <img :src="accountAvatarImage">
+        <img :src="avatarMemberImage" />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button
-          type="danger"
-          @click="dialogMessageShow = true"
-        >刪 除</el-button>
+        <el-button type="danger" @click="dialogMessageShow = true"
+          >刪 除</el-button
+        >
       </span>
     </el-dialog>
 
@@ -400,22 +410,21 @@
         <span slot="footer" class="dialog-footer">
           <el-button
             type="primary"
-            @click="dialogMessageShowSubmit(memberDataList, dialogMessageTitle)"
-          >确 定</el-button>
+            @click="dialogMessageSubmit(memberDataList, dialogMessageTitle)"
+            >确 定</el-button
+          >
         </span>
       </el-dialog>
 
       <!-- 登入 交易 密碼 表格-->
       <span class="dialog-content" v-html="dialogMessageContent" />
       <span slot="footer" class="dialog-footer">
-        <el-button
-          type="primary"
-          @click="notificationMessageShow = true"
-        >确 定</el-button>
-        <el-button
-          type="danger"
-          @click="dialogMessageShow = false"
-        >取 消</el-button>
+        <el-button type="primary" @click="notificationMessageShow = true"
+          >确 定</el-button
+        >
+        <el-button type="danger" @click="dialogMessageShow = false"
+          >取 消</el-button
+        >
       </span>
     </el-dialog>
 
@@ -424,31 +433,32 @@
       :title="dialogMessageTitle"
       :visible.sync="dialogbankMessageShow"
       :width="dialogbankMessageWidth"
-      class="bank-message-style"
       center
+      class="bank-message-style"
     >
       <!-- 嗨錢包帳戶表格 -->
       <el-table
         v-show="hiwalletBankDataShow"
-        :data="hiwalleDatatList"
+        :data="memberDataList.hiwalletList"
         height="500"
         style="width: 50%; margin: 0 5px"
       >
         <el-table-column
           :label="
-            $t('dashboard.hiwalletAccount') + ` (${hiwalleDatatList.length}) 筆`
+            $t('dashboard.hiwallet_account') +
+            ` (${memberDataList.hiwalletList.length}) 筆`
           "
           align="center"
         >
           <el-table-column
+            align="center"
             prop="userName"
             :label="$t('login.username')"
-            align="center"
           />
           <el-table-column
-            prop="note"
-            :label="$t('dashboard.nicknameRemark')"
             align="center"
+            prop="note"
+            :label="$t('dashboard.nickname_remark')"
           />
         </el-table-column>
       </el-table>
@@ -456,26 +466,26 @@
       <!-- 銀行帳戶表格 -->
       <el-table
         v-show="bankDataShow"
-        :data="bankDatatList"
+        :data="memberDataList.bankList"
         height="500"
         style="width: 50%; margin: 0 5px"
       >
         <el-table-column
-          :label="
-            $t('dashboard.bankCardAccountNumber') +
-              ` (${bankDatatList.length}) 筆`
-          "
           align="center"
+          :label="
+            $t('dashboard.bank_card_account_number') +
+            ` (${memberDataList.bankList.length}) 筆`
+          "
         >
           <el-table-column
+            align="center"
             prop="userName"
             :label="$t('login.username')"
-            align="center"
           />
           <el-table-column
-            prop="note"
-            :label="$t('dashboard.nicknameRemark')"
             align="center"
+            prop="note"
+            :label="$t('dashboard.nickname_remark')"
           />
         </el-table-column>
       </el-table>
@@ -483,48 +493,57 @@
       <!-- 商家管理 進行中活動 -->
       <el-table
         v-show="activeEventDataListShow"
-        :data="activeDataList"
+        :data="memberDataList.in_progress_activities"
         border
         style="width: 50%; margin: 0 5px"
       >
-        <el-table-column align="center" prop="activeName" :label="$t('dashboard.event_name')" />
-        <el-table-column align="center" prop="activeStartTime" :label="$t('dashboard.event_start_date')" />
-        <el-table-column align="center" prop="activeEndTime" :label="$t('dashboard.event_end_date')" />
+        <el-table-column
+          align="center"
+          prop="activeName"
+          :label="$t('dashboard.event_name')"
+        />
+        <el-table-column
+          align="center"
+          prop="activeStartTime"
+          :label="$t('dashboard.event_start_date')"
+        />
+        <el-table-column
+          align="center"
+          prop="activeEndTime"
+          :label="$t('dashboard.event_end_date')"
+        />
       </el-table>
-
     </el-dialog>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PublicUserForm',
+  name: "PublicUserForm",
   props: {
     memberDataList: {
       type: Object,
-      required: true
-    }
+    },
   },
   data() {
     return {
       advancedModifyForm: {
-        newNickName: ''
+        newNickName: "",
       },
       advancedModifyRules: {
         newNickName: [
           {
             required: true,
-            message: this.$t('dashboard.the_account_cannot_be_blank'),
-            trigger: 'blur'
-          }
-        ]
+            message: this.$t("dashboard.the_account_cannot_be_blank"),
+            trigger: "blur",
+          },
+        ],
       },
-      accountAvatarImage: '',
-      dialogMessageTitle: '',
-      innerMessageContent: '',
-      dialogMessageContent: '',
-      dialogbankMessageWidth: '',
+      avatarMemberImage: "",
+      dialogMessageTitle: "",
+      innerMessageContent: "",
+      dialogMessageContent: "",
+      dialogbankMessageWidth: "",
       bankDataShow: false,
       dialogMessageShow: false,
       dialogtAvatarShow: false,
@@ -533,6 +552,7 @@ export default {
       notificationMessageShow: false,
       nickNameMessageShow: false,
       activeEventDataListShow: false,
+
       storeRouter: false,
       accountRouter: false,
       merchantShow: false,
@@ -541,155 +561,159 @@ export default {
       merchantdisabled: true,
       merchantNickNameShow: false,
       merchantCityBranchesShow: false,
-      merchantCurrentRatesShow: false
-
-    }
+      merchantCurrentRatesShow: false,
+    };
   },
   created() {
-    this.getMemberList()
-    const routerKey = this.$route.name
-    if (routerKey === 'PagePermission') {
-      this.accountRouter = true
-    } else if (routerKey === 'storeManagement') {
-      this.storeRouter = true
+    const routerKey = this.$route.name;
+    if (routerKey === "PagePermission") {
+      this.accountRouter = true;
+    } else if (routerKey === "storeManagement") {
+      this.storeRouter = true;
     }
   },
   methods: {
-    getMemberList() {
-      this.hiwalleDatatList = this.memberDataList.hiwalletList
-      this.bankDatatList = this.memberDataList.bankList
-      this.mechantModifyForm = this.memberDataList.mechantModifyForm
-      this.merchantData = this.memberDataList.merchantData
-      this.activeDataList = this.memberDataList.in_progress_activities
-    },
     merchantStepOne() {
-      this.merchantSubmit = true
-      this.merchantModify = false
-      this.merchantdisabled = false
+      this.merchantSubmit = true;
+      this.merchantModify = false;
+      this.merchantdisabled = false;
     },
     merchantStepTwo(key) {
       // 未來做區分
-      this.merchantSubmit = false
-      this.merchantModify = true
-      this.merchantdisabled = true
-      if (key === 'OK') {
+      this.merchantSubmit = false;
+      this.merchantModify = true;
+      this.merchantdisabled = true;
+      if (key === "OK") {
       }
     },
     merchantMessageShowSubmit(data, key, modify) {
-      if (key === this.$t('dashboard.accountNickname')) {
-        this.merchantShow = false
-        this.nickNameMessageShow = false
-        data.nickName = modify.newNickName
+      if (key === this.$t("dashboard.account_nickName")) {
+        this.merchantShow = false;
+        this.nickNameMessageShow = false;
+        data.nickName = modify.newNickName;
       }
     },
     // 常用對象 綁定銀行
     handleBankList(key) {
-      this.dialogbankMessageShow = true
-      if (key === 'payObject') {
-        this.bankDataShow = true
-        this.hiwalletBankDataShow = true
-        this.activeEventDataListShow = false
-        this.dialogMessageTitle = this.$t('dashboard.commonlyTradedCounterparties')
-        this.dialogbankMessageWidth = '70%'
-      } else if (key === 'bankCard') {
-        this.bankDataShow = true
-        this.hiwalletBankDataShow = false
-        this.activeEventDataListShow = false
-        this.dialogMessageTitle = this.$t('dashboard.bankCardAccountNumber')
-        this.dialogbankMessageWidth = '50%'
-      } else if (key === 'activities') {
-        this.bankDataShow = false
-        this.hiwalletBankDataShow = false
-        this.activeEventDataListShow = true
-        this.dialogMessageTitle = this.$t('dashboard.list_of_in_progress_events')
-        this.dialogbankMessageWidth = '60%'
+      this.bankDataShow = true;
+      this.dialogbankMessageShow = true;
+      this.hiwalletBankDataShow = false;
+      this.activeEventDataListShow = false;
+      this.dialogbankMessageWidth = "50%";
+
+      switch (key) {
+        case "payObject":
+          this.hiwalletBankDataShow = true;
+          this.dialogbankMessageWidth = "70%";
+          this.dialogMessageTitle = this.$t(
+            "dashboard.commonly_traded_counterparties"
+          );
+          break;
+        case "bankCard":
+          this.dialogMessageTitle = this.$t(
+            "dashboard.bank_card_account_number"
+          );
+          break;
+        case "activities":
+          this.bankDataShow = false;
+          this.activeEventDataListShow = true;
+          this.dialogMessageTitle = this.$t(
+            "dashboard.list_of_in_progress_events"
+          );
+          break;
       }
     },
 
     // 過濾表單
     submitVisible(formKey) {
       this.$refs[formKey].validate((valid) => {
-        if (!valid) return
+        if (!valid) return;
         this.innerMessageContent = `${this.$t(
-          'dashboard.accountNickname'
-        )}變更成功`
-        this.nickNameMessageShow = true
-      })
+          "dashboard.account_nickName"
+        )}變更成功`;
+        this.nickNameMessageShow = true;
+      });
     },
     merchantCityBranches(key) {
-      this.merchantShow = true
+      this.merchantShow = true;
+      this.merchantNickNameShow = false;
+      this.merchantCurrentRatesShow = false;
+      this.merchantCityBranchesShow = false;
+      this.dialogbankMessageWidth = "30%";
+
       switch (key) {
-        case 'editPermission':
-          this.merchantNickNameShow = true
-          this.merchantCurrentRatesShow = false
-          this.merchantCityBranchesShow = false
-          this.dialogMessageTitle = this.$t('dashboard.accountNickname')
-          this.dialogbankMessageWidth = '30%'
-          this.$nextTick(() => this.$refs.advancedModifyForm.resetFields())
-          break
-        case 'currentRates':
-          this.merchantNickNameShow = false
-          this.merchantCurrentRatesShow = true
-          this.merchantCityBranchesShow = false
-          this.dialogMessageTitle = this.$t('dashboard.merchant_current_rates')
-          this.dialogbankMessageWidth = '40%'
-          break
-        case 'merchant':
-          this.merchantNickNameShow = false
-          this.merchantCurrentRatesShow = false
-          this.merchantCityBranchesShow = true
-          this.dialogMessageTitle = this.$t('dashboard.merchant_city_branch_information')
-          this.dialogbankMessageWidth = '30%'
-          break
+        case "editPermission":
+          this.merchantNickNameShow = true;
+          this.dialogMessageTitle = this.$t("dashboard.account_nickName");
+          this.$nextTick(() => this.$refs.advancedModifyForm.resetFields());
+          break;
+        case "currentRates":
+          this.merchantCurrentRatesShow = true;
+          this.dialogMessageTitle = this.$t("dashboard.merchant_current_rates");
+          this.dialogbankMessageWidth = "40%";
+          break;
+        case "merchant":
+          this.merchantCityBranchesShow = true;
+          this.dialogMessageTitle = this.$t(
+            "dashboard.merchant_city_branch_information"
+          );
+          break;
       }
     },
     // 切換解鎖按鈕
     handleModifyStatus(row, status) {
-      this.dialogMessageShow = true
-      if (status === 'normal' || status === 'locking') {
-        this.dialogMessageTitle = this.$t('dashboard.accountLock')
-        this.dialogMessageContent = `是否要${
-          status === 'normal' ? '解鎖帳號' : '鎖定帳號'
-        } ( <span style="color:red">${row.userName}</span> ) ?`
-        this.innerMessageContent = `帳號已${
-          status === 'normal' ? '解鎖' : '鎖定'
-        }。`
-        this.accountStatus = status
-      } else if (status === 'loginPassword' || status === 'payPassword') {
-        this.dialogMessageTitle =
-          status === 'loginPassword'
-            ? this.$t('dashboard.recordLoginPassword')
-            : this.$t('dashboard.recordPayPassword')
-        this.dialogMessageContent = `是否要重置帳號 ( <span style="color:red">${
-          row.userName
-        }</span> ) 的${status === 'loginPassword' ? '登錄' : '交易'}密碼 ?`
-        this.innerMessageContent = '密碼已重置'
-      } else if (status === 'accountAvatar') {
-        this.dialogtAvatarShow = true
-        this.dialogMessageShow = false
-        this.dialogMessageTitle = `${this.$t('dashboard.accountAvatar')}`
-        this.dialogMessageContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`
-        this.innerMessageContent = '帳號頭像刪除成功。'
-        this.avatarStatus = 'noUpload'
-        this.accountAvatarImage = row.avatar
+      this.dialogMessageShow = true;
+      switch (status) {
+        case "normal":
+        case "locking":
+          this.dialogMessageTitle = this.$t("dashboard.accountLock");
+          this.dialogMessageContent = `是否要${
+            status === "normal" ? "解鎖帳號" : "鎖定帳號"
+          } ( <span style="color:red">${row.userName}</span> ) ?`;
+          this.innerMessageContent = `帳號已${
+            status === "normal" ? "解鎖" : "鎖定"
+          }。`;
+          this.accountStatus = status;
+          break;
+        case "loginPassword":
+        case "payPassword":  
+          this.dialogMessageTitle =
+            status === "loginPassword"
+              ? this.$t("dashboard.record_login_password")
+              : this.$t("dashboard.record_pay_password");
+          this.dialogMessageContent = `是否要重置帳號 ( <span style="color:red">${
+            row.userName
+          }</span> ) 的${status === "loginPassword" ? "登錄" : "交易"}密碼 ?`;
+          this.innerMessageContent = "密碼已重置";
+          break;
+        case "accountAvatar":  
+          this.dialogtAvatarShow = true;
+          this.dialogMessageShow = false;
+          this.dialogMessageTitle = `${this.$t("dashboard.accountAvatar")}`;
+          this.dialogMessageContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`;
+          this.innerMessageContent = "帳號頭像刪除成功。";
+          this.avatarStatus = "noUpload";
+          this.avatarMemberImage = row.avatar; 
+          break;
+
       }
     },
     // 送出解鎖按鈕
-    dialogMessageShowSubmit(data, key) {
-      this.merchantShow = false
-      this.dialogMessageShow = false
-      this.dialogtAvatarShow = false
-      this.notificationMessageShow = false
-      this.$message({ message: '操作成功', type: 'success' })
-      if (key === this.$t('dashboard.accountLock')) {
-        data.status = this.accountStatus
-      } else if (key === this.$t('dashboard.accountAvatar')) {
-        data.avatar = require('@/assets/no_data_images/no_data.png')
-        data.avatarStatus = this.avatarStatus
+    dialogMessageSubmit(data, key) {
+      this.merchantShow = false;
+      this.dialogMessageShow = false;
+      this.dialogtAvatarShow = false;
+      this.notificationMessageShow = false;
+      this.$message({ message: "操作成功", type: "success" });
+      if (key === this.$t("dashboard.accountLock")) {
+        data.status = this.accountStatus;
+      } else if (key === this.$t("dashboard.accountAvatar")) {
+        data.avatar = require("@/assets/no_data_images/no_data.png");
+        data.avatarStatus = this.avatarStatus;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -30,7 +30,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <publicUserForm
+    <publicUser-Form
       v-if="serachDataListShow"
       :member-data-list="memberDataList"
     />
@@ -69,8 +69,8 @@ export default {
     getMemberList() {
       getRoles().then((res) => {
         if (res.code === 20000) {
-          this.serachDataListShow = true
           this.memberDataList = res.data
+          this.serachDataListShow = this.memberDataList !=={}
         }
       })
     },

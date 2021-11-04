@@ -438,7 +438,7 @@
     >
       <!-- 嗨錢包帳戶表格 -->
       <el-table
-        v-show="isHiwalletListShow"
+        v-show="isHiwalletDataShow"
         :data="memberDataList.hiwalletList"
         height="500"
         style="width: 50%; margin: 0 5px"
@@ -492,7 +492,7 @@
 
       <!-- 商家管理 進行中活動 -->
       <el-table
-        v-show="isActiveListShow" 
+        v-show="isActiveDataShow" 
         :data="memberDataList.in_progress_activities"
         border
         style="width: 100%;"
@@ -554,10 +554,11 @@ export default {
       dialogbankListShow: false,
       notificationMessageShow: false,
 
-      isActiveListShow: false,
-      isHiwalletListShow: false,
 
       isBankDataShow: false,
+      isActiveDataShow: false,
+      isHiwalletDataShow: false,
+
       isMerchantShow: false,
       isMerchantModify: true,
       isMerchantSubmit: false,
@@ -594,12 +595,12 @@ export default {
     handleBankList(key) {
       this.isBankDataShow = true;
       this.dialogbankListShow = true;
-      this.isHiwalletListShow = false;
-      this.isActiveListShow = false;
+      this.isHiwalletDataShow = false;
+      this.isActiveDataShow = false;
       this.dialogWidth = "50%";
       switch (key) {
         case "payObject":
-          this.isHiwalletListShow = true;
+          this.isHiwalletDataShow = true;
           this.dialogWidth = "70%";
           this.dialogMessageTitle = this.$t(
             "dashboard.commonly_traded_counterparties"
@@ -612,7 +613,7 @@ export default {
           break;
         case "activities":
           this.isBankDataShow = false;
-          this.isActiveListShow = true;
+          this.isActiveDataShow = true;
           this.dialogMessageTitle = this.$t(
             "dashboard.list_of_in_progress_events"
           );
@@ -676,7 +677,6 @@ export default {
       this.isMerchantCurrentRatesShow = false;
       this.isMerchantCityBranchesShow = false;
       this.dialogWidth = "30%";
-
       switch (key) {
         case "editPermission":
           this.isMerchantNickNameShow = true;

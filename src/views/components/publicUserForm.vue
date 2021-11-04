@@ -323,14 +323,14 @@
           <el-button
             v-if="isMerchantModify"
             type="danger"
-            @click="merchantStepOne"
+            @click="merchantModify"
             >修 改</el-button
           >
           <div v-if="isMerchantSubmit">
-            <el-button type="success" @click="merchantStepTwo('OK')"
+            <el-button type="success" @click="merchantSubmit('OK')"
               >確 定</el-button
             >
-            <el-button type="danger" @click="merchantStepTwo('Canel')"
+            <el-button type="danger" @click="merchantSubmit('Canel')"
               >取 消</el-button
             >
           </div>
@@ -492,10 +492,10 @@
 
       <!-- 商家管理 進行中活動 -->
       <el-table
-        v-show="isActiveListShow"
+        v-show="isActiveListShow" 
         :data="memberDataList.in_progress_activities"
         border
-        style="width: 50%; margin: 0 5px"
+        style="width: 100%;"
       >
         <el-table-column
           align="center"
@@ -513,6 +513,7 @@
           :label="$t('dashboard.event_end_date')"
         />
       </el-table>
+
     </el-dialog>
   </div>
 </template>
@@ -575,21 +576,20 @@ export default {
     }
   },
   methods: {
-
-    merchantStepOne() {
+    // 商家當前費率
+    merchantModify() {
       this.isMerchantSubmit = true;
       this.isMerchantModify = false;
       this.isMerchantdisabled = false;
     },
-
-    merchantStepTwo(key) {
+    // 商家當前費率
+    merchantSubmit(key) {
       // 未來做區分
       this.isMerchantSubmit = false;
       this.isMerchantModify = true;
       this.isMerchantdisabled = true;
       if (key === "OK") this.$message({ message: "操作成功", type: "success" });
     },
-
     // 常用對象 綁定銀行
     handleBankList(key) {
       this.isBankDataShow = true;
@@ -597,7 +597,6 @@ export default {
       this.isHiwalletListShow = false;
       this.isActiveListShow = false;
       this.dialogWidth = "50%";
-
       switch (key) {
         case "payObject":
           this.isHiwalletListShow = true;
@@ -656,7 +655,6 @@ export default {
           this.avatarStatus = "noUpload";
           this.avatarMemberImage = row.avatar; 
           break;
-
       }
     },
 

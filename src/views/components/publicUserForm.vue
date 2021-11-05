@@ -546,6 +546,7 @@ export default {
       innerMessageContent: "",
       dialogMessageContent: "",
       
+      // 商家管理 帳號管理 
       storeRouter: false,
       accountRouter: false,
 
@@ -554,10 +555,11 @@ export default {
       dialogbankListShow: false,
       notificationMessageShow: false,
 
-
+      // 銀行卡 常用對象 進行活動
       isBankDataShow: false,
       isActiveDataShow: false,
       isHiwalletDataShow: false,
+
 
       isMerchantShow: false,
       isMerchantModify: true,

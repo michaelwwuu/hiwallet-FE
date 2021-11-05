@@ -12,7 +12,8 @@ export default {
     page404: '404',
     clipboardDemo: 'Clipboard',
     profile: 'Profile',
-    storeManagement: 'Merchant manage'
+    storeManagement: 'Merchant manage',
+    certificationManagement:'Certification Management',
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -83,5 +84,15 @@ export default {
     event_name: 'Event Name',
     event_start_date: 'Event Start Date',
     event_end_date: 'Event End Date'
-  }
+  },
+  certification:{
+    adminPermission: 'Account manage',
+    account_enquiry: 'Account Enquiry',
+    search: 'Search',
+    noReview:'No review',
+    reviewed:'Reviewed',
+    account:'Account',
+    upload_date:'Upload date',
+    audit_status:'Audit status',
+  },
 }

@@ -12,7 +12,8 @@ export default {
     page404: '404',
     clipboardDemo: 'Clipboard',
     profile: '个人中心',
-    storeManagement: '商家管理'
+    storeManagement: '商家管理',
+    certificationManagement:'認證管理',
   },
   navbar: {
     dashboard: '首页',
@@ -83,5 +84,15 @@ export default {
     event_name: '活動名稱',
     event_start_date: '活動開始日期',
     event_end_date: '活動結束日期'
-  }
+  },
+  certification:{
+    adminPermission: '账号管理',
+    account_enquiry: '账号查詢',
+    search: '搜索',
+    noReview:'未審查',
+    reviewed:'已審查',
+    account:'個人帳號',
+    upload_date:'資料上傳日期',
+    audit_status:'審核狀態',
+  },
 }

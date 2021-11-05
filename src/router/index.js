@@ -97,6 +97,27 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/certificationManagement',
+    component: Layout,
+    redirect: '/certificationManagement/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'certificationManagement',
+    meta: {
+      title: 'certificationManagement',
+      icon: 'skill'
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/certificationManagement/page'),
+        name: 'certificationManagement',
+        meta: {
+          title: 'certificationManagement'
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -15,9 +15,9 @@ export function getRoles(params) {
   })
 }
 
-export function addRole(data) {
+export function getCertification(data) {
   return request({
-    url: '/vue-element-admin/role',
+    url: '/vue-element-admin/certification',
     method: 'post',
     data
   })

@@ -1,44 +1,48 @@
 <template>
   <div class="form-table">
-    <div class="el-form" >
-      <span>{{ $t('certification.account') }}</span>
-      <span>{{ $t('certification.upload_date') }}</span>
-      <span>{{ $t('certification.audit_status') }}</span>
+    <div class="el-form">
+      <span>{{ $t("certification.account") }}</span>
+      <span>{{ $t("certification.upload_date") }}</span>
+      <span>{{ $t("certification.audit_status") }}</span>
     </div>
-    <div class="el-form" v-for="(item,index) in certificationDataList" :key="index">
+    <div
+      class="el-form"
+      v-for="(item, index) in certificationDataList"
+      :key="index"
+    >
       <span>{{ item.userName }}</span>
       <span>{{ item.creaTime }}</span>
       <span>
         <el-button
-          :type="item.status === 'no'?'danger':'success'"
+          :type="item.status === 'no' ? 'danger' : 'success'"
           size="small"
         >
-        {{ item.status === 'no'? $t("certification.noReview") : $t("certification.reviewed" )  }}
+          {{
+            item.status === "no"
+              ? $t("certification.noReview")
+              : $t("certification.reviewed")
+          }}
         </el-button>
       </span>
     </div>
+    
   </div>
 </template>
 
 <script>
 export default {
-  name: 'certificationManagement',
-  props:{
-    certificationDataList:{
+  name: "certificationManagement",
+  props: {
+    certificationDataList: {
       type: Array,
-    }
+    },
   },
   data() {
-    return {
-
-    }
+    return {};
   },
-  created() {
-  },
-  methods: {
-
-  }
-}
+  created() {},
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
@@ -48,7 +52,7 @@ export default {
   margin-top: 2em;
   border-radius: 10px;
   background-color: #faf1d338;
-  line-height:1.7em;
+  line-height: 1.7em;
   .el-form {
     display: flex;
     justify-content: space-between;

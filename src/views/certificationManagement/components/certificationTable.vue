@@ -10,7 +10,7 @@
       <span>{{ item.creaTime }}</span>
       <span>
         <el-button
-          :type=" item.status === 'no'?'danger':'success'"
+          :type="item.status === 'no'?'danger':'success'"
           size="small"
         >
         {{ item.status === 'no'? $t("certification.noReview") : $t("certification.reviewed" )  }}

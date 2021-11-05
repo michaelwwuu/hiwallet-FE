@@ -93,10 +93,10 @@ const roles = {
 
 const certificationList = [
   { userName: 'HW132202091', creaTime: '2021/10/19',status: 'no'},
-  { userName: 'HW132202092', creaTime: '2021/10/18',status: 'no'},
-  { userName: 'HW132202093', creaTime: '2021/10/17',status: 'no'},
-  { userName: 'HW132202094', creaTime: '2021/10/16',status: 'no'},
-  { userName: 'HW132202095', creaTime: '2021/10/15',status: 'no'},
+  { userName: 'HW132202092', creaTime: '2021/10/18',status: 'yes'},
+  { userName: 'HW132202093', creaTime: '2021/10/17',status: 'yes'},
+  { userName: 'HW132202094', creaTime: '2021/10/16',status: 'yes'},
+  { userName: 'HW132202095', creaTime: '2021/10/15',status: 'yes'},
   { userName: 'HW132202096', creaTime: '2021/10/14',status: 'no'},
   { userName: 'HW132202097', creaTime: '2021/10/13',status: 'no'},
   { userName: 'HW132202098', creaTime: '2021/10/12',status: 'no'}, 

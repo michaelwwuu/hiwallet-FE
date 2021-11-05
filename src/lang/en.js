@@ -14,6 +14,7 @@ export default {
     profile: 'Profile',
     storeManagement: 'Merchant manage',
     certificationManagement:'Certification Management',
+    certificationManagementList:'List of personal accounts to be reviewed',
   },
   navbar: {
     dashboard: 'Dashboard',

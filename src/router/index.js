@@ -111,9 +111,9 @@ export const asyncRoutes = [
       {
         path: 'page',
         component: () => import('@/views/certificationManagement/page'),
-        name: 'certificationManagement',
+        name: 'certificationManagemen',
         meta: {
-          title: 'certificationManagement'
+          title: 'certificationManagementList'
         }
       }
     ]

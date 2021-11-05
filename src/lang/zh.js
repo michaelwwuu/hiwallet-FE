@@ -14,6 +14,7 @@ export default {
     profile: '个人中心',
     storeManagement: '商家管理',
     certificationManagement:'認證管理',
+    certificationManagementList:'待審查個人帳號列表',
   },
   navbar: {
     dashboard: '首页',

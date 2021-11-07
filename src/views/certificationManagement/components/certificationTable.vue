@@ -16,6 +16,7 @@
         <el-button
           :type="item.status === 'no' ? 'danger' : 'success'"
           size="small"
+          @click="checkMemberList(item.userName)"
         >
           {{
             item.status === "no"
@@ -41,7 +42,11 @@ export default {
     return {};
   },
   created() {},
-  methods: {},
+  methods: {
+    checkMemberList(userName){
+      console.log(userName)
+    }
+  },
 };
 </script>
 

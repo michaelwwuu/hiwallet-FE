@@ -105,7 +105,7 @@ const certificationList = [
 ];
 
 const memberList = { 
-    status: 'no',
+    status: 'noReview',
     avatar:'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
     avatarStatus:'done',
     userName: 'HW132202091',

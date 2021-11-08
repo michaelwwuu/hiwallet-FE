@@ -109,6 +109,8 @@ export default {
     jobType:'工作性質',
     company:'雇主(公司)名稱',
     salarySource:'資金來源',
-    TINSSSGSIS:'TIN/SSS/GSIS'
+    TINSSSGSIS:'TIN/SSS/GSIS',
+    changed_to_unaudited_status:'變更為未審核狀態',
+    change_to_audited_status:'變更為已審核狀態',
   },
 }

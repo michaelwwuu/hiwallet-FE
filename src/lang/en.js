@@ -109,6 +109,8 @@ export default {
     jobType:'Job Type',
     company:'Company',
     salarySource:'Salary source',
-    TINSSSGSIS:'TIN/SSS/GSIS'
+    TINSSSGSIS:'TIN/SSS/GSIS',
+    changed_to_unaudited_status:'Changed to unaudited status',
+    change_to_audited_status:'Change to audited status',
   },
 }

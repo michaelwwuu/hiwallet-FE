@@ -5,15 +5,21 @@
       <span>{{ memberDataList.userName }}</span>
       <span>
         <el-button
-          :type="memberDataList.status === 'no' ? 'danger' : 'success'"
-          size="small"
-        >
-          {{
-            memberDataList.status === "no"
-              ? $t("certification.noReview")
-              : $t("certification.reviewed")
-          }}
-        </el-button>
+            v-if="memberDataList.status !== 'noReview'"
+            type="danger"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'noReview')"
+          >
+            {{ $t("certification.noReview") }}
+          </el-button>
+          <el-button
+            v-if="memberDataList.status !== 'reviewed'"
+            type="success"
+            size="small"
+            @click="handleModifyStatus(memberDataList, 'reviewed')"
+          >
+            {{ $t("certification.reviewed") }}
+          </el-button>
       </span>
     </div>
     <div class="el-form">
@@ -101,6 +107,42 @@
         <img :src="memberDataList.avatar" />
       </div>
     </el-dialog>
+
+    <!-- 登入 交易 密碼 表格-->
+    <el-dialog
+      :title="dialogMessageTitle"
+      :visible.sync="dialogMessageShow"
+      width="30%"
+      center
+    >
+      <el-dialog
+        title="通知訊息"
+        :visible.sync="notificationMessageShow"
+        width="30%"
+        append-to-body
+        center
+      >
+        <span class="dialog-content" v-html="innerMessageContent" />
+        <span slot="footer" class="dialog-footer">
+          <el-button
+            type="primary"
+            @click="changeStatusSubmit(memberDataList)"
+            >确 定</el-button
+          >
+        </span>
+      </el-dialog>
+
+      <!-- 登入 交易 密碼 表格-->
+      <span class="dialog-content" v-html="dialogMessageContent" />
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="notificationMessageShow = true"
+          >确 定</el-button
+        >
+        <el-button type="danger" @click="dialogMessageShow = false"
+          >取 消</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -114,12 +156,34 @@ export default {
   },
   data() {
     return {
+      dialogMessageTitle: "",
+      innerMessageContent: "",
+      dialogMessageContent: "",
+
       dialogAvatarShow:false,
+      dialogMessageShow: false,
+
+      notificationMessageShow: false,
     };
   },
   created() {},
   methods: {
-
+    handleModifyStatus(row, status) {
+      console.log(row, status)
+      this.dialogMessageShow = true;
+      this.dialogMessageTitle = status === "noReview" ? this.$t("certification.change_to_audited_status") : this.$t("certification.changed_to_unaudited_status");
+      this.dialogMessageContent = `是否要帳號 ( <span style="color:red">${row.userName}</span> ) 的審查狀態變更為"${
+        status === "noReview" ? "已審查" : "未審查"
+      }"?`;
+      this.innerMessageContent = "帳號認證狀態已變更";
+      this.accountStatus = status;
+    },
+    changeStatusSubmit(data) {
+      this.dialogMessageShow = false;
+      this.notificationMessageShow = false;
+      data.status = this.accountStatus;
+      this.$message({ message: "操作成功", type: "success" });
+    },
   },
 };
 </script>

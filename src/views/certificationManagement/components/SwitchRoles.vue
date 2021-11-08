@@ -1,10 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form
-      ref="listSearchKey"
-      :model="listSearchKey"
-      @submit.native.prevent
-    >
+    <el-form ref="listSearchKey" :model="listSearchKey" @submit.native.prevent>
       <el-form-item
         :label="$t('certification.account_enquiry')"
         label-width="80px"
@@ -26,51 +22,96 @@
         >
           {{ $t("certification.search") }}
         </el-button>
+        <el-button
+          v-show="isBackBtnShow"
+          type="info"
+          icon="el-icon-top-right"
+          style="margin-left: 10px; float: right"
+          @click="certificationData"
+        >
+          {{ $t("certification.back_to_list") }}
+        </el-button>
       </el-form-item>
     </el-form>
 
-    <certificationTable :certificationDataList="certificationDataList"></certificationTable>
+    <certificationTable
+      v-show="isCertificationShow"
+      :certificationDataList="certificationDataList"
+      @backShow="backShow"
+    ></certificationTable>
+
+    <member-data v-show="isMemberDataShow" :memberDataList="memberDataList" @backShow="backShow"></member-data>
   </div>
 </template>
 
 <script>
-import { getCertification } from '@/api/role'
-import certificationTable from './certificationTable.vue'
+import { getCertification,getCertificationMemberList } from "@/api/role";
+import certificationTable from "./certificationTable.vue";
+import memberData from "./memberData.vue";
 export default {
-  name: 'certificationManagement',
-  components:{
-    certificationTable
+  name: "certificationManagement",
+  components: {
+    certificationTable,
+    memberData,
   },
   data() {
     return {
+      memberDataList:{},
       certificationDataList: [],
       listSearchKey: {
-        searchKey: ''
+        searchKey: "",
       },
-      serachDataListShow: false
-    }
+      memberList:{
+        name:''
+      },
+      isBackBtnShow: false,
+      isMemberDataShow: false,
+      isCertificationShow: true,
+      
+    };
   },
   created() {
-    this.getCertificationDataList()
+    this.getCertificationDataList();
   },
   methods: {
-    // 獲取表格資料
-    getCertificationDataList() {
-      getCertification().then(res => {
-        if (res.code === 20000) {
-          this.certificationDataList = res.data
-        }
+    backShow(data,status) {
+      this.isBackBtnShow = status;
+      this.isMemberDataShow = status
+      this.isCertificationShow = !status
+      this.getMemberDataList(data)
+    },
+    
+    getMemberDataList(data){
+      this.memberList.name = data
+      getCertificationMemberList(this.memberList).then((res)=>{
+        this.memberDataList = res.data
       })
     },
+
+    certificationData() {
+      this.isBackBtnShow = false;
+      this.isMemberDataShow = false
+      this.isCertificationShow = true
+    },
+    // 獲取表格資料
+    getCertificationDataList() {
+      getCertification().then((res) => {
+        if (res.code === 20000) {
+          this.certificationDataList = res.data;
+        }
+      });
+    },
+
     // 示意搜尋
     handleFilter(rules) {
-      if (this.listSearchKey.searchKey.trim() === '') this.listSearchKey.searchKey = ''
-      this.$refs[rules].validate(valid => {
-        if (!valid) return
-      })
-    }
-  }
-}
+      if (this.listSearchKey.searchKey.trim() === "")
+        this.listSearchKey.searchKey = "";
+      this.$refs[rules].validate((valid) => {
+        if (!valid) return;
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -80,6 +121,11 @@ export default {
   }
   .permission-tree {
     margin-bottom: 30px;
+  }
+  .el-form {
+    .el-form-item {
+      width: 70%;
+    }
   }
 }
 .form-table {

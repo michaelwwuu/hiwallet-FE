@@ -23,6 +23,15 @@ export function getCertification(data) {
   })
 }
 
+
+export function getCertificationMemberList(data) {
+  return request({
+    url: '/vue-element-admin/certificationMemberList',
+    method: 'get',
+    data
+  })
+}
+
 export function updateRole(id, data) {
   return request({
     url: `/vue-element-admin/role/${id}`,

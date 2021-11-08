@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="form-table">
     <div class="el-form">
       <span>{{ $t("certification.account") }}</span>
@@ -25,12 +26,14 @@
           }}
         </el-button>
       </span>
-    </div>
-    
+    </div> 
   </div>
+</div>
+
 </template>
 
 <script>
+
 export default {
   name: "certificationManagement",
   props: {
@@ -38,15 +41,14 @@ export default {
       type: Array,
     },
   },
-  data() {
-    return {};
-  },
-  created() {},
   methods: {
     checkMemberList(userName){
-      console.log(userName)
+      if(userName !== ''){
+        this.$emit('backShow',userName,true)
+      } 
     }
   },
+
 };
 </script>
 

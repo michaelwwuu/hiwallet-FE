@@ -103,6 +103,27 @@ const certificationList = [
   { userName: 'HW132202099', creaTime: '2021/10/11',status: 'no'}, 
   { userName: 'HW132202099', creaTime: '2021/10/10',status: 'no'}, 
 ];
+
+const memberList = { 
+    status: 'no',
+    avatar:'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
+    avatarStatus:'done',
+    userName: 'HW132202091',
+    birthDays: '1987/08/07',
+    pleace:'上海灘',
+    country:'中國',
+    address:'中國廣東省上海市長沙路12號',
+    permanentAddress:'中國廣東省上海市長沙路12號',
+    phoneNumber:'0987987987',
+    specialFeatures:'done',
+    jobType:'商',
+    company:'上海發大財貿易公司',
+    salarySource:'薪資',
+    TINSSSGSIS:'SSS/7533967',
+    realName:'王大同',
+};
+
+
 module.exports = [
   // mock get all routes form server
   {
@@ -164,6 +185,8 @@ module.exports = [
       }
     }
   },
+
+  //certification api
   {
     url: '/vue-element-admin/certification',
     type: 'post',
@@ -171,6 +194,18 @@ module.exports = [
       return {
         code: 20000,
         data: certificationList,
+      }
+    }
+  },
+
+  //certificationMember api
+  {
+    url: '/vue-element-admin/certificationMemberList',
+    type: 'get',
+    response: _ => {
+      return {
+        code: 20000,
+        data: memberList,
       }
     }
   }

@@ -90,9 +90,9 @@ export const asyncRoutes = [
       {
         path: 'page',
         component: () => import('@/views/storeManagement/page'),
-        name: 'storeManagement',
+        name: 'PageStoreManagement',
         meta: {
-          title: 'storeManagement'
+          title: 'PageStoreManagement'
         }
       }
     ]

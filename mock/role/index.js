@@ -93,10 +93,10 @@ const roles = {
 
 const certificationList = [
   { userName: 'HW132202091', creaTime: '2021/10/19',status: 'no'},
-  { userName: 'HW132202092', creaTime: '2021/10/18',status: 'yes'},
-  { userName: 'HW132202093', creaTime: '2021/10/17',status: 'yes'},
-  { userName: 'HW132202094', creaTime: '2021/10/16',status: 'yes'},
-  { userName: 'HW132202095', creaTime: '2021/10/15',status: 'yes'},
+  { userName: 'HW132202092', creaTime: '2021/10/18',status: 'no'},
+  { userName: 'HW132202093', creaTime: '2021/10/17',status: 'no'},
+  { userName: 'HW132202094', creaTime: '2021/10/16',status: 'no'},
+  { userName: 'HW132202095', creaTime: '2021/10/15',status: 'no'},
   { userName: 'HW132202096', creaTime: '2021/10/14',status: 'no'},
   { userName: 'HW132202097', creaTime: '2021/10/13',status: 'no'},
   { userName: 'HW132202098', creaTime: '2021/10/12',status: 'no'}, 
@@ -115,12 +115,12 @@ const memberList = {
     address:'中國廣東省上海市長沙路12號',
     permanentAddress:'中國廣東省上海市長沙路12號',
     phoneNumber:'0987987987',
-    specialFeatures:'done',
+    special_features:'done',
     jobType:'商',
     company:'上海發大財貿易公司',
-    salarySource:'薪資',
+    salary_source:'薪資',
     TINSSSGSIS:'SSS/7533967',
-    realName:'王大同',
+    real_name:'王大同',
 };
 
 

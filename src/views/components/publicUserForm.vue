@@ -219,7 +219,7 @@
                 changeStatusSubmit(
                   memberDataList,
                   dialogMessageTitle,
-                  advancedModifyForm
+                  nameModifyForm
                 )
               "
               >确 定</el-button
@@ -227,9 +227,9 @@
           </span>
         </el-dialog>
         <el-form
-          ref="advancedModifyForm"
-          :model="advancedModifyForm"
-          :rules="advancedModifyRules"
+          ref="nameModifyForm"
+          :model="nameModifyForm"
+          :rules="nameModifyRules"
           label-width="150px"
           class="advancedModify-style"
         >
@@ -241,7 +241,7 @@
             :label="$t('dashboard.change_nickName')"
           >
             <el-input
-              v-model="advancedModifyForm.newNickName"
+              v-model="nameModifyForm.newNickName"
               type="text"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
               autocomplete="off"
@@ -249,7 +249,7 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="visibleFormSubmit('advancedModifyForm')"
+          <el-button type="primary" @click="visibleFormSubmit('nameModifyForm')"
             >确 定</el-button
           >
           <el-button type="danger" @click="isMerchantShow = false"
@@ -270,7 +270,7 @@
             <el-input
               v-model="memberDataList.mechantModifyForm.nowRate"
               type="text"
-              :disabled="isMerchantdisabled"
+              :disabled="isMerchantDisabled"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
               autocomplete="off"
               style="width: 380px !important"
@@ -281,14 +281,14 @@
               v-model="memberDataList.mechantModifyForm.nowCreatStartTime"
               type="date"
               placeholder="选择日期"
-              :disabled="isMerchantdisabled"
+              :disabled="isMerchantDisabled"
               style="margin-right: 18px; width: 180px !important"
             />
             <el-date-picker
               v-model="memberDataList.mechantModifyForm.nowCreatEndTime"
               type="date"
               placeholder="选择日期"
-              :disabled="isMerchantdisabled"
+              :disabled="isMerchantDisabled"
               style="width: 180px !important"
             />
           </el-form-item>
@@ -296,7 +296,7 @@
             <el-input
               v-model="memberDataList.mechantModifyForm.nextRate"
               type="text"
-              :disabled="isMerchantdisabled"
+              :disabled="isMerchantDisabled"
               :placeholder="$t('dashboard.please_enter_a_new_nickname')"
               autocomplete="off"
               style="width: 380px !important"
@@ -307,14 +307,14 @@
               v-model="memberDataList.mechantModifyForm.nextCreatStartTime"
               type="date"
               placeholder="选择日期"
-              :disabled="isMerchantdisabled"
+              :disabled="isMerchantDisabled"
               style="margin-right: 18px; width: 180px !important"
             />
             <el-date-picker
               v-model="memberDataList.mechantModifyForm.nextCreatEndTime"
               type="date"
               placeholder="选择日期"
-              :disabled="isMerchantdisabled"
+              :disabled="isMerchantDisabled"
               style="width: 180px !important"
             />
           </el-form-item>
@@ -528,10 +528,10 @@ export default {
   },
   data() {
     return {
-      advancedModifyForm: {
+      nameModifyForm: {
         newNickName: "",
       },
-      advancedModifyRules: {
+      nameModifyRules: {
         newNickName: [
           {
             required: true,
@@ -564,7 +564,7 @@ export default {
       isMerchantShow: false,
       isMerchantModify: true,
       isMerchantSubmit: false,
-      isMerchantdisabled: true,
+      isMerchantDisabled: true,
       isMerchantNickNameShow: false,
       isMerchantCityBranchesShow: false,
       isMerchantCurrentRatesShow: false,
@@ -583,14 +583,14 @@ export default {
     merchantModify() {
       this.isMerchantSubmit = true;
       this.isMerchantModify = false;
-      this.isMerchantdisabled = false;
+      this.isMerchantDisabled = false;
     },
     // 商家當前費率
     merchantSubmit(key) {
       // 未來做區分
       this.isMerchantSubmit = false;
       this.isMerchantModify = true;
-      this.isMerchantdisabled = true;
+      this.isMerchantDisabled = true;
       if (key === "OK") this.$message({ message: "操作成功", type: "success" });
     },
     // 常用對象 綁定銀行
@@ -683,7 +683,7 @@ export default {
         case "editPermission":
           this.isMerchantNickNameShow = true;
           this.dialogMessageTitle = this.$t("dashboard.account_nickName");
-          this.$nextTick(() => this.$refs.advancedModifyForm.resetFields());
+          this.$nextTick(() => this.$refs.nameModifyForm.resetFields());
           break;
         case "currentRates":
           this.isMerchantCurrentRatesShow = true;

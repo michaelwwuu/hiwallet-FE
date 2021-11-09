@@ -12,13 +12,13 @@
           name="searchKey"
           type="text"
           style="width: 400px"
-          @keyup.enter.native="handleFilter('listSearchKey')"
+          @keyup.enter.native="handleFilter"
         />
         <el-button
           type="primary"
           icon="el-icon-search"
           style="margin-left: 10px"
-          @click="handleFilter('listSearchKey')"
+          @click="handleFilter"
         >
           {{ $t("certification.search") }}
         </el-button>
@@ -34,18 +34,22 @@
       </el-form-item>
     </el-form>
 
-    <certificationTable
+    <certification-table
       v-show="isCertificationShow"
       :certificationDataList="certificationDataList"
       @backShow="backShow"
-    ></certificationTable>
+    />
 
-    <member-data v-show="isMemberDataShow" :memberDataList="memberDataList" @backShow="backShow"></member-data>
+    <member-data
+      v-show="isMemberDataShow"
+      :memberDataList="memberDataList"
+      @backShow="backShow"
+    />
   </div>
 </template>
 
 <script>
-import { getCertification,getCertificationMemberList } from "@/api/role";
+import { getCertification, getCertificationMemberList } from "@/api/role";
 import certificationTable from "./certificationTable.vue";
 import memberData from "./memberData.vue";
 export default {
@@ -56,59 +60,55 @@ export default {
   },
   data() {
     return {
-      memberDataList:{},
-      certificationDataList: [],
       listSearchKey: {
         searchKey: "",
       },
-      memberList:{
-        name:''
+      memberList: {
+        name: "",
       },
+      memberDataList: {},
+      certificationDataList: [],
       isBackBtnShow: false,
       isMemberDataShow: false,
       isCertificationShow: true,
-      
     };
   },
   created() {
     this.getCertificationDataList();
   },
   methods: {
-    backShow(data,status) {
+    backShow(data, status) {
       this.isBackBtnShow = status;
-      this.isMemberDataShow = status
-      this.isCertificationShow = !status
-      this.getMemberDataList(data)
+      this.isMemberDataShow = status;
+      this.isCertificationShow = !status;
+      this.getMemberDataList(data);
     },
-    
-    getMemberDataList(data){
-      this.memberList.name = data
-      getCertificationMemberList(this.memberList).then((res)=>{
+
+    getMemberDataList(data) {
+      this.memberList.name = data;
+      getCertificationMemberList(this.memberList).then((res) => {
         this.memberDataList = res.data
-      })
+      });
     },
 
     certificationData() {
       this.isBackBtnShow = false;
-      this.isMemberDataShow = false
-      this.isCertificationShow = true
+      this.isMemberDataShow = false;
+      this.isCertificationShow = true;
     },
     // 獲取表格資料
     getCertificationDataList() {
       getCertification().then((res) => {
-        if (res.code === 20000) {
-          this.certificationDataList = res.data;
-        }
+        if (res.code === 20000) this.certificationDataList = res.data;
       });
     },
 
     // 示意搜尋
-    handleFilter(rules) {
-      if (this.listSearchKey.searchKey.trim() === "")
-        this.listSearchKey.searchKey = "";
-      this.$refs[rules].validate((valid) => {
-        if (!valid) return;
-      });
+    handleFilter() {
+      if (this.listSearchKey.searchKey.trim() === "") return;
+      this.isCertificationShow = false;
+      this.isMemberDataShow = true;
+      this.getMemberDataList(this.listSearchKey.searchKey);
     },
   },
 };

@@ -94,67 +94,67 @@ export default {
   .permission-tree {
     margin-bottom: 30px;
   }
-}
-.form-table {
-  border: 0.05em solid #b3b3b3;
-  width: 70%;
-  margin-top: 2em;
-  border-radius: 10px;
-  background-color: #faf1d338;
-  .el-form {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0.6em;
-    padding: 0.7em 3em;
-    border-bottom: 0.01em solid #b3b3b3;
-    &:last-child {
-      border-bottom: 0;
-    }
-    span {
-      width: 300px;
-      font-size: 14px;
-      text-align: center;
-      color: #666666;
-    }
-  }
-}
-.el-dialog__wrapper {
-  ::v-deep.el-dialog {
+  .form-table {
+    border: 0.05em solid #b3b3b3;
+    width: 70%;
+    margin-top: 2em;
     border-radius: 10px;
-    .el-dialog__header {
-      width: 95%;
-      margin: 0 auto;
-      border-bottom: 0.05em solid #b3b3b3;
-    }
-    .el-dialog__body {
-      text-align: center;
-      .dialog-content {
-        font-size: 15px;
-      }
-      .avatar-box {
-        margin: 0 auto;
-        img {
-          width: 200px;
-          border: 0.5px solid #b3b3b3;
-          border-radius: 10px;
-          background-repeat: no-repeat;
-          background-size: cover;
-        }
-      }
-      .advancedModify-style {
-        .el-form-item__content {
-          text-align: left;
-        }
-      }
-    }
-  }
-}
-.bank-message-style {
-  ::v-deep.el-dialog {
-    .el-dialog__body {
+    background-color: #faf1d338;
+    .el-form {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      margin: 0 0.6em;
+      padding: 0.7em 3em;
+      border-bottom: 0.01em solid #b3b3b3;
+      &:last-child {
+        border-bottom: 0;
+      }
+      span {
+        width: 300px;
+        font-size: 14px;
+        text-align: center;
+        color: #666666;
+      }
+    }
+  }
+  .el-dialog__wrapper {
+    ::v-deep.el-dialog {
+      border-radius: 10px;
+      .el-dialog__header {
+        width: 95%;
+        margin: 0 auto;
+        border-bottom: 0.05em solid #b3b3b3;
+      }
+      .el-dialog__body {
+        text-align: center;
+        .dialog-content {
+          font-size: 15px;
+        }
+        .avatar-box {
+          margin: 0 auto;
+          img {
+            width: 200px;
+            border: 0.5px solid #b3b3b3;
+            border-radius: 10px;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        }
+        .advancedModify-style {
+          .el-form-item__content {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+  .bank-message-style {
+    ::v-deep.el-dialog {
+      .el-dialog__body {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }

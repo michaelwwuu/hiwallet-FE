@@ -22,6 +22,9 @@ import moment from 'moment'
 // 引入根组件mixins
 import mixins from './mixins/root'
 
+// 解決chrome监听器来阻止'touchstart'事件
+import 'default-passive-events'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

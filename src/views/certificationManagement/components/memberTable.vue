@@ -5,21 +5,21 @@
       <span>{{ memberDataList.userName }}</span>
       <span>
         <el-button
-            v-if="memberDataList.status !== 'noReview'"
-            type="danger"
-            size="small"
-            @click="handleModifyStatus(memberDataList, 'noReview')"
-          >
-            {{ $t("certification.noReview") }}
-          </el-button>
-          <el-button
-            v-if="memberDataList.status !== 'reviewed'"
-            type="success"
-            size="small"
-            @click="handleModifyStatus(memberDataList, 'reviewed')"
-          >
-            {{ $t("certification.reviewed") }}
-          </el-button>
+          v-show="memberDataList.status !== 'noReview'"
+          type="danger"
+          size="small"
+          @click="handleModifyStatus(memberDataList, 'noReview')"
+        >
+          {{ $t("certification.noReview") }}
+        </el-button>
+        <el-button
+          v-show="memberDataList.status !== 'reviewed'"
+          type="success"
+          size="small"
+          @click="handleModifyStatus(memberDataList, 'reviewed')"
+        >
+          {{ $t("certification.reviewed") }}
+        </el-button>
       </span>
     </div>
     <div class="el-form">
@@ -29,7 +29,7 @@
         <el-button
           type="warning"
           size="small"
-          @click="dialogAvatarShow = true"
+          @click="handleModifyStatus(memberDataList, 'avatarImg')"
         >
           {{ $t("dashboard.check") }}
         </el-button>
@@ -95,53 +95,50 @@
       <span>{{ memberDataList.TINSSSGSIS }}</span>
       <span></span>
     </div>
-
-    <!-- 頭像 -->
-    <el-dialog
-      :title="$t('certification.proof_photos')"
-      :visible.sync="dialogAvatarShow"
-      width="30%"
-      center
-    >
-      <div class="avatar-box">
-        <img :src="memberDataList.avatar" />
-      </div>
-    </el-dialog>
-
-    <!-- 登入 交易 密碼 表格-->
+    
+    <!-- 談窗 -->
     <el-dialog
       :title="dialogMessageTitle"
-      :visible.sync="dialogMessageShow"
+      :visible.sync="isDialogMessageShow"
       width="30%"
       center
     >
-      <el-dialog
-        title="通知訊息"
-        :visible.sync="notificationMessageShow"
-        width="30%"
-        append-to-body
-        center
-      >
-        <span class="dialog-content">帳號認證狀態已變更</span>
+      <!-- 審查狀態-->
+      <div v-show="isDialogAuditShow">
+        <el-dialog
+          title="通知訊息"
+          :visible.sync="notificationMessageShow"
+          width="30%"
+          append-to-body
+          center
+        >
+          <span class="dialog-content">帳號認證狀態已變更</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button
+              type="primary"
+              @click="changeStatusSubmit(memberDataList)"
+              >确 定</el-button
+            >
+          </span>
+        </el-dialog>
+        <!-- 審查狀態-->
+        <div style="margin: -0.5em 0 2em 0">
+          <span class="dialog-content" v-html="dialogMessageContent" />
+        </div>
         <span slot="footer" class="dialog-footer">
-          <el-button
-            type="primary"
-            @click="changeStatusSubmit(memberDataList)"
+          <el-button type="primary" @click="notificationMessageShow = true"
             >确 定</el-button
           >
+          <el-button type="danger" @click="isDialogMessageShow = false"
+            >取 消</el-button
+          >
         </span>
-      </el-dialog>
+      </div>
 
-      <!-- 登入 交易 密碼 表格-->
-      <span class="dialog-content" v-html="dialogMessageContent" />
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="notificationMessageShow = true"
-          >确 定</el-button
-        >
-        <el-button type="danger" @click="dialogMessageShow = false"
-          >取 消</el-button
-        >
-      </span>
+      <!-- 證件照片-->
+      <div v-show="isDialogAvatarShow" class="avatar-box" >
+        <img :src="memberDataList.avatar" />
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -159,22 +156,35 @@ export default {
       dialogMessageTitle: "",
       dialogMessageContent: "",
 
-      dialogAvatarShow:false,
-      dialogMessageShow: false,
+      isDialogAuditShow:false,
+      isDialogAvatarShow:false,
+      isDialogMessageShow: false,
       notificationMessageShow: false,
     };
   },
   methods: {
     handleModifyStatus(row, status) {
-      this.dialogMessageShow = true;
-      this.dialogMessageTitle = status === "noReview" ? this.$t("certification.change_to_audited_status") : this.$t("certification.changed_to_unaudited_status");
-      this.dialogMessageContent = `是否要帳號 ( <span style="color:red">${row.userName}</span> ) 的審查狀態變更為"${
-        status === "noReview" ? "已審查" : "未審查"
-      }"?`;
-      this.accountStatus = status;
+      this.isDialogAuditShow = false;
+      this.isDialogAvatarShow = false;
+      this.isDialogMessageShow = true;
+      switch (status) {
+        case 'noReview':
+        case 'reviewed':
+          this.isDialogAuditShow = true;
+          this.dialogMessageTitle = status === "noReview" ? this.$t("certification.change_to_audited_status") : this.$t("certification.changed_to_unaudited_status");
+          this.dialogMessageContent = `是否要帳號 ( <span style="color:red">${row.userName}</span> ) 的審查狀態變更為"${
+            status === "noReview" ? "已審查" : "未審查"
+          }"?`;
+          this.accountStatus = status;
+          break
+        case 'avatarImg':
+          this.isDialogAvatarShow = true;
+          this.dialogMessageTitle = this.$t('certification.proof_photos');
+          break
+      }
     },
     changeStatusSubmit(data) {
-      this.dialogMessageShow = false;
+      this.isDialogMessageShow = false;
       this.notificationMessageShow = false;
       data.status = this.accountStatus;
       this.$message({ message: "操作成功", type: "success" });

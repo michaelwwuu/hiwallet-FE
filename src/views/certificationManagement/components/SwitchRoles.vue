@@ -40,23 +40,24 @@
       @backShow="backShow"
     />
 
-    <member-data
+    <member-table
       v-show="isMemberDataShow"
       :memberDataList="memberDataList"
       @backShow="backShow"
     />
+
   </div>
 </template>
 
 <script>
 import { getCertification, getCertificationMemberList } from "@/api/role";
 import certificationTable from "./certificationTable.vue";
-import memberData from "./memberData.vue";
+import memberTable from "./memberTable.vue";
 export default {
   name: "certificationManagement",
   components: {
     certificationTable,
-    memberData,
+    memberTable,
   },
   data() {
     return {
@@ -106,8 +107,8 @@ export default {
     // 示意搜尋
     handleFilter() {
       if (this.listSearchKey.searchKey.trim() === "") return;
-      this.isCertificationShow = false;
       this.isMemberDataShow = true;
+      this.isCertificationShow = false;
       this.getMemberDataList(this.listSearchKey.searchKey);
     },
   },

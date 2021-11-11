@@ -1,34 +1,34 @@
 <template>
-<div>
-  <div class="form-table">
-    <div class="el-form">
-      <span>{{ $t("certification.account") }}</span>
-      <span>{{ $t("certification.upload_date") }}</span>
-      <span>{{ $t("certification.audit_status") }}</span>
+  <div>
+    <div class="form-table">
+      <div class="el-form">
+        <span>{{ $t("certification.account") }}</span>
+        <span>{{ $t("certification.upload_date") }}</span>
+        <span>{{ $t("certification.audit_status") }}</span>
+      </div>
+      <div
+        class="el-form"
+        v-for="(item, index) in certificationDataList"
+        :key="index"
+      >
+        <span>{{ item.userName }}</span>
+        <span>{{ item.creaTime }}</span>
+        <span>
+          <el-button
+            :type="item.status === 'no' ? 'danger' : 'success'"
+            size="small"
+            @click="checkMemberList(item.userName)"
+          >
+            {{
+              item.status === "no"
+                ? $t("certification.noReview")
+                : $t("certification.reviewed")
+            }}
+          </el-button>
+        </span>
+      </div> 
     </div>
-    <div
-      class="el-form"
-      v-for="(item, index) in certificationDataList"
-      :key="index"
-    >
-      <span>{{ item.userName }}</span>
-      <span>{{ item.creaTime }}</span>
-      <span>
-        <el-button
-          :type="item.status === 'no' ? 'danger' : 'success'"
-          size="small"
-          @click="checkMemberList(item.userName)"
-        >
-          {{
-            item.status === "no"
-              ? $t("certification.noReview")
-              : $t("certification.reviewed")
-          }}
-        </el-button>
-      </span>
-    </div> 
   </div>
-</div>
 
 </template>
 

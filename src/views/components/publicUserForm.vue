@@ -574,7 +574,7 @@ export default {
     const routerKey = this.$route.name;
     if (routerKey === "PagePermission") {
       this.accountRouter = true;
-    } else if (routerKey === "storeManagement") {
+    } else if (routerKey === "PageStoreManagement") {
       this.storeRouter = true;
     }
   },

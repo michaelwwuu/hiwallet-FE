@@ -6,11 +6,15 @@
         <span>{{ memberDataList.userName }}</span>
         <span>
           <el-button
-            :type="memberDataList.status === 'locking'? 'danger':'success'"
+            :type="memberDataList.status === 'locking' ? 'danger' : 'success'"
             size="small"
             @click="handleModifyStatus(memberDataList, memberDataList.status)"
           >
-            {{ memberDataList.status === 'locking' ? $t("dashboard.locking"):$t("dashboard.normal") }}
+            {{
+              memberDataList.status === "locking"
+                ? $t("dashboard.locking")
+                : $t("dashboard.normal")
+            }}
           </el-button>
         </span>
       </div>
@@ -483,10 +487,10 @@
 
       <!-- 商家管理 進行中活動 -->
       <el-table
-        v-show="isActiveDataShow" 
+        v-show="isActiveDataShow"
         :data="memberDataList.in_progress_activities"
         border
-        style="width: 100%;"
+        style="width: 100%"
       >
         <el-table-column
           align="center"
@@ -504,7 +508,6 @@
           :label="$t('dashboard.event_end_date')"
         />
       </el-table>
-
     </el-dialog>
   </div>
 </template>
@@ -536,8 +539,8 @@ export default {
       dialogMessageTitle: "",
       innerMessageContent: "",
       dialogMessageContent: "",
-      
-      // 商家管理 帳號管理 
+
+      // 商家管理 帳號管理
       storeRouter: false,
       accountRouter: false,
 
@@ -550,7 +553,6 @@ export default {
       isBankDataShow: false,
       isActiveDataShow: false,
       isHiwalletDataShow: false,
-
 
       isMerchantShow: false,
       isMerchantModify: true,
@@ -629,7 +631,7 @@ export default {
           }。`;
           break;
         case "loginPassword":
-        case "payPassword":  
+        case "payPassword":
           this.dialogMessageTitle =
             status === "loginPassword"
               ? this.$t("dashboard.record_login_password")
@@ -639,13 +641,13 @@ export default {
           }</span> ) 的${status === "loginPassword" ? "登錄" : "交易"}密碼 ?`;
           this.innerMessageContent = "密碼已重置";
           break;
-        case "accountAvatar":  
+        case "accountAvatar":
           this.dialogAvatarShow = true;
           this.dialogMessageShow = false;
           this.dialogMessageTitle = `${this.$t("dashboard.accountAvatar")}`;
           this.dialogMessageContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`;
           this.innerMessageContent = "帳號頭像刪除成功。";
-          this.avatarMemberImage = row.avatar; 
+          this.avatarMemberImage = row.avatar;
           break;
       }
     },
@@ -694,13 +696,17 @@ export default {
       this.dialogMessageShow = false;
       this.dialogAvatarShow = false;
       this.notificationMessageShow = false;
-      if (key === this.$t("dashboard.accountLock")) {
-        data.status = data.status === "locking" ? "normal" :"locking";
-      } else if (key === this.$t("dashboard.accountAvatar")) {
-        data.avatar = require("@/assets/no_data_images/no_data.png");
-        data.avatarStatus = data.avatarStatus === "done" ? "noUpload" : "done";
-      } else if(key === this.$t("dashboard.account_nickName")){
-        data.nickName = modify.newNickName;
+      switch (key) {
+        case this.$t("dashboard.accountLock"): 
+          data.status = data.status === "locking" ? "normal" : "locking";
+          break
+        case this.$t("dashboard.accountAvatar"): 
+          data.avatar = require("@/assets/no_data_images/no_data.png");
+          data.avatarStatus = data.avatarStatus === "done" ? "noUpload" : "done";
+          break  
+        case this.$t("dashboard.account_nickName"): 
+          data.nickName = modify.newNickName;
+          break    
       }
       this.$message({ message: "操作成功", type: "success" });
     },

@@ -107,7 +107,7 @@
           <span slot="footer" class="dialog-footer">
             <el-button
               type="primary"
-              @click="changeStatusSubmit"
+              @click="changeStatusSubmit(memberDataList)"
               >确 定</el-button
             >
           </span>
@@ -166,7 +166,6 @@ export default {
           this.dialogMessageContent = `是否要帳號 ( <span style="color:red">${row.userName}</span> ) 的審查狀態變更為"${
             status === "noReview" ? "已審查" : "未審查"
           }"?`;
-          row.status = status === "noReview" ? "reviewed" : "noReview";
           break
         case 'avatarImg':
           this.isDialogAvatarShow = true;
@@ -174,9 +173,10 @@ export default {
           break
       }
     },
-    changeStatusSubmit() {
+    changeStatusSubmit(data) {
       this.isDialogMessageShow = false;
       this.notificationMessageShow = false;
+      data.status = data.status === "noReview" ? "reviewed" : "noReview" ;
       this.$message({ message: "操作成功", type: "success" });
     },
   },

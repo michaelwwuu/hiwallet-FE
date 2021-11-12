@@ -6,20 +6,11 @@
         <span>{{ memberDataList.userName }}</span>
         <span>
           <el-button
-            v-if="memberDataList.status !== 'locking'"
-            type="danger"
+            :type="memberDataList.status === 'locking'? 'danger':'success'"
             size="small"
-            @click="handleModifyStatus(memberDataList, 'locking')"
+            @click="handleModifyStatus(memberDataList, memberDataList.status)"
           >
-            {{ $t("dashboard.locking") }}
-          </el-button>
-          <el-button
-            v-if="memberDataList.status !== 'normal'"
-            type="success"
-            size="small"
-            @click="handleModifyStatus(memberDataList, 'normal')"
-          >
-            {{ $t("dashboard.normal") }}
+            {{ memberDataList.status === 'locking' ? $t("dashboard.locking"):$t("dashboard.normal") }}
           </el-button>
         </span>
       </div>
@@ -636,7 +627,6 @@ export default {
           this.innerMessageContent = `帳號已${
             status === "normal" ? "解鎖" : "鎖定"
           }。`;
-          this.accountStatus = status;
           break;
         case "loginPassword":
         case "payPassword":  
@@ -655,7 +645,6 @@ export default {
           this.dialogMessageTitle = `${this.$t("dashboard.accountAvatar")}`;
           this.dialogMessageContent = `是否要刪除帳號 ( <span style="color:red">${row.userName}</span> ) 的頭像 ?`;
           this.innerMessageContent = "帳號頭像刪除成功。";
-          this.avatarStatus = "noUpload";
           this.avatarMemberImage = row.avatar; 
           break;
       }
@@ -706,10 +695,10 @@ export default {
       this.dialogAvatarShow = false;
       this.notificationMessageShow = false;
       if (key === this.$t("dashboard.accountLock")) {
-        data.status = this.accountStatus;
+        data.status = data.status === "locking" ? "normal" :"locking";
       } else if (key === this.$t("dashboard.accountAvatar")) {
         data.avatar = require("@/assets/no_data_images/no_data.png");
-        data.avatarStatus = this.avatarStatus;
+        data.avatarStatus = data.avatarStatus === "done" ? "noUpload" : "done";
       } else if(key === this.$t("dashboard.account_nickName")){
         data.nickName = modify.newNickName;
       }

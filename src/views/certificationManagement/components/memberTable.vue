@@ -5,20 +5,11 @@
       <span>{{ memberDataList.userName }}</span>
       <span>
         <el-button
-          v-show="memberDataList.status !== 'noReview'"
-          type="danger"
+          :type="memberDataList.status === 'noReview'? 'danger' : 'success'"
           size="small"
-          @click="handleModifyStatus(memberDataList, 'noReview')"
+          @click="handleModifyStatus(memberDataList, memberDataList.status)"
         >
-          {{ $t("certification.noReview") }}
-        </el-button>
-        <el-button
-          v-show="memberDataList.status !== 'reviewed'"
-          type="success"
-          size="small"
-          @click="handleModifyStatus(memberDataList, 'reviewed')"
-        >
-          {{ $t("certification.reviewed") }}
+          {{ memberDataList.status === 'noReview'? $t("certification.noReview") : $t("certification.reviewed")}}
         </el-button>
       </span>
     </div>
@@ -116,7 +107,7 @@
           <span slot="footer" class="dialog-footer">
             <el-button
               type="primary"
-              @click="changeStatusSubmit(memberDataList)"
+              @click="changeStatusSubmit"
               >确 定</el-button
             >
           </span>
@@ -175,7 +166,7 @@ export default {
           this.dialogMessageContent = `是否要帳號 ( <span style="color:red">${row.userName}</span> ) 的審查狀態變更為"${
             status === "noReview" ? "已審查" : "未審查"
           }"?`;
-          this.accountStatus = status;
+          row.status = status === "noReview" ? "reviewed" : "noReview";
           break
         case 'avatarImg':
           this.isDialogAvatarShow = true;
@@ -183,10 +174,9 @@ export default {
           break
       }
     },
-    changeStatusSubmit(data) {
+    changeStatusSubmit() {
       this.isDialogMessageShow = false;
       this.notificationMessageShow = false;
-      data.status = this.accountStatus;
       this.$message({ message: "操作成功", type: "success" });
     },
   },

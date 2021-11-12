@@ -37,13 +37,13 @@
     <certification-table
       v-show="isCertificationShow"
       :certificationDataList="certificationDataList"
-      @backShow="backShow"
+      @isAduitShow="isAduitShow"
     />
 
     <member-table
       v-show="isMemberDataShow"
       :memberDataList="memberDataList"
-      @backShow="backShow"
+      
     />
 
   </div>
@@ -78,7 +78,7 @@ export default {
     this.getCertificationDataList();
   },
   methods: {
-    backShow(data, status) {
+    isAduitShow(data, status) {
       this.isBackBtnShow = status;
       this.isMemberDataShow = status;
       this.isCertificationShow = !status;

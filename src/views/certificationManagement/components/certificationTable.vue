@@ -44,7 +44,7 @@ export default {
   methods: {
     checkMemberList(userName){
       if(userName !== ''){
-        this.$emit('backShow',userName,true)
+        this.$emit('isAduitShow',userName,true)
       } 
     }
   },

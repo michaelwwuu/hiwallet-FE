@@ -199,28 +199,6 @@
     >
       <!-- 暱稱或商家名稱 -->
       <template v-if="dialogMessageTitle === $t('dashboard.account_nickName')">
-        <el-dialog
-          title="通知訊息"
-          :visible.sync="notificationMessageShow"
-          width="30%"
-          append-to-body
-          center
-        >
-          <span class="dialog-content" v-html="innerMessageContent" />
-          <span slot="footer" class="dialog-footer">
-            <el-button
-              type="primary"
-              @click="
-                changeStatusSubmit(
-                  memberDataList,
-                  dialogMessageTitle,
-                  nameModifyForm
-                )
-              "
-              >确 定</el-button
-            >
-          </span>
-        </el-dialog>
         <el-form
           ref="nameModifyForm"
           :model="nameModifyForm"
@@ -243,6 +221,7 @@
             />
           </el-form-item>
         </el-form>
+
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="visibleFormSubmit('nameModifyForm')"
             >确 定</el-button
@@ -334,6 +313,29 @@
         </span>
       </template>
     </el-dialog>
+    <!-- 確認訊息 -->
+    <el-dialog
+      title="通知訊息"
+      :visible.sync="notificationMessageShow"
+      width="30%"
+      append-to-body
+      center
+    >
+      <span class="dialog-content" v-html="innerMessageContent" />
+      <span slot="footer" class="dialog-footer">
+        <el-button
+          type="primary"
+          @click="
+            changeStatusSubmit(
+              memberDataList,
+              dialogMessageTitle,
+              nameModifyForm
+            )
+          "
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
 
     <!-- 登入 / 交易 / 密碼 / 頭像 -->
     <el-dialog
@@ -342,23 +344,6 @@
       width="30%"
       center
     >
-      <el-dialog
-        title="通知訊息"
-        :visible.sync="notificationMessageShow"
-        width="30%"
-        append-to-body
-        center
-      >
-        <span class="dialog-content" v-html="innerMessageContent" />
-        <span slot="footer" class="dialog-footer">
-          <el-button
-            type="primary"
-            @click="changeStatusSubmit(memberDataList, dialogMessageTitle)"
-            >确 定</el-button
-          >
-        </span>
-      </el-dialog>
-
       <!-- 登入 / 交易 / 密碼 -->
       <span
         v-if="dialogMessageTitle !== $t('dashboard.accountAvatar')"

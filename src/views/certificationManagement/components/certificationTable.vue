@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="totleStyle">共 {{certificationDataList.length}} 筆資料</div>
+    <div class="total-style">共 {{certificationDataList.length}} 筆資料</div>
     <div class="form-table">
       <div class="el-form">
         <span>{{ $t("certification.account") }}</span>
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.totleStyle{
+.total-style{
   width: 70%;
   color: #0062ff;
   font-size:14px;

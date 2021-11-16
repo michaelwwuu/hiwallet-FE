@@ -190,14 +190,14 @@
       </div>
     </div>
 
-    <!-- 費率 -->
+    <!-- 費率 / 暱稱或商家名稱 / 嗨錢包餘額 -->
     <el-dialog
       :title="dialogMessageTitle"
       :visible.sync="isMerchantShow"
       :width="dialogWidth"
       center
     >
-      <!-- 暱稱或商家名稱 -->
+      <!-- 暱稱或商家名稱 / 嗨錢包餘額 -->
       <template v-if="dialogMessageTitle === $t('dashboard.account_nickName')">
         <el-form
           ref="nameModifyForm"
@@ -303,7 +303,7 @@
             >修 改</el-button
           >
           <div v-if="isMerchantSubmit">
-            <el-button type="success" @click="merchantSubmit('OK')"
+            <el-button type="primary" @click="merchantSubmit('OK')"
               >確 定</el-button
             >
             <el-button type="danger" @click="merchantSubmit('Canel')"
@@ -313,6 +313,7 @@
         </span>
       </template>
     </el-dialog>
+
     <!-- 確認訊息 -->
     <el-dialog
       title="通知訊息"
@@ -359,6 +360,30 @@
         <img :src="memberDataList.avatar" />
       </div>
 
+      <el-form
+        v-if="dialogMessageTitle === $t('dashboard.merchant_current_rates')"
+        ref="nameModifyForm"
+        :model="nameModifyForm"
+        :rules="nameModifyRules"
+        label-width="150px"
+        class="advancedModify-style"
+      >
+        <el-form-item :label="$t('dashboard.current_nickName')">
+          <span>{{ memberDataList.nickName }}</span>
+        </el-form-item>
+        <el-form-item
+          prop="newNickName"
+          :label="$t('dashboard.change_nickName')"
+        >
+          <el-input
+            v-model="nameModifyForm.newNickName"
+            type="text"
+            :placeholder="$t('dashboard.please_enter_a_new_nickname')"
+            autocomplete="off"
+          />
+        </el-form-item>
+      </el-form>
+
       <!-- 底部確認按鈕-->
       <span slot="footer" class="dialog-footer">
         <el-button
@@ -370,7 +395,7 @@
         <el-button
           v-if="dialogMessageTitle !== $t('dashboard.accountAvatar')"
           type="primary"
-          @click="notificationMessageShow = true"
+          @click="dialogMessageTitle === $t('dashboard.merchant_current_rates') ? visibleFormSubmit('nameModifyForm') : notificationMessageShow = true"
           >确 定</el-button
         >
         <el-button
@@ -391,29 +416,23 @@
       class="bank-message-style"
     >
       <!-- 常用交易對象 -->
-      <template
+      <hiwallet-bank-table
         v-if="
           dialogMessageTitle === $t('dashboard.commonly_traded_counterparties')
         "
-      >
-        <hiwallet-bank-table
-          :memberDataList="memberDataList.hiwalletList"
-          :memberDataTitle="$t('dashboard.hiwallet_account')"
-          style="width: 50%; margin: 0 5px"
-        />
-        <hiwallet-bank-table
-          :memberDataList="memberDataList.bankList"
-          :memberDataTitle="$t('dashboard.bank_card_account_number')"
-          style="width: 50%; margin: 0 5px"
-        />
-      </template>
+        :memberDataList="memberDataList.hiwalletList"
+        :memberDataTitle="$t('dashboard.hiwallet_account')"
+        style="width: 50%; margin: 0 5px"
+      />
 
       <!-- 綁定銀行卡 -->
       <hiwallet-bank-table
-        v-if="dialogMessageTitle === $t('dashboard.bank_card_account_number')"
+        v-if="
+          dialogMessageTitle === $t('dashboard.commonly_traded_counterparties') || dialogMessageTitle === $t('dashboard.bank_card_account_number')
+        "
         :memberDataList="memberDataList.bankList"
         :memberDataTitle="$t('dashboard.bank_card_account_number')"
-        style="width: 100%"
+        :style="dialogMessageTitle === $t('dashboard.commonly_traded_counterparties') ? 'width: 50%; margin: 0 5px':'width: 100%'"
       />
 
       <!-- 商家管理 進行中活動 -->
@@ -436,9 +455,9 @@
 </template>
 
 <script>
-import cityBankForm from "./cityBankForm";
-import activityTable from "./activityTable";
-import hiwalletBankTable from "./hiwalletBankTable";
+import cityBankForm from "./cityBankForm.vue";
+import activityTable from "./activityTable.vue";
+import hiwalletBankTable from "./hiwalletBankTable.vue";
 
 export default {
   name: "PublicUserForm",
@@ -493,10 +512,10 @@ export default {
     },
     // 商家當前費率
     merchantSubmit(key) {
-      // 未來做區分
-      this.isMerchantSubmit = false;
       this.isMerchantModify = true;
+      this.isMerchantSubmit = false;
       this.isMerchantDisabled = true;
+      // 未來做區分
       if (key === "OK") this.$message({ message: "操作成功", type: "success" });
     },
     // 常用對象 綁定銀行

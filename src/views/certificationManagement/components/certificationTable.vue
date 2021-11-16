@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="totleStyle">共 {{certificationDataList.length}} 筆資料</div>
     <div class="form-table">
       <div class="el-form">
         <span>{{ $t("certification.account") }}</span>
@@ -28,8 +29,17 @@
         </span>
       </div> 
     </div>
+    <!-- 分頁 -->
+    <div class="pagination-block">
+      <el-pagination
+        background
+        :page-size="certificationDataList.length"
+        :pager-count="5"
+        layout="sizes, prev, pager, next, jumper"
+        :total="certificationDataList.length">
+      </el-pagination>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -53,6 +63,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.totleStyle{
+  width: 70%;
+  color: #0062ff;
+  font-size:14px;
+  text-align: right;
+  margin-bottom: -1.5em;
+}
 .form-table {
   border: 0.05em solid #b3b3b3;
   width: 70%;
@@ -76,6 +93,17 @@ export default {
       text-align: center;
       color: #666666;
     }
+  }
+}
+::v-deep.pagination-block{
+  width: 70%;
+  text-align: center;
+  margin: 15px 0;
+  .el-pagination__sizes{
+    float:left;
+  }
+  .el-pagination__jump{
+    float:right;   
   }
 }
 </style>

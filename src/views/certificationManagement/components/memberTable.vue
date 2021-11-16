@@ -81,7 +81,7 @@
       <span>{{ memberDataList.salary_source }}</span>
       <span></span>
     </div>
-    <div class="el-form">
+    <div class="el-form" style="border-bottom:0;">
       <span>{{ $t("certification.TINSSSGSIS") }}</span>
       <span>{{ memberDataList.TINSSSGSIS }}</span>
       <span></span>
@@ -128,12 +128,13 @@
       </div>
 
     </el-dialog>
+    
   </div>
 </template>
 
 <script>
 export default {
-  name: "memberData",
+  name: "memberTable",
   props: {
     memberDataList:{
       type: Object,
@@ -191,9 +192,6 @@ export default {
     margin: 0 0.6em;
     padding: 0.7em 3em;
     border-bottom: 0.01em solid #b3b3b3;
-    &:last-child {
-      border-bottom: 0;
-    }
     span {
       width: 300px;
       font-size: 14px;
@@ -201,6 +199,7 @@ export default {
       color: #666666;
     }
   }
+  
 }
 .el-dialog__wrapper {
   ::v-deep.el-dialog {

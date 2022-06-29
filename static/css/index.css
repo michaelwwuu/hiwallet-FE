@@ -165,7 +165,7 @@ ul li {
     display: inline-block;
     text-align: left;
     padding: 0 26px;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 .download-btn:hover + .download-qr {
      visibility: visible;
@@ -226,7 +226,7 @@ ul li {
     display: inline-block;
     vertical-align: top;
     text-align: center;
-    width: 33%;
+    width: 32%;
 }
 .unit-block-1 .cube {
     position: relative;
@@ -331,7 +331,7 @@ ul li {
 .wrap-full-h5 {
     position: relative;
     width: 100%;
-    max-width: 768px;
+    max-width: 820px;
     /* height: 3328px; */
     overflow: hidden;
     background-color: #FAFCFE;
@@ -487,8 +487,9 @@ ul li {
     background-position: center top;
     position: relative;
     z-index: 200;
-
+    background-size: contain;
     /* position: absolute; */
+    background-color: #ff6a03;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -524,7 +525,7 @@ ul li {
 .wrap-full-h5 {
     display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 820px) {
     .wrap-full-pc {
         display: none;
     }

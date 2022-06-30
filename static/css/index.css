@@ -28,7 +28,7 @@ ul li {
 }
 .thi-title {
     font-size: 24px;
-    font-weight: 600;
+    /* font-weight: 600; */
     margin-top: 10px;
 }
 .wrap-full-pc {
@@ -248,7 +248,7 @@ ul li {
     margin: 0;
     padding: 0;
     font-size: 24px;
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 /* end unit-block-1 */
 
@@ -359,14 +359,14 @@ ul li {
 }
 .wrap-full-h5 .unit-block-1 ul li p {
     font-size: 4.6vw;
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 .wrap-full-h5 .sub-title-horizon {
     font-size: 7vw;
 }
 .wrap-full-h5 .thi-title {
     font-size: 4.6vw;
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 .wrap-full-h5 .string_headline {
     font-size: 9vw;
@@ -379,7 +379,7 @@ ul li {
     font-size: 7vw;
     color: #fff;
     margin-top: -2px;
-    font-weight: 500;
+    /* font-weight: 500; */
     margin-bottom: 0;
     min-height: 17vw;
     padding: 0 10px;
@@ -487,9 +487,8 @@ ul li {
     background-position: center top;
     position: relative;
     z-index: 200;
-    background-size: contain;
+    background-size: cover;
     /* position: absolute; */
-    background-color: #ff6a03;
     left: 0;
     bottom: 0;
     width: 100%;
